@@ -7,3 +7,7 @@ r
 Bdocker/dev/init/db/docker-entrypoint-initdb.d/02_create_tables.sql,f/e/fefaa0f1dd212309adf0fd05e5f6b548d143079b
 u
 Edocker/dev/init/db/docker-entrypoint-initdb.d/21_insert_data_demo.sql,f/0/f097df5295ff73aa2a0fe48a69123cee4b07eea2
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+M
+docker/dev/docker-compose.yml,e\6\e65149c09cfc627df355d6363f74ac6885bd12b1
