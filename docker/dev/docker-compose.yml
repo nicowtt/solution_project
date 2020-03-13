@@ -1,0 +1,12 @@
+version: '2.1'
+services:
+  complain_db:
+    image: postgres:9.4
+    ports:
+      - "127.0.0.1:9032:5432"
+    volumes:
+       - "./init/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+    environment:
+      - POSTGRES_DB=db_complain
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=nicotine
