@@ -7,6 +7,10 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/microservicebdd/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-web/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-dao/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-business/pom.xml" />
+        <option value="$PROJECT_DIR$/microservice-model/pom.xml" />
       </list>
     </option>
   </component>

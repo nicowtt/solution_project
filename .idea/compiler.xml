@@ -6,11 +6,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="microservice-web" />
         <module name="microservicebdd" />
+        <module name="microservice-dao" />
+        <module name="microservice-business" />
+        <module name="microservice-model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="microservicebdd" target="1.5" />
+      <module name="microservice-business" target="1.8" />
+      <module name="microservice-dao" target="1.8" />
+      <module name="microservice-model" target="1.8" />
+      <module name="microservice-web" target="1.8" />
+      <module name="microservicebdd" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="microservice-business" options="-parameters" />
+      <module name="microservice-dao" options="-parameters" />
+      <module name="microservice-model" options="-parameters" />
+      <module name="microservice-web" options="-parameters" />
+      <module name="microservicebdd" options="-parameters" />
+    </option>
   </component>
 </project>
