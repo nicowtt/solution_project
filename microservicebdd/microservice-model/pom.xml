@@ -2,23 +2,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- =============================================================== -->
+    <!-- project information -->
+    <!-- =============================================================== -->
+    <!-- ===== Maven Project Parent ===== -->
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.nicow</groupId>
+        <artifactId>microservicebdd</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.nicow</groupId>
+    <!-- ===== Maven information ===== -->
     <artifactId>microservice-model</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+
+    <!-- ===== global Informations ===== -->
     <name>microservice-model</name>
-    <description>Demo project for Spring Boot</description>
+    <description>module for entities</description>
+    <version>0.0.1-SNAPSHOT</version>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
+    <!-- =============================================================== -->
+    <!-- Dependencies -->
+    <!-- =============================================================== -->
     <dependencies>
+        <!-- ===== Modules ===== -->
+        <!-- ===== Dependencies ===== -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
@@ -29,6 +36,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -40,14 +48,21 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- ===== bdd mongodb ===== -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+        </dependency>
+
     </dependencies>
 
+    <!-- =============================================================== -->
+    <!-- Build -->
+    <!-- =============================================================== -->
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+
         </plugins>
     </build>
 

@@ -7,10 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="microservice-web" />
-        <module name="microservicebdd" />
+        <module name="microservice-model" />
         <module name="microservice-dao" />
         <module name="microservice-business" />
-        <module name="microservice-model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
