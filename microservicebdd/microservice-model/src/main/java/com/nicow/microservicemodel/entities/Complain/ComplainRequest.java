@@ -22,6 +22,6 @@ public class ComplainRequest {
     private String creatorEmail;
     private Date creationDate;
     private int popularity;
-    @DBRef(lazy = true)
+//    @DBRef(lazy = true)
     private Collection<ComplainResponse> complainResponses=new ArrayList<>();
 }

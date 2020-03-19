@@ -24,8 +24,8 @@ public class ComplainTheme {
     private String creatorEmail;
     private Date creationDate;
     private int popularity;
-    @DBRef(lazy = true)
+//    @DBRef(lazy = true)
     private Collection<ComplainRequest> complainRequests=new ArrayList<>();
-    @DBRef
+//    @DBRef
     private Collection<SubscriptionThemeUser> subscriptionThemeUsers=new ArrayList<>();
 }
