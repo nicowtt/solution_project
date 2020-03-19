@@ -1,3 +1,6 @@
 
-Z	java:S106#"9Replace this use of System.out or System.err by a logger.(ÒÍ£—ûÿÿÿÿ8º¡´“.
-U	java:S106&"9Replace this use of System.out or System.err by a logger.(çÏï€8º¡´“.
+Z	java:S1062"9Replace this use of System.out or System.err by a logger.(ÒÍ£—ûÿÿÿÿ8º¡´“.
+p
+java:S11920"SDefine a constant instead of duplicating this literal "nico.bod@gmail.com" 3 times.(ƒß†Î8´¡œ.
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8´¡œ.

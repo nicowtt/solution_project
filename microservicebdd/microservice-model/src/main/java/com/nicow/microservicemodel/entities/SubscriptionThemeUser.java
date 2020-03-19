@@ -1,4 +1,4 @@
-package com.nicow.microservicemodel.entities.subscription;
+package com.nicow.microservicemodel.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,31 +1,26 @@
-package com.nicow.microservicemodel.entities.Complain;
+package com.nicow.microservicemodel.entities;
 
-import com.nicow.microservicemodel.entities.subscription.SubscriptionThemeUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-@Document(collection = "complainTheme")
+@Document(collection = "complainRequest")
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
-public class ComplainTheme {
+public class ComplainRequest {
 
     @Id
     private String id;
-    private String name;
-    private String photoUrl;
+    private String request;
     private String creatorEmail;
     private Date creationDate;
     private int popularity;
 //    @DBRef(lazy = true)
-    private Collection<ComplainRequest> complainRequests=new ArrayList<>();
-//    @DBRef
-    private Collection<SubscriptionThemeUser> subscriptionThemeUsers=new ArrayList<>();
+    private Collection<ComplainResponse> complainResponses=new ArrayList<>();
 }

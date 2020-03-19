@@ -3,11 +3,13 @@ package com.nicow.microserviceweb;
 import com.nicow.microservicedao.complainDao.ComplainRequestDao;
 import com.nicow.microservicedao.complainDao.ComplainThemeDao;
 import com.nicow.microservicedao.complainDao.ComplainUserDao;
-import com.nicow.microservicemodel.entities.Complain.ComplainRequest;
-import com.nicow.microservicemodel.entities.Complain.ComplainResponse;
-import com.nicow.microservicemodel.entities.Complain.ComplainTheme;
-import com.nicow.microservicemodel.entities.Complain.ComplainUser;
-import com.nicow.microservicemodel.entities.subscription.SubscriptionThemeUser;
+import com.nicow.microservicemodel.dto.ComplainUserDto;
+import com.nicow.microservicemodel.entities.ComplainRequest;
+import com.nicow.microservicemodel.entities.ComplainResponse;
+import com.nicow.microservicemodel.entities.ComplainTheme;
+import com.nicow.microservicemodel.entities.ComplainUser;
+import com.nicow.microservicemodel.entities.SubscriptionThemeUser;
+import com.nicow.microservicemodel.mapper.ComplainUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +20,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.nicow"})
@@ -33,6 +34,9 @@ public class MicroserviceWebApplication {
 
     @Autowired
     private ComplainRequestDao requestDao;
+
+    @Autowired
+    private ComplainUserMapper userMapper;
 
 
     public static void main(String[] args) {
@@ -60,6 +64,12 @@ public class MicroserviceWebApplication {
             firstTheme.getComplainRequests().add(firstRequest);
             // update theme
             themeDao.save(firstTheme);
+
+            // test dto
+            ComplainUser userFromBdd = userDao.findByEmail("nico.bod@gmail.com");
+            ComplainUserDto complainUserDto = userMapper.toComplainUserDto(userFromBdd);
+            ComplainUser userTest = userMapper.toComplainUser(complainUserDto);
+            System.out.println(userTest.toString());
             };
     }
 
