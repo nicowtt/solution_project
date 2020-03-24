@@ -19,3 +19,25 @@ X
 (microservicebdd/microservice-dao/pom.xml,1\e\1e3c2fec28bd192ed276c925b0e60717b7c72713
 ˜
 hmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/MicroserviceWebApplication.java,b\4\b47ed9d213f728ce83eea9ddef81742f39e2d5ac
+•
+emicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/dto/ComplainUserDto.java,2\3\23e241a2fa3165d0bee1adcf79418a36490403ac
+ 
+pmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/SubscriptionThemeUser.java,0\d\0dfd40c24831d8d08ff2260cd8d277d7855abedb
+—
+gmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainUser.java,8\7\875295de973133579fdb758ec6b8e5fbeb99071a
+˜
+hmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainTheme.java,4\5\451cda6e25117a5a3052c38ecf7298bd27d2a867
+›
+kmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainResponse.java,8\6\86262533f32770ce58f7d02bffee78b5bf1e1972
+š
+jmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainRequest.java,c\e\ce0375a050b6244473327e4e6914bb1b017ab0e8
+›
+kmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/mapper/ComplainUserMapper.java,d\e\de412cee47b58c5b8f0947ad3a45a35ed5ce5a9b
+«
+{microservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/securitytoken/JwtUserDetailsService.java,3\b\3b5483bc39566209140364d9b505c9a47b5fa543
+¤
+tmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/impl/ComplainUserManagerImpl.java,d\7\d7a5747cabed341e2dcc3fa097bdee901d0c9e16
+ 
+pmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainUserController.java,5\1\5176662f67249ac4a0c7fa01eac92d482b5f898a
+¤
+tmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainUserManager.java,8\b\8bc52f26740dd56167ddcd182265af16d315b803
