@@ -1,3 +1,4 @@
+import { ApplicationHttpClientService } from './services/applicationHttpClient.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     AuthService,
-    AuthGuardService    
+    AuthGuardService,
+    ApplicationHttpClientService  
   ],
   bootstrap: [AppComponent]
 })
