@@ -41,3 +41,5 @@ tmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusin
 pmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainUserController.java,5\1\5176662f67249ac4a0c7fa01eac92d482b5f898a
 ¤
 tmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainUserManager.java,8\b\8bc52f26740dd56167ddcd182265af16d315b803
+[
++applicationWebAngular/src/app/app.module.ts,2\4\240e9e29b62fcea1f8f3d2b9a9e2d8bdf195816b
