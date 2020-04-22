@@ -36,19 +36,39 @@ public class ComplainUserController {
     private JwtTokenUtil jwtTokenUtil;
 
 
-    @PostMapping(value = "/checkUserLogin", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ComplainUserDto> checkUserLogin(@RequestBody ComplainUserDto complainUserDto) {
+    @PostMapping(value = "/checkLogin", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ComplainUserDto> checkLogin(@RequestBody ComplainUserDto complainUserDto) {
 
         ComplainUser complainUserInput = complainUserMapper.toComplainUser(complainUserDto);
-        // todo check if user and password is ok
-        ComplainUser fullUserFromDao = complainUserManager.findByEmail(complainUserInput.getEmail());
-        ComplainUserDto fullUserFromDaoDto = complainUserMapper.toComplainUserDto(fullUserFromDao);
-        // token creation
-        final UserDetails userDetails = jwtUserDetailsService
-                .loadUserByUsername(complainUserInput.getEmail());
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        fullUserFromDaoDto.setToken(token);
-        fullUserFromDaoDto.setPassword(null);
-        return ResponseEntity.ok(fullUserFromDaoDto);
+        boolean userInputToValid = complainUserManager.checkIfUserMailAndPasswordIsOk(complainUserInput);
+        if (userInputToValid) {
+            ComplainUser fullUserFromDao = complainUserManager.findByEmail(complainUserInput.getEmail());
+            ComplainUserDto fullUserFromDaoDto = complainUserMapper.toComplainUserDto(fullUserFromDao);
+            // token creation
+            final UserDetails userDetails = jwtUserDetailsService
+                    .loadUserByUsername(complainUserInput.getEmail());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            fullUserFromDaoDto.setToken(token);
+            fullUserFromDaoDto.setPassword(null);
+            return ResponseEntity.ok(fullUserFromDaoDto);
+        } else {
+            return (new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE));
+        }
+
+    }
+
+    /**
+     * for create new user
+     * @param newUserDto
+     * @return
+     */
+    @PostMapping(value = "/newUser", consumes = "application/json")
+    public ResponseEntity<String> newUser(@RequestBody ComplainUserDto newUserDto) {
+        boolean addNewUserIsOk = false;
+        if (addNewUserIsOk) {
+            return (new ResponseEntity<>(HttpStatus.CREATED));
+        } else {
+            return (new ResponseEntity<>("email already exist",HttpStatus.CONFLICT));
+        }
     }
 }

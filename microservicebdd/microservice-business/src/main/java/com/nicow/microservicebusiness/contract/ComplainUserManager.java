@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 public interface ComplainUserManager {
 
     ComplainUser findByEmail(String Email);
+    boolean checkIfUserMailAndPasswordIsOk(ComplainUser userToValidate);
+    boolean checkIfMailExist(String mail);
 }

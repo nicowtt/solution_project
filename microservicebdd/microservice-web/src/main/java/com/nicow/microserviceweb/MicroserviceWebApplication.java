@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -24,6 +25,7 @@ import java.util.Date;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.nicow"})
 @EnableMongoRepositories(basePackages = {"com.nicow"})
+@EntityScan("com.nicow")
 public class MicroserviceWebApplication {
 
     @Autowired
@@ -38,7 +40,6 @@ public class MicroserviceWebApplication {
     @Autowired
     private ComplainUserMapper userMapper;
 
-
     public static void main(String[] args) {
         SpringApplication.run(MicroserviceWebApplication.class, args);
     }
@@ -49,7 +50,7 @@ public class MicroserviceWebApplication {
             //ajout user
             userDao.deleteAll();
             Date todayDate= new Date();
-            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "mdp", 0, todayDate, "ADMIN"));
+            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, todayDate, "ADMIN"));
             userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "mdp", 0, todayDate, "USER"));
             userDao.findAll().forEach(System.out::println);
 

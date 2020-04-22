@@ -15,8 +15,8 @@ import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', component: SignupComponent },
-  { path: '', redirectTo: 'sales', pathMatch: 'full'},
-  { path: '**', redirectTo: 'sales'}
+  { path: '', redirectTo: '#', pathMatch: 'full'},
+  { path: '**', redirectTo: '#'}
 ];
 
 @NgModule({

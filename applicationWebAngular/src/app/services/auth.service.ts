@@ -25,26 +25,26 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  // /**
-  //  * User sign in
-  //  * @param email
-  //  * @param password
-  //  */
-  // signInUser(email, password) {
-  //   return this.http.post<any>('/checkUserLogIn', { email, password })
-  //     .pipe(map(user => {
-  //       if (user && user.token) {
-  //         this.userInProgress = user;
-  //         // console.log('only token: ' + this.userInProgress.token);
-  //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-  //         localStorage.setItem('currentUser', JSON.stringify(user));
-  //         localStorage.setItem('currentUserToken', JSON.stringify(this.userInProgress.token));
-  //         this.currentUserSubject.next(user);
-  //         console.log('local quand sigIn: ' + localStorage.getItem('currentUser'));
-  //       }
-  //       return user;
-  //     }));
-  // }
+  /**
+   * User sign in
+   * @param email
+   * @param password
+   */
+  signInUser(email, password) {
+    return this.http.post<any>('/checkLogin', { email, password })
+      .pipe(map(user => {
+        if (user && user.token) {
+          this.userInProgress = user;
+          // console.log('only token: ' + this.userInProgress.token);
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('currentUserToken', JSON.stringify(this.userInProgress.token));
+          this.currentUserSubject.next(user);
+          console.log('local quand sigIn: ' + localStorage.getItem('currentUser'));
+        }
+        return user;
+      }));
+  }
 
   // /**
   //  * User logOut
