@@ -47,9 +47,9 @@ public class MicroserviceWebApplication {
     @Bean
     CommandLineRunner start() {
         return args->{
+            Date todayDate= new Date();
             //ajout user
             userDao.deleteAll();
-            Date todayDate= new Date();
             userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, todayDate, "ADMIN"));
             userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "mdp", 0, todayDate, "USER"));
             userDao.findAll().forEach(System.out::println);

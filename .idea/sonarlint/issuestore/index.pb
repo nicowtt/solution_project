@@ -43,3 +43,17 @@ pmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/contro
 tmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainUserManager.java,8\b\8bc52f26740dd56167ddcd182265af16d315b803
 [
 +applicationWebAngular/src/app/app.module.ts,2\4\240e9e29b62fcea1f8f3d2b9a9e2d8bdf195816b
+™
+imicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainUserDao.java,f\b\fb54152ca360ab4f912d055f3128c501205b47a2
+¢
+rmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/security/JwtAuthenticationEntryPoint.java,7\a\7a9200372383d589ed5f25e1e0653212009a926f
+–
+fmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/config/WebSecurityConfig.java,6\5\6548eb50e868eacadcf2f119bfceccbae3ea50c4
+ 
+pmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/PasswordEncoder.java,3\f\3f1e661082a5483c50c1ade7aa567e831bcc74b0
+ 
+pmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/impl/PasswordEncoderImpl.java,0\1\01eb3e0fe84e11165030be6129440f2f37499b76
+—
+gmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/security/JwtRequestFilter.java,4\f\4f3a41d2961cbbc75fa8b398a7dcef6cbf18af59
+“
+cmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/security/JwtTokenUtil.java,8\8\889985d2dd5cf377cb70420d3d4f0e1117e2c367

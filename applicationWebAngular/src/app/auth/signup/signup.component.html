@@ -1,1 +1,58 @@
-<p>signup works!</p>
+<div class="raw">
+    <div class="col-sm-12 col-sm-offset-2">
+  
+      <h2 id="frontTitle">Création d'un compte:</h2>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="firstName">Prénom</label>
+          <input type="text" id="firstName" formControlName="firstName"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+          <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+            <div class="error" *ngIf="f.firstName.errors.required">Un prenom est requis</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input type="text" id="name" formControlName="name"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+          <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div class="error" *ngIf="f.name.errors.required">Un nom est requis</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pseudo">Pseudo</label>
+          <input type="text" id="pseudo" formControlName="pseudo"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pseudo.errors }" />
+          <div *ngIf="submitted && f.pseudo.errors" class="invalid-feedback">
+            <div class="error" *ngIf="f.pseudo.errors.required">Un pseudo est requis</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div class="error" *ngIf="f.email.errors.required">Un email est requis</div>
+            <div class="error" *ngIf="f.email.errors.email">@ non présent</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" formControlName="password"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback" >
+            <div class="error" *ngIf="f.password.errors.required">Un password est requis</div>
+            <div class="error" *ngIf="f.password.errors.pattern">minimum 3 caractères </div>
+          </div>
+        </div>
+  
+        <button class="btn btn-primary" type="submit" >Créer mon compte</button>
+  
+      </form>
+    </div>
+  </div>
+  

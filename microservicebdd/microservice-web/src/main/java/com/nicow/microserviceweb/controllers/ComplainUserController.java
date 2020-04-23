@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,8 +65,10 @@ public class ComplainUserController {
      */
     @PostMapping(value = "/newUser", consumes = "application/json")
     public ResponseEntity<String> newUser(@RequestBody ComplainUserDto newUserDto) {
-        boolean addNewUserIsOk = false;
-        if (addNewUserIsOk) {
+       ComplainUser newUserOnBdd;
+        newUserOnBdd = complainUserManager.addUser(newUserDto);
+
+        if (newUserOnBdd.getId() != null) {
             return (new ResponseEntity<>(HttpStatus.CREATED));
         } else {
             return (new ResponseEntity<>("email already exist",HttpStatus.CONFLICT));

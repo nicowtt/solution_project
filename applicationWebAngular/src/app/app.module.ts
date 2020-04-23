@@ -9,8 +9,10 @@ import { AppComponent } from './app.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { HeaderComponent } from './header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import { AlertComponent } from './alert/alert.component';
+import {HeaderInterceptorService} from "./services/header-interceptor.service";
 
 const appRoutes: Routes = [
   { path: 'auth/signin', component: SigninComponent },
@@ -24,7 +26,8 @@ const appRoutes: Routes = [
     AppComponent,
     SigninComponent,
     SignupComponent,
-    HeaderComponent
+    HeaderComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +38,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },
     AuthService,
     AuthGuardService,
-    ApplicationHttpClientService  
+    ApplicationHttpClientService,
   ],
   bootstrap: [AppComponent]
 })

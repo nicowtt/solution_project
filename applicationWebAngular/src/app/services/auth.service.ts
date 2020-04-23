@@ -46,15 +46,15 @@ export class AuthService {
       }));
   }
 
-  // /**
-  //  * User logOut
-  //  */
-  // logout() {
-  //   // remove user from local storage and set current user to null
-  //   localStorage.removeItem('currentUser');
-  //   this.currentUserSubject.next(null);
-  //   // console.log('local quand logOut: ' + localStorage.getItem('currentUser'));
-  // }
+  /**
+   * User logOut
+   */
+  logout() {
+    // remove user from local storage and set current user to null
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+    // console.log('local quand logOut: ' + localStorage.getItem('currentUser'));
+  }
 
   // /**
   //  * for create new user
