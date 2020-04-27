@@ -47,7 +47,6 @@
       <module name="microservice-dao" options="-parameters" />
       <module name="microservice-model" options="-parameters" />
       <module name="microservice-web" options="-parameters" />
-      <module name="microservicebdd" options="-parameters" />
     </option>
   </component>
 </project>
