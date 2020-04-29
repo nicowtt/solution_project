@@ -6,23 +6,27 @@ import com.nicow.microservicebusiness.contract.ComplainUserManager;
 import com.nicow.microservicemodel.dto.ComplainUserDto;
 import com.nicow.microservicemodel.entities.ComplainUser;
 import com.nicow.microservicemodel.mapper.ComplainUserMapper;
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MongoConfig.class)
 public class ComplainUserManagerImplIntegrityTest {
 
-
-    private ComplainUserDto complainUserDtoTest;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -33,36 +37,56 @@ public class ComplainUserManagerImplIntegrityTest {
     @Autowired
     private ComplainUserMapper complainUserMapper;
 
+    private ComplainUserDto complainUserDtoTest;
+    private ComplainUser complainUserTest;
+
 
     @Before
     public void setUp() {
         complainUserDtoTest = new ComplainUserDto(null, "nico", "bod", "nicow",
-                "test@test.com", "test",
+                "test@test.com", "mdp",
                 0, null, "ADMIN", null);
+
+        complainUserTest = complainUserManager.addUser(complainUserDtoTest);
+    }
+
+    @After
+    public void CleanAfter() {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is("test@test.com"));
+        mongoTemplate.remove(query,ComplainUser.class);
     }
 
     @Test
-    public void saveData() {
+    public void testAddUser() {
+        mongoTemplate.save(complainUserTest, "complainUser");
 
-        // when
-        ComplainUser userAdded = complainUserManager.addUser(complainUserDtoTest);
-        mongoTemplate.save(userAdded, "test");
-
-        // then
-        assertThat(mongoTemplate.findAll(DBObject.class, "test")).extracting("email")
+        assertThat(mongoTemplate.findAll(DBObject.class, "complainUser")).extracting("email")
                 .containsOnly("test@test.com");
+
     }
 
     @Test
-    public void shouldMapUserDtoToUser() {
+    public void testCheckIfMailExist() {
+        boolean mailExist = complainUserManager.checkIfMailExist("test@test.com");
 
-        //when
-        ComplainUser complainUserTest = complainUserMapper.toComplainUser(complainUserDtoTest);
+        assertTrue("Mail don't exist", mailExist);
 
-        //then
-        assertThat( complainUserTest ).isNotNull();
-        assertThat( complainUserTest.getEmail() ).isEqualTo( "test@test.com" );
+    }
 
+    @Test
+    public void testCheckIfUserMailAndPasswordIsOk() {
+        complainUserTest.setPassword("mdp");
+        boolean userMailAndPasswordIsOk = complainUserManager.checkIfUserMailAndPasswordIsOk(complainUserTest);
+
+        assertTrue("mail or password is false", userMailAndPasswordIsOk);
+    }
+
+    @Test
+    public void testFindByMail() {
+        ComplainUser userFindByMail = complainUserManager.findByEmail("test@test.com");
+
+        assertEquals( "test@test.com", userFindByMail.getEmail());
     }
 
 

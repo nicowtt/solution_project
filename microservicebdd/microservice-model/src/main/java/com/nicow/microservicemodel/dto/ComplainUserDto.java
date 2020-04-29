@@ -112,4 +112,21 @@ public class ComplainUserDto {
     public void setToken(String token) {
         this.token = token;
     }
+
+    // to string
+    @Override
+    public String toString() {
+        return "ComplainUserDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", popularity=" + popularity +
+                ", creationDate=" + creationDate +
+                ", role='" + role + '\'' +
+                ", token='" + token + '\'' +
+                '}';
+    }
 }
