@@ -9,7 +9,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 
 @Configuration
@@ -28,9 +27,6 @@ public class MongoConfig {
     @Bean
     public MongoTemplate mongoTemplate() {
         MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-
         return mongoTemplate;
-
     }
-
 }
