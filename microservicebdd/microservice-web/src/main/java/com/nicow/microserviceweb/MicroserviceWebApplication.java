@@ -44,34 +44,34 @@ public class MicroserviceWebApplication {
         SpringApplication.run(MicroserviceWebApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner start() {
-        return args->{
-            Date todayDate= new Date();
-            //ajout user
-            userDao.deleteAll();
-            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, todayDate, "ADMIN"));
-            userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "mdp", 0, todayDate, "USER"));
-            userDao.findAll().forEach(System.out::println);
-
-            //ajout d'un theme et d'un request
-            themeDao.deleteAll();
-            requestDao.deleteAll();
-
-            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
-            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainResponse>()));
-
-            // ajout de la request dans le theme
-            firstTheme.getComplainRequests().add(firstRequest);
-            // update theme
-            themeDao.save(firstTheme);
-
-            // test dto
-            ComplainUser userFromBdd = userDao.findByEmail("nico.bod@gmail.com");
-            ComplainUserDto complainUserDto = userMapper.toComplainUserDto(userFromBdd);
-            ComplainUser userTest = userMapper.toComplainUser(complainUserDto);
-            System.out.println(userTest.toString());
-            };
-    }
+//    @Bean
+//    CommandLineRunner start() {
+//        return args->{
+//            Date todayDate= new Date();
+//            //ajout user
+//            userDao.deleteAll();
+//            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, todayDate, "ADMIN"));
+//            userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "mdp", 0, todayDate, "USER"));
+//            userDao.findAll().forEach(System.out::println);
+//
+//            //ajout d'un theme et d'un request
+//            themeDao.deleteAll();
+//            requestDao.deleteAll();
+//
+//            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
+//            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainResponse>()));
+//
+//            // ajout de la request dans le theme
+//            firstTheme.getComplainRequests().add(firstRequest);
+//            // update theme
+//            themeDao.save(firstTheme);
+//
+//            // test dto
+//            ComplainUser userFromBdd = userDao.findByEmail("nico.bod@gmail.com");
+//            ComplainUserDto complainUserDto = userMapper.toComplainUserDto(userFromBdd);
+//            ComplainUser userTest = userMapper.toComplainUser(complainUserDto);
+//            System.out.println(userTest.toString());
+//            };
+//    }
 
 }
