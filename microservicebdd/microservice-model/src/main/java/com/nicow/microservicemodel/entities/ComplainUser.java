@@ -2,6 +2,9 @@ package com.nicow.microservicemodel.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 @Document(collection = "complainUser")
@@ -15,6 +18,7 @@ public class ComplainUser {
     private String email;
     private String password;
     private int popularity;
+    private Collection<Integer> peopleForPopularity = new ArrayList<>();
     private Date creationDate;
     private String role;
 
@@ -22,7 +26,7 @@ public class ComplainUser {
     public ComplainUser() {
     }
 
-    public ComplainUser(String id, String name, String firstName, String pseudo, String email, String password, int popularity, Date creationDate, String role) {
+    public ComplainUser(String id, String name, String firstName, String pseudo, String email, String password, int popularity, Collection<Integer> peopleForPopularity, Date creationDate, String role) {
         this.id = id;
         this.name = name;
         this.firstName = firstName;
@@ -30,6 +34,7 @@ public class ComplainUser {
         this.email = email;
         this.password = password;
         this.popularity = popularity;
+        this.peopleForPopularity = peopleForPopularity;
         this.creationDate = creationDate;
         this.role = role;
     }
@@ -91,6 +96,14 @@ public class ComplainUser {
         this.popularity = popularity;
     }
 
+    public Collection<Integer> getPeopleForPopularity() {
+        return peopleForPopularity;
+    }
+
+    public void setPeopleForPopularity(Collection<Integer> peopleForPopularity) {
+        this.peopleForPopularity = peopleForPopularity;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
@@ -118,6 +131,7 @@ public class ComplainUser {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", popularity=" + popularity +
+                ", peopleForPopularity=" + peopleForPopularity +
                 ", creationDate=" + creationDate +
                 ", role='" + role + '\'' +
                 '}';

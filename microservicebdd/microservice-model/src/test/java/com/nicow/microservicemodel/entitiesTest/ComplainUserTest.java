@@ -20,9 +20,10 @@ public class ComplainUserTest {
         complainUser.setPopularity(0);
         complainUser.setCreationDate(null);
         complainUser.setRole("ADMIN");
+        complainUser.setPeopleForPopularity(null);
 
         Assert.assertEquals("ComplainUser{id='1', name='nico', firstName='bod', pseudo='nicow', " +
-                "email='nico.bod@gmail.com', password='test', popularity=0, " +
-                "creationDate=null, role='ADMIN'}", complainUser.toString());
+                "email='nico.bod@gmail.com', password='test', popularity=0, peopleForPopularity=null," +
+                " creationDate=null, role='ADMIN'}", complainUser.toString());
     }
 }

@@ -32,9 +32,9 @@ public class ComplainUserMapperTest {
     public void setUp() {
         complainUserDtoTest = new ComplainUserDto(null, "nico", "bod", "nicow",
                 "test@test.com", "mdp",
-                0, null, "ADMIN", null);
+                0, null, null, "ADMIN", null);
         complainUserTest = new ComplainUser(null, "nico", "bod", "nicow",
-                "test@test.com", "mdp", 0, null, "ADMIN");
+                "test@test.com", "mdp", 0, null, null, "ADMIN");
     }
 
     @Test

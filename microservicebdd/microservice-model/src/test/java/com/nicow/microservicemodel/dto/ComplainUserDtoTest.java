@@ -17,12 +17,13 @@ public class ComplainUserDtoTest {
         complainUserDto.setEmail("nico.bod@gmail.com");
         complainUserDto.setPassword("test");
         complainUserDto.setPopularity(0);
+        complainUserDto.setPeopleForPopularity(null);
         complainUserDto.setCreationDate(null);
         complainUserDto.setRole("ADMIN");
         complainUserDto.setToken(null);
 
         Assert.assertEquals("ComplainUserDto{id='1', name='nico', firstName='bod', pseudo='nicow', " +
-                "email='nico.bod@gmail.com', password='test', popularity=0, creationDate=null, role='ADMIN', " +
-                "token='null'}", complainUserDto.toString());
+                "email='nico.bod@gmail.com', password='test', popularity=0, peopleForPopularity=null, " +
+                "creationDate=null, role='ADMIN', token='null'}", complainUserDto.toString());
     }
 }
