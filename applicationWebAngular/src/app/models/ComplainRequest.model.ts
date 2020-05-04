@@ -6,7 +6,7 @@ export class ComplainRequestModel {
     creationdate: Date;
     popularity: number;
     nbrResponse: number;
-    themeId: number;
+    themeName: string;
 
     constructor() {}
 }

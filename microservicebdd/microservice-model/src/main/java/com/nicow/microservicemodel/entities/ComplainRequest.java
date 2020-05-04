@@ -19,18 +19,20 @@ public class ComplainRequest {
     private int popularity;
 //    @DBRef(lazy = true)
     private Collection<ComplainResponse> complainResponses=new ArrayList<>();
+    private String themeName;
 
     // constructor
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorEmail, Date creationDate, int popularity, Collection<ComplainResponse> complainResponses) {
+    public ComplainRequest(String id, String request, String creatorEmail, Date creationDate, int popularity, Collection<ComplainResponse> complainResponses, String themeName) {
         this.id = id;
         this.request = request;
         this.creatorEmail = creatorEmail;
         this.creationDate = creationDate;
         this.popularity = popularity;
         this.complainResponses = complainResponses;
+        this.themeName = themeName;
     }
 
     // getters and setters
@@ -82,6 +84,14 @@ public class ComplainRequest {
         this.complainResponses = complainResponses;
     }
 
+    public String getThemeName() {
+        return themeName;
+    }
+
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
+    }
+
     // to string
     @Override
     public String toString() {
@@ -92,6 +102,7 @@ public class ComplainRequest {
                 ", creationDate=" + creationDate +
                 ", popularity=" + popularity +
                 ", complainResponses=" + complainResponses +
+                ", themeName='" + themeName + '\'' +
                 '}';
     }
 }

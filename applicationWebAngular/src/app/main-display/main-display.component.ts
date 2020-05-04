@@ -1,3 +1,5 @@
+import { ComplainRequestService } from './../services/ComplainRequest.service';
+import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { ComplainThemeService } from './../services/ComplainTheme.service';
 import { Subscription } from 'rxjs';
 import { ComplainThemeModel } from './../models/ComplainTheme.model';
@@ -13,7 +15,11 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   themesList: ComplainThemeModel[];
   themesSubscription: Subscription;
 
-  constructor(private complainThemeService: ComplainThemeService) { }
+  requestsList: ComplainRequestModel[];
+  requestsSubscription: Subscription;
+
+  constructor(private complainThemeService: ComplainThemeService,
+              private complainRequestService: ComplainRequestService) { }
 
   ngOnInit() {
     // subscription
@@ -22,18 +28,26 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
         this.themesList = themes;
       }
     );
-
     this.complainThemeService.getAllThemes(() => {
       this.complainThemeService.emitThemes();
       // test
       console.log('themes: ' + this.themesList[0].name);
     });
 
+    this.requestsSubscription = this.complainRequestService.requestSubject.subscribe(
+      (requests: ComplainRequestModel[]) => {
+        this.requestsList = requests;
+      }
+    );
+    this.complainRequestService.getAllRequests(() => {
+      this.complainRequestService.emitRequests();
+    });
 
   }
 
   ngOnDestroy() {
     this.themesSubscription.unsubscribe();
+    this.requestsSubscription.unsubscribe();
   }
 
 }

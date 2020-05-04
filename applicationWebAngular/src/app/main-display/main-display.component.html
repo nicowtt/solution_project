@@ -1,13 +1,21 @@
 <div class="row">
-  <div class="col-xs-12">
-    <div class="list-group">
-      <button class="list-group-item" *ngFor="let theme of themesList; let i = index">
-        <h4>{{ theme.name}}</h4>
-        <button class="list-group-item" *ngFor="let request of theme.complainRequests; let i = index">
-          <h4>{{ request.request}}</h4>
-        </button>
-      </button>
+  <div class="col-md-12">
+    <div class="list-group" *ngFor="let request of requestsList; let i = index">
+      <a href="#" class="list-group-item list-group-item-action">
+        <div id="themeOnGroup">{{request.themeName}}</div>
+        <div>{{request.request}}</div>
+      </a>
+
+      <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
+      <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
     </div>
+
+
+
   </div>
 </div>
+
+
+
 

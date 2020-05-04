@@ -1,0 +1,11 @@
+.list-group-item {
+  font-family: georgia, "trebuchet ms", arial, serif;
+  color: grey;
+  background-color: black;
+  border-bottom-color: grey;
+}
+
+#themeOnGroup {
+  font-size: small;
+  color: white;
+}
