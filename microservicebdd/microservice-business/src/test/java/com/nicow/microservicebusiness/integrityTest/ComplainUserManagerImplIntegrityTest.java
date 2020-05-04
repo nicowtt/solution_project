@@ -45,7 +45,7 @@ public class ComplainUserManagerImplIntegrityTest {
     public void setUp() {
         complainUserDtoTest = new ComplainUserDto(null, "nico", "bod", "nicow",
                 "test@test.com", "mdp",
-                0, null, "ADMIN", null);
+                0, null, null, "ADMIN", null);
 
         complainUserTest = complainUserManager.addUser(complainUserDtoTest);
     }

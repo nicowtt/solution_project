@@ -42,7 +42,7 @@ public class ComplainUserControllerIntegrityTest extends UtilsForTest {
 
         complainUserDtoTest = new ComplainUserDto(null, "nico", "bod", "nicow",
                 "test@test.com", "mdp",
-                0, null, "ADMIN", null);
+                0, null, null, "ADMIN", null);
     }
 
     @After
