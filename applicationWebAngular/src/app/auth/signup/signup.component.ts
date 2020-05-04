@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserModel} from "../../models/ComplainUser.model";
-import {UserService} from "../../services/complainUser.service";
+import {ComplainUserService} from "../../services/complainUser.service";
 import {first} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import { getLocaleDateTimeFormat } from '@angular/common';
@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private userService: UserService,
+              private userService: ComplainUserService,
               private route: ActivatedRoute,
               private router: Router
               ) {

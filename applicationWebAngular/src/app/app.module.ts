@@ -12,13 +12,15 @@ import { HeaderComponent } from './header/header.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
-import {HeaderInterceptorService} from "./services/header-interceptor.service";
+import {HeaderInterceptorService} from './services/header-interceptor.service';
+import { MainDisplayComponent } from './main-display/main-display.component';
 
 const appRoutes: Routes = [
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', component: SignupComponent },
-  { path: '', redirectTo: '#', pathMatch: 'full'},
-  { path: '**', redirectTo: '#'}
+  { path: 'main', component: MainDisplayComponent},
+  { path: '', redirectTo: 'main', pathMatch: 'full'},
+  { path: '**', redirectTo: 'main'}
 ];
 
 @NgModule({
@@ -27,7 +29,8 @@ const appRoutes: Routes = [
     SigninComponent,
     SignupComponent,
     HeaderComponent,
-    AlertComponent
+    AlertComponent,
+    MainDisplayComponent
   ],
   imports: [
     BrowserModule,

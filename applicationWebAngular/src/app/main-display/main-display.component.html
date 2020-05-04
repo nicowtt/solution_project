@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="list-group">
+      <button class="list-group-item" *ngFor="let theme of themesList; let i = index">
+        <h4>{{ theme.name}}</h4>
+        <button class="list-group-item" *ngFor="let request of theme.complainRequests; let i = index">
+          <h4>{{ request.request}}</h4>
+        </button>
+      </button>
+    </div>
+  </div>
+</div>
+
