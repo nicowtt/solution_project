@@ -1,3 +1,4 @@
+import { ComplainResponseModel } from './../models/ComplainResponse.model';
 import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { ComplainThemeService } from './../services/ComplainTheme.service';
@@ -17,6 +18,11 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   requestsList: ComplainRequestModel[];
   requestsSubscription: Subscription;
+
+  responsesList: ComplainResponseModel[];
+
+  displayRequest = true;
+  requestName: string;
 
   constructor(private complainThemeService: ComplainThemeService,
               private complainRequestService: ComplainRequestService) { }
@@ -49,5 +55,14 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     this.themesSubscription.unsubscribe();
     this.requestsSubscription.unsubscribe();
   }
+
+  showResponses(index: number) {
+    console.log('test');
+    this.responsesList = this.requestsList[index].complainResponses;
+    this.displayRequest = false;
+    this.requestName = this.requestsList[index].request;
+  }
+
+  //todo request list and responses list sort with 
 
 }

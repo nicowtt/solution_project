@@ -1,7 +1,7 @@
 export class ComplainResponseModel {
 
     id: number;
-    response: String;
+    response: string;
     creationDate: Date;
     popularity: number;
     complainUserId: number;

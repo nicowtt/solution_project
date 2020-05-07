@@ -235,3 +235,7 @@ fmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/config
 tmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainUserManager.java,8/b/8bc52f26740dd56167ddcd182265af16d315b803
 ¥
 umicroservicebdd/microservice-web/src/test/java/com/nicow/microserviceweb/controllersIntegritiesTest/UtilsForTest.java,2/e/2e7adc4a007c896a5d8dd956bb936b3079d13e05
+¡
+qmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainThemeController.java,5/7/57b190d6fbceb36426f66e77302277b5d9c34490
+¤
+tmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainRequestControlleur.java,e/f/ef35f30c1ce1c3c7684e9e8a98bfcc1fb31c0236

@@ -1,6 +1,7 @@
 package com.nicow.microserviceweb;
 
 import com.nicow.microservicedao.complainDao.ComplainRequestDao;
+import com.nicow.microservicedao.complainDao.ComplainResponseDao;
 import com.nicow.microservicedao.complainDao.ComplainThemeDao;
 import com.nicow.microservicedao.complainDao.ComplainUserDao;
 import com.nicow.microservicemodel.dto.ComplainUserDto;
@@ -38,6 +39,9 @@ public class MicroserviceWebApplication {
     private ComplainRequestDao requestDao;
 
     @Autowired
+    private ComplainResponseDao responseDao;
+
+    @Autowired
     private ComplainUserMapper userMapper;
 
     public static void main(String[] args) {
@@ -57,14 +61,32 @@ public class MicroserviceWebApplication {
 //            //ajout d'un theme et d'un request
 //            themeDao.deleteAll();
 //            requestDao.deleteAll();
+//            responseDao.deleteAll();
 //
 //            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
 //            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainResponse>(), "corona-virus"));
+//            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "nico.bod@gmail.com", todayDate));
+//            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", todayDate));
+//
+//            ComplainTheme secondTheme = themeDao.save(new ComplainTheme(null, "Méteo","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
+//            ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainResponse>(), "Méteo"));
+//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", todayDate));
+//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "nico.bod@gmail.com", todayDate));
 //
 //            // ajout de la request dans le theme
 //            firstTheme.getComplainRequests().add(firstRequest);
+//            secondTheme.getComplainRequests().add(secondRequest);
+//            // ajout de la response dans la request
+//            firstRequest.getComplainResponses().add(firstResponseFirstRequest);
+//            firstRequest.getComplainResponses().add(secondResponseFirstRequest);
+//            secondRequest.getComplainResponses().add(firstResponseSecondRequest);
+//            secondRequest.getComplainResponses().add(secondResponseSecondRequest);
+//            // update request
+//            requestDao.save(firstRequest);
+//            requestDao.save(secondRequest);
 //            // update theme
 //            themeDao.save(firstTheme);
+//            themeDao.save(secondTheme);
 //
 //            // test dto
 //            ComplainUser userFromBdd = userDao.findByEmail("nico.bod@gmail.com");

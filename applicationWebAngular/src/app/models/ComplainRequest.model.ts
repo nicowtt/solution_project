@@ -1,3 +1,4 @@
+import { ComplainResponseModel } from './ComplainResponse.model';
 export class ComplainRequestModel {
 
     id: number;
@@ -7,6 +8,7 @@ export class ComplainRequestModel {
     popularity: number;
     nbrResponse: number;
     themeName: string;
+    complainResponses: ComplainResponseModel[];
 
     constructor() {}
 }
