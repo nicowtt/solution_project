@@ -5,7 +5,7 @@ export class UserModel {
   pseudo: string;
   password: string;
   email: string;
-  creationDate: Date;
+  creationDate: string;
   popularity: number;
   token: string;
 

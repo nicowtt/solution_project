@@ -4,7 +4,7 @@ export class ComplainRequestModel {
     id: number;
     request: string;
     complainUserId: number;
-    creationdate: Date;
+    creationDate: string;
     popularity: number;
     nbrResponse: number;
     themeName: string;

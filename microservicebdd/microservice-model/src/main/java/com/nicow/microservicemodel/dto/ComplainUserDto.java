@@ -14,7 +14,7 @@ public class ComplainUserDto {
     private String password;
     private int popularity;
     private Collection<Integer> peopleForPopularity = new ArrayList<>();
-    private Date creationDate;
+    private String creationDate;
     private String role;
     private String token;
 
@@ -22,7 +22,7 @@ public class ComplainUserDto {
     public ComplainUserDto() {
     }
 
-    public ComplainUserDto(String id, String name, String firstName, String pseudo, String email, String password, int popularity, Collection<Integer> peopleForPopularity, Date creationDate, String role, String token) {
+    public ComplainUserDto(String id, String name, String firstName, String pseudo, String email, String password, int popularity, Collection<Integer> peopleForPopularity, String creationDate, String role, String token) {
         this.id = id;
         this.name = name;
         this.firstName = firstName;
@@ -101,11 +101,11 @@ public class ComplainUserDto {
         this.peopleForPopularity = peopleForPopularity;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

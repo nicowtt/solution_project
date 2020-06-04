@@ -7,7 +7,7 @@ export class ComplainThemeModel {
   name: string;
   photoUrl: string;
   creatorEmail: string;
-  creationDate: Date;
+  creationDate: string;
   popularity: number;
   complainRequests: ComplainRequestModel[];
   subscriptionThemeUsers: SubscriptionThemeUserModel[];

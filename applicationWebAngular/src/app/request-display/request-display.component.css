@@ -1,0 +1,19 @@
+.list-group-item {
+  font-family: georgia, "trebuchet ms", arial, serif;
+  color: grey;
+  background-color: black;
+  border-bottom-color: grey;
+}
+
+#RequestName {
+  font-family: georgia, "trebuchet ms", arial, serif;
+  color: white;
+}
+
+#displayDate{
+  font-family: georgia, "trebuchet ms", arial, serif;
+  font-size: small;
+  color: grey;
+}
+
+

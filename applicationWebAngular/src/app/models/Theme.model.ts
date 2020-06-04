@@ -2,7 +2,7 @@ export class ThemeModel{
 
     id: number;
     complainUserId: number;
-    creationdate: Date;
+    creationdate: string;
     popularity: number;
     nbrRequest: number;
 

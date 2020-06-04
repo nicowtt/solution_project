@@ -7,6 +7,7 @@ import {ComplainUserService} from "../../services/complainUser.service";
 import {first} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import { getLocaleDateTimeFormat } from '@angular/common';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -66,7 +67,7 @@ export class SignupComponent implements OnInit {
     newUser.pseudo = this.f.pseudo.value;
     newUser.email = this.f.email.value;
     newUser.password = this.f.password.value;
-    newUser.creationDate = new Date;
+    newUser.creationDate = new Date().toLocaleString();
 
     this.userService.AddUser(newUser, () => {
       this.router.navigate(['auth/signin']);

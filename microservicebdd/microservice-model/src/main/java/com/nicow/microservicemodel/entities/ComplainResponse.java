@@ -13,13 +13,13 @@ public class ComplainResponse {
     private String response;
     private int popularity;
     private String creatorEmail;
-    private Date creationDate;
+    private String creationDate;
 
     // constructor
     public ComplainResponse() {
     }
 
-    public ComplainResponse(String id, String response, int popularity, String creatorEmail, Date creationDate) {
+    public ComplainResponse(String id, String response, int popularity, String creatorEmail, String creationDate) {
         this.id = id;
         this.response = response;
         this.popularity = popularity;
@@ -60,11 +60,11 @@ public class ComplainResponse {
         this.creatorEmail = creatorEmail;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 

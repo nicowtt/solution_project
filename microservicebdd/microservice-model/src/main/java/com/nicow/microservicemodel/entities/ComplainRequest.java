@@ -15,7 +15,7 @@ public class ComplainRequest {
     private String id;
     private String request;
     private String creatorEmail;
-    private Date creationDate;
+    private String creationDate;
     private int popularity;
 //    @DBRef(lazy = true)
     private Collection<ComplainResponse> complainResponses=new ArrayList<>();
@@ -25,7 +25,7 @@ public class ComplainRequest {
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorEmail, Date creationDate, int popularity, Collection<ComplainResponse> complainResponses, String themeName) {
+    public ComplainRequest(String id, String request, String creatorEmail, String creationDate, int popularity, Collection<ComplainResponse> complainResponses, String themeName) {
         this.id = id;
         this.request = request;
         this.creatorEmail = creatorEmail;
@@ -60,11 +60,11 @@ public class ComplainRequest {
         this.creatorEmail = creatorEmail;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -99,7 +99,7 @@ public class ComplainRequest {
                 "id='" + id + '\'' +
                 ", request='" + request + '\'' +
                 ", creatorEmail='" + creatorEmail + '\'' +
-                ", creationDate=" + creationDate +
+                ", creationDate='" + creationDate + '\'' +
                 ", popularity=" + popularity +
                 ", complainResponses=" + complainResponses +
                 ", themeName='" + themeName + '\'' +

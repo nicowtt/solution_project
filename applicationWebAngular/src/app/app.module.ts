@@ -14,8 +14,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 import {HeaderInterceptorService} from './services/header-interceptor.service';
 import { MainDisplayComponent } from './main-display/main-display.component';
+import { RequestDisplayComponent } from './request-display/request-display.component';
 
 const appRoutes: Routes = [
+  { path: 'request/:id', component: RequestDisplayComponent},
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', component: SignupComponent },
   { path: 'main', component: MainDisplayComponent},
@@ -30,7 +32,8 @@ const appRoutes: Routes = [
     SignupComponent,
     HeaderComponent,
     AlertComponent,
-    MainDisplayComponent
+    MainDisplayComponent,
+    RequestDisplayComponent
   ],
   imports: [
     BrowserModule,

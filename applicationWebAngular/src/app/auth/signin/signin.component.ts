@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert.service';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
@@ -19,7 +20,8 @@ export class SigninComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private alertService: AlertService) { }
 
   ngOnInit() {
     this.initForm();
@@ -56,10 +58,16 @@ export class SigninComponent implements OnInit {
         },
         (error: HttpErrorResponse) => {
           if (error.status === 406) {
-            // this.alertService.error("Le nom d'utilisateur ou le mot de passe est incorrect");
+            this.alertService.error("Le nom d'utilisateur ou le mot de passe est incorrect");
+            setTimeout(() => {
+              this.alertService.clear();
+            }, 2000);
             console.log("Le nom d'utilisateur ou le mot de passe est incorrect");
           } else {
-            // this.alertService.error(error.message);
+            this.alertService.error(error.message);
+            setTimeout(() => {
+              this.alertService.clear();
+            }, 2000);
             console.log(error.message);
           }
           this.loading = false;

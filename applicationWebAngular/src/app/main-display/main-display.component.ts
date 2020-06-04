@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ComplainResponseModel } from './../models/ComplainResponse.model';
 import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
@@ -19,13 +20,9 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   requestsList: ComplainRequestModel[];
   requestsSubscription: Subscription;
 
-  responsesList: ComplainResponseModel[];
-
-  displayRequest = true;
-  requestName: string;
-
   constructor(private complainThemeService: ComplainThemeService,
-              private complainRequestService: ComplainRequestService) { }
+              private complainRequestService: ComplainRequestService,
+              private router: Router) { }
 
   ngOnInit() {
     // subscription
@@ -36,8 +33,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     );
     this.complainThemeService.getAllThemes(() => {
       this.complainThemeService.emitThemes();
-      // test
-      console.log('themes: ' + this.themesList[0].name);
     });
 
     this.requestsSubscription = this.complainRequestService.requestSubject.subscribe(
@@ -57,12 +52,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   showResponses(index: number) {
-    console.log('test');
-    this.responsesList = this.requestsList[index].complainResponses;
-    this.displayRequest = false;
-    this.requestName = this.requestsList[index].request;
+    this.router.navigate(['/request', index]);
   }
-
-  //todo request list and responses list sort with 
-
 }
