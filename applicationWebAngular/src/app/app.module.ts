@@ -14,10 +14,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
 import {HeaderInterceptorService} from './services/header-interceptor.service';
 import { MainDisplayComponent } from './main-display/main-display.component';
-import { RequestDisplayComponent } from './request-display/request-display.component';
+import { ResponseDisplayComponent } from './response-display/response-display.component';
 
 const appRoutes: Routes = [
-  { path: 'request/:id', component: RequestDisplayComponent},
+  { path: 'response/:id', component: ResponseDisplayComponent},
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', component: SignupComponent },
   { path: 'main', component: MainDisplayComponent},
@@ -33,7 +33,7 @@ const appRoutes: Routes = [
     HeaderComponent,
     AlertComponent,
     MainDisplayComponent,
-    RequestDisplayComponent
+    ResponseDisplayComponent
   ],
   imports: [
     BrowserModule,

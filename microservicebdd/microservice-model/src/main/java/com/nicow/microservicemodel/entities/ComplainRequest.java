@@ -14,6 +14,7 @@ public class ComplainRequest {
     @Id
     private String id;
     private String request;
+    private String creatorPseudo;
     private String creatorEmail;
     private String creationDate;
     private int popularity;
@@ -25,9 +26,10 @@ public class ComplainRequest {
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorEmail, String creationDate, int popularity, Collection<ComplainResponse> complainResponses, String themeName) {
+    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, Collection<ComplainResponse> complainResponses, String themeName) {
         this.id = id;
         this.request = request;
+        this.creatorPseudo = creatorPseudo;
         this.creatorEmail = creatorEmail;
         this.creationDate = creationDate;
         this.popularity = popularity;
@@ -50,6 +52,14 @@ public class ComplainRequest {
 
     public void setRequest(String request) {
         this.request = request;
+    }
+
+    public String getCreatorPseudo() {
+        return creatorPseudo;
+    }
+
+    public void setCreatorPseudo(String creatorPseudo) {
+        this.creatorPseudo = creatorPseudo;
     }
 
     public String getCreatorEmail() {
@@ -98,6 +108,7 @@ public class ComplainRequest {
         return "ComplainRequest{" +
                 "id='" + id + '\'' +
                 ", request='" + request + '\'' +
+                ", creatorPseudo='" + creatorPseudo + '\'' +
                 ", creatorEmail='" + creatorEmail + '\'' +
                 ", creationDate='" + creationDate + '\'' +
                 ", popularity=" + popularity +

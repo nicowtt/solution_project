@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequestDisplayComponent } from './request-display.component';
+import { ResponseDisplayComponent } from './response-display.component';
 
-describe('RequestDisplayComponent', () => {
-  let component: RequestDisplayComponent;
-  let fixture: ComponentFixture<RequestDisplayComponent>;
+describe('ResponseDisplayComponent', () => {
+  let component: ResponseDisplayComponent;
+  let fixture: ComponentFixture<ResponseDisplayComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestDisplayComponent ]
+      declarations: [ ResponseDisplayComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestDisplayComponent);
+    fixture = TestBed.createComponent(ResponseDisplayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

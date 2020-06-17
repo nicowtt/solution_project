@@ -4,6 +4,8 @@ export class ComplainResponseModel {
     response: string;
     creationDate: string;
     popularity: number;
+    creatorEmail: string;
+    creatorPseudo: string;
     complainUserId: number;
     complainRequestId: number;
 

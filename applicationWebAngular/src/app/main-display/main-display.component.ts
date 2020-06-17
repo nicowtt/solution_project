@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { ComplainResponseModel } from './../models/ComplainResponse.model';
 import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { ComplainThemeService } from './../services/ComplainTheme.service';
@@ -42,6 +41,9 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     );
     this.complainRequestService.getAllRequests(() => {
       this.complainRequestService.emitRequests();
+      this.requestsList.forEach(request => {
+          this.countNbrOfResponse(request);
+      });
     });
 
   }
@@ -52,6 +54,21 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   showResponses(index: number) {
-    this.router.navigate(['/request', index]);
+    this.router.navigate(['/response', index]);
+  }
+
+  countNbrOfResponse(request: ComplainRequestModel) {
+      const nbrOfResponse = request.complainResponses.length;
+      request.nbrResponse = nbrOfResponse;
+  }
+
+  increasePopularity(index: number) {
+    this.requestsList[index].popularity++;
+    // todo update score on back
+  }
+
+  decreasePopularity(index: number) {
+    this.requestsList[index].popularity--;
+    // todo update score on back
   }
 }

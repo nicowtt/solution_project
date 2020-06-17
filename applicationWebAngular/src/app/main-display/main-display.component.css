@@ -1,20 +1,4 @@
-.list-group-item {
-  font-family: georgia, "trebuchet ms", arial, serif;
-  color: grey;
-  background-color: black;
-  border-bottom-color: grey;
-}
 
-#displayTheme {
-  font-size: small;
-  /*color: white;*/
-}
-
-
-#displayRequestNameOnResponse {
-  font-size: small;
-  color: white;
-}
 
 .list-group.panel > .list-group-item {
   border-bottom-right-radius: 4px;
@@ -23,4 +7,19 @@
 .list-group-submenu {
   margin-left:20px;
 }
+
+#nbrResponse {
+  float: right;
+}
+
+#popularity {
+  float: left;
+  margin-right: 10px;
+}
+
+#score {
+  margin-left: 10px;
+}
+
+
 

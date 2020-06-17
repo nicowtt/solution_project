@@ -1,20 +1,18 @@
-import { ComplainThemeModel } from './../models/ComplainTheme.model';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ComplainThemeService } from './../services/ComplainTheme.service';
 import { ComplainResponseModel } from './../models/ComplainResponse.model';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { Subscription } from 'rxjs';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { ComplainRequestService } from '../services/ComplainRequest.service';
 
 @Component({
-  selector: 'app-request-display',
-  templateUrl: './request-display.component.html',
-  styleUrls: ['./request-display.component.css']
+  selector: 'app-response-display',
+  templateUrl: './response-display.component.html',
+  styleUrls: ['./response-display.component.css']
 })
-export class RequestDisplayComponent implements OnInit, OnDestroy {
+export class ResponseDisplayComponent implements OnInit, OnDestroy {
+
 
   requestsList: ComplainRequestModel[];
   requestsSubscription: Subscription;
