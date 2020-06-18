@@ -1,3 +1,7 @@
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { AlertService } from './../services/alert.service';
+import { ComplainUserModel } from './../models/ComplainUser.model';
+import { AuthService } from './../services/auth.service';
 import { Router } from '@angular/router';
 import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
@@ -19,9 +23,19 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   requestsList: ComplainRequestModel[];
   requestsSubscription: Subscription;
 
+  currentUser: ComplainUserModel;
+  userConnected: boolean;
+
+
   constructor(private complainThemeService: ComplainThemeService,
               private complainRequestService: ComplainRequestService,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService,
+              private alertService: AlertService,
+              private snackBar: MatSnackBar
+              ) {
+                this.authService.currentUser.subscribe(x => this.currentUser = x);
+               }
 
   ngOnInit() {
     // subscription
@@ -45,6 +59,13 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
           this.countNbrOfResponse(request);
       });
     });
+    // user connected
+    if (this.authService.currentUserValue) {
+      this.userConnected = true;
+      console.log("l'utilisateur " + this.currentUser.email + " est conncecté")
+    } else {
+      this.userConnected = false;
+    }
 
   }
 
@@ -63,8 +84,20 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   increasePopularity(index: number) {
-    this.requestsList[index].popularity++;
-    // todo update score on back
+    if (this.userConnected) {
+      this.requestsList[index].popularity++;
+      const userPseudo = this.currentUser.pseudo;
+      this.complainRequestService.increaseRequestPopularity(this.requestsList[index], userPseudo, () => {
+        this.requestsList[index].popularity--;
+      });
+    } else {
+      this.snackBar.open('Vous devez être connecté pour avoir accés à cette fonction', '', {
+        duration: 3000,
+        verticalPosition: 'top'
+      }
+      );
+    }
+
   }
 
   decreasePopularity(index: number) {

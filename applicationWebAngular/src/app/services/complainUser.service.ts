@@ -1,6 +1,6 @@
 import { AlertService } from './alert.service';
 import { Router } from '@angular/router';
-import {UserModel} from '../models/ComplainUser.model';
+import {ComplainUserModel} from '../models/ComplainUser.model';
 import {Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {ApplicationHttpClientService} from './applicationHttpClient.service';
@@ -11,11 +11,11 @@ export class ComplainUserService {
               private alertService : AlertService,
               private router: Router) { }
 
-  private usersList: UserModel[] = [];
-  usersSubject = new Subject<UserModel[]>();
+  private usersList: ComplainUserModel[] = [];
+  usersSubject = new Subject<ComplainUserModel[]>();
 
-  private user: UserModel;
-  userSubject = new Subject<UserModel>();
+  private user: ComplainUserModel;
+  userSubject = new Subject<ComplainUserModel>();
 
 
   listEmailsSubject = new Subject<string[]>();
@@ -38,7 +38,7 @@ export class ComplainUserService {
    * @param user
    * @constructor
    */
-  AddUser(user: UserModel, onSucces: Function, onError:Function) {
+  AddUser(user: ComplainUserModel, onSucces: Function, onError:Function) {
     return this.http
     .post(`/newUser`, user)
     .subscribe(

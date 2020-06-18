@@ -1,3 +1,4 @@
+import { MatSnackBarModule } from '@angular/material';
 import { ApplicationHttpClientService } from './services/applicationHttpClient.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -15,6 +16,7 @@ import { AlertComponent } from './alert/alert.component';
 import {HeaderInterceptorService} from './services/header-interceptor.service';
 import { MainDisplayComponent } from './main-display/main-display.component';
 import { ResponseDisplayComponent } from './response-display/response-display.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   { path: 'response/:id', component: ResponseDisplayComponent},
@@ -41,7 +43,9 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    NoopAnimationsModule,
+    MatSnackBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },

@@ -1,4 +1,4 @@
-export class UserModel {
+export class ComplainUserModel {
   id: number;
   name: string;
   firstName: string;

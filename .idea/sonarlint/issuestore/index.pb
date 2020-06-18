@@ -239,3 +239,13 @@ umicroservicebdd/microservice-web/src/test/java/com/nicow/microserviceweb/contro
 qmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainThemeController.java,5/7/57b190d6fbceb36426f66e77302277b5d9c34490
 ¤
 tmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainRequestControlleur.java,e/f/ef35f30c1ce1c3c7684e9e8a98bfcc1fb31c0236
+™
+imicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainUserDao.java,f/b/fb54152ca360ab4f912d055f3128c501205b47a2
+š
+jmicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainThemeDao.java,0/f/0f1dcf153e397a3043f2538787a00f728668b1ba
+œ
+lmicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainRequestDao.java,c/d/cdcbc2f61c197ec145bcc29e999cced31b31b780
+§
+wmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainRequestManager.java,f/1/f130ca86c4a322a56db38151382aecb99b29132a
+§
+wmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/impl/ComplainrequestManagerImpl.java,6/4/64864cb66c57d233230ba74725f4adf5e2fa8b23

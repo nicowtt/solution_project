@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserModel} from "../../models/ComplainUser.model";
+import {ComplainUserModel} from "../../models/ComplainUser.model";
 import {ComplainUserService} from "../../services/complainUser.service";
 import {first} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -61,7 +61,7 @@ export class SignupComponent implements OnInit {
     }
     // mapp from form
     this.loading = true;
-    const newUser = new UserModel();
+    const newUser = new ComplainUserModel();
     newUser.name = this.f.name.value;
     newUser.firstName = this.f.firstName.value;
     newUser.pseudo = this.f.pseudo.value;

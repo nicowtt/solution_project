@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 @Document(collection = "complainRequest")
 public class ComplainRequest {
@@ -18,6 +18,7 @@ public class ComplainRequest {
     private String creatorEmail;
     private String creationDate;
     private int popularity;
+    private List<String> userWhoIncreasePopularityList;
 //    @DBRef(lazy = true)
     private Collection<ComplainResponse> complainResponses=new ArrayList<>();
     private String themeName;
@@ -26,13 +27,14 @@ public class ComplainRequest {
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, Collection<ComplainResponse> complainResponses, String themeName) {
+    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, List<String> userWhoIncreasePopularityList, Collection<ComplainResponse> complainResponses, String themeName) {
         this.id = id;
         this.request = request;
         this.creatorPseudo = creatorPseudo;
         this.creatorEmail = creatorEmail;
         this.creationDate = creationDate;
         this.popularity = popularity;
+        this.userWhoIncreasePopularityList = userWhoIncreasePopularityList;
         this.complainResponses = complainResponses;
         this.themeName = themeName;
     }
@@ -90,6 +92,14 @@ public class ComplainRequest {
         return complainResponses;
     }
 
+    public List<String> getUserWhoIncreasePopularityList() {
+        return userWhoIncreasePopularityList;
+    }
+
+    public void setUserWhoIncreasePopularityList(List<String> userWhoIncreasePopularityList) {
+        this.userWhoIncreasePopularityList = userWhoIncreasePopularityList;
+    }
+
     public void setComplainResponses(Collection<ComplainResponse> complainResponses) {
         this.complainResponses = complainResponses;
     }
@@ -115,5 +125,10 @@ public class ComplainRequest {
                 ", complainResponses=" + complainResponses +
                 ", themeName='" + themeName + '\'' +
                 '}';
+    }
+
+    // methods
+    public void addUserWhoIncreasePopularity(String userInput) {
+        this.userWhoIncreasePopularityList.add(userInput);
     }
 }

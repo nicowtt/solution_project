@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../services/auth.service';
-import {UserModel} from '../models/ComplainUser.model';
+import {ComplainUserModel} from '../models/ComplainUser.model';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ import {UserModel} from '../models/ComplainUser.model';
 })
 export class HeaderComponent implements OnInit {
 
-  currentUser: UserModel;
+  currentUser: ComplainUserModel;
 
   constructor(private authService: AuthService,
               private router: Router) {
