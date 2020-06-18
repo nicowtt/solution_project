@@ -82,12 +82,22 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       request.nbrResponse = nbrOfResponse;
   }
 
-  increasePopularity(index: number) {
+  changePopularity(index: number, change: string) {
     if (this.userConnected) {
-      this.requestsList[index].popularity++;
-      const userPseudo = this.currentUser.pseudo;
-      this.complainRequestService.increaseRequestPopularity(this.requestsList[index], userPseudo, () => {
+      if (change === '+') {
+        this.requestsList[index].popularity++;
+      } else if (change === '-') {
         this.requestsList[index].popularity--;
+      }
+
+      const userPseudo = this.currentUser.pseudo;
+      this.complainRequestService.changeRequestPopularity(this.requestsList[index], userPseudo, () => {
+        // on error
+        if (change === '+') {
+          this.requestsList[index].popularity--;
+        } else if (change === '-') {
+          this.requestsList[index].popularity++;
+        }
       });
     } else {
       this.snackBar.open('Vous devez être connecté pour avoir accés à cette fonction', '', {
@@ -96,11 +106,5 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
       );
     }
-
-  }
-
-  decreasePopularity(index: number) {
-    this.requestsList[index].popularity--;
-    // todo update score on back
   }
 }

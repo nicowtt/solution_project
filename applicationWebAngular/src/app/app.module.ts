@@ -19,7 +19,7 @@ import { ResponseDisplayComponent } from './response-display/response-display.co
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
-  { path: 'response/:id', component: ResponseDisplayComponent},
+  { path: 'response/:id', canActivate: [AuthGuardService], component: ResponseDisplayComponent},
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', component: SignupComponent },
   { path: 'main', component: MainDisplayComponent},

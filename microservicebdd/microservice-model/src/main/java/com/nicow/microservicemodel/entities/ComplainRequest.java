@@ -18,7 +18,7 @@ public class ComplainRequest {
     private String creatorEmail;
     private String creationDate;
     private int popularity;
-    private List<String> userWhoIncreasePopularityList;
+    private List<String> userWhoChangePopularityList;
 //    @DBRef(lazy = true)
     private Collection<ComplainResponse> complainResponses=new ArrayList<>();
     private String themeName;
@@ -27,14 +27,14 @@ public class ComplainRequest {
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, List<String> userWhoIncreasePopularityList, Collection<ComplainResponse> complainResponses, String themeName) {
+    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, List<String> userWhoChangePopularityList, Collection<ComplainResponse> complainResponses, String themeName) {
         this.id = id;
         this.request = request;
         this.creatorPseudo = creatorPseudo;
         this.creatorEmail = creatorEmail;
         this.creationDate = creationDate;
         this.popularity = popularity;
-        this.userWhoIncreasePopularityList = userWhoIncreasePopularityList;
+        this.userWhoChangePopularityList = userWhoChangePopularityList;
         this.complainResponses = complainResponses;
         this.themeName = themeName;
     }
@@ -92,12 +92,12 @@ public class ComplainRequest {
         return complainResponses;
     }
 
-    public List<String> getUserWhoIncreasePopularityList() {
-        return userWhoIncreasePopularityList;
+    public List<String> getUserWhoChangePopularityList() {
+        return userWhoChangePopularityList;
     }
 
-    public void setUserWhoIncreasePopularityList(List<String> userWhoIncreasePopularityList) {
-        this.userWhoIncreasePopularityList = userWhoIncreasePopularityList;
+    public void setUserWhoChangePopularityList(List<String> userWhoChangePopularityList) {
+        this.userWhoChangePopularityList = userWhoChangePopularityList;
     }
 
     public void setComplainResponses(Collection<ComplainResponse> complainResponses) {
@@ -129,6 +129,6 @@ public class ComplainRequest {
 
     // methods
     public void addUserWhoIncreasePopularity(String userInput) {
-        this.userWhoIncreasePopularityList.add(userInput);
+        this.userWhoChangePopularityList.add(userInput);
     }
 }

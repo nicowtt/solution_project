@@ -33,8 +33,8 @@ public class ComplainRequestControlleur {
         return requestList;
     }
 
-    @PostMapping(value = "/increaseRequestPopularity/{userPseudoInput}", consumes = "application/json")
-    public ResponseEntity<String> updateRequest(
+    @PostMapping(value = "/changeRequestPopularity/{userPseudoInput}", consumes = "application/json")
+    public ResponseEntity<String> changeRequestPopularity(
             @PathVariable String userPseudoInput,
             @RequestBody ComplainRequest complainRequestInput) {
         Boolean userIsAuthorized = false;
@@ -49,7 +49,7 @@ public class ComplainRequestControlleur {
         if (userIsAuthorized) {
             complainRequestInput.addUserWhoIncreasePopularity(userPseudoInput);
             complainRequestDao.save(complainRequestInput);
-            logger.info("User " + userPseudoInput + " increase popularity of: " + complainRequestInput.getRequest());
+            logger.info("User " + userPseudoInput + " change popularity of: " + complainRequestInput.getRequest());
             return (new ResponseEntity<>(HttpStatus.OK));
         } else {
             return (new ResponseEntity<>(HttpStatus.FORBIDDEN));

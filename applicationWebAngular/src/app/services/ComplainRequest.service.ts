@@ -38,9 +38,9 @@ export class ComplainRequestService {
       );
     }
 
-    increaseRequestPopularity(request: ComplainRequestModel, userPseudo: string, onError: Function) {
+    changeRequestPopularity(request: ComplainRequestModel, userPseudo: string, onError: Function) {
       this.http
-      .post<ComplainRequestModel>('/increaseRequestPopularity/' + userPseudo, request)
+      .post<ComplainRequestModel>('/changeRequestPopularity/' + userPseudo, request)
       .subscribe(
         (response) => {
         },
