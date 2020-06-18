@@ -62,7 +62,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     // user connected
     if (this.authService.currentUserValue) {
       this.userConnected = true;
-      console.log("l'utilisateur " + this.currentUser.email + " est conncecté")
     } else {
       this.userConnected = false;
     }
