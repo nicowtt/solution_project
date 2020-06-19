@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Smart Complain</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </ul>
+    
+    
+    <ul class="navbar-nav navbar-right">
+
+      <li class="nav-item dropdown" *ngIf="currentUser">
+        <a class="nav-link dropdown-toggle" href="#" id="persoNavbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Espace personel {{currentUser.name}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" *ngIf="currentUser" (click)="onSignOut()" id="deconexion">
+            Deconnexion<span class="sr-only">(current)</span></a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="auth/signup" *ngIf="!currentUser">Créer un compte <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="auth/signin" *ngIf="!currentUser">Connexion <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    
+  </div>
+</nav>

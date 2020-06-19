@@ -1,6 +1,7 @@
 package com.nicow.microserviceweb;
 
 import com.nicow.microservicedao.complainDao.ComplainRequestDao;
+import com.nicow.microservicedao.complainDao.ComplainResponseDao;
 import com.nicow.microservicedao.complainDao.ComplainThemeDao;
 import com.nicow.microservicedao.complainDao.ComplainUserDao;
 import com.nicow.microservicemodel.dto.ComplainUserDto;
@@ -14,16 +15,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.nicow"})
 @EnableMongoRepositories(basePackages = {"com.nicow"})
+@EntityScan("com.nicow")
 public class MicroserviceWebApplication {
 
     @Autowired
@@ -36,41 +40,63 @@ public class MicroserviceWebApplication {
     private ComplainRequestDao requestDao;
 
     @Autowired
-    private ComplainUserMapper userMapper;
+    private ComplainResponseDao responseDao;
 
+    @Autowired
+    private ComplainUserMapper userMapper;
 
     public static void main(String[] args) {
         SpringApplication.run(MicroserviceWebApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner start() {
-        return args->{
-            //ajout user
-            userDao.deleteAll();
-            Date todayDate= new Date();
-            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "mdp", 0, todayDate, "ADMIN"));
-            userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "mdp", 0, todayDate, "USER"));
-            userDao.findAll().forEach(System.out::println);
-
-            //ajout d'un theme et d'un request
-            themeDao.deleteAll();
-            requestDao.deleteAll();
-
-            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
-            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainResponse>()));
-
-            // ajout de la request dans le theme
-            firstTheme.getComplainRequests().add(firstRequest);
-            // update theme
-            themeDao.save(firstTheme);
-
-            // test dto
-            ComplainUser userFromBdd = userDao.findByEmail("nico.bod@gmail.com");
-            ComplainUserDto complainUserDto = userMapper.toComplainUserDto(userFromBdd);
-            ComplainUser userTest = userMapper.toComplainUser(complainUserDto);
-            System.out.println(userTest.toString());
-            };
-    }
+//    @Bean
+//    CommandLineRunner start() {
+//        return args->{
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//            Date date = new Date();
+//            String todayDate = dateFormat.format(date);
+//            //ajout user
+//            userDao.deleteAll();
+//            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, null, todayDate, "ADMIN"));
+//            userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "mdp", 0, null, todayDate, "USER"));
+//            userDao.findAll().forEach(System.out::println);
+//
+//            //ajout d'un theme et d'un request
+//            themeDao.deleteAll();
+//            requestDao.deleteAll();
+//            responseDao.deleteAll();
+//
+//            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
+//            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nicow", "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<ComplainResponse>(), "corona-virus"));
+//            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate));
+//            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate));
+//
+//            ComplainTheme secondTheme = themeDao.save(new ComplainTheme(null, "Méteo","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
+//            ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "seagul", "steven.seagal@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<ComplainResponse>(), "Méteo"));
+//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", todayDate));
+//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", todayDate));
+//
+//            // ajout de la request dans le theme
+//            firstTheme.getComplainRequests().add(firstRequest);
+//            secondTheme.getComplainRequests().add(secondRequest);
+//            // ajout de la response dans la request
+//            firstRequest.getComplainResponses().add(firstResponseFirstRequest);
+//            firstRequest.getComplainResponses().add(secondResponseFirstRequest);
+//            secondRequest.getComplainResponses().add(firstResponseSecondRequest);
+//            secondRequest.getComplainResponses().add(secondResponseSecondRequest);
+//            // update request
+//            requestDao.save(firstRequest);
+//            requestDao.save(secondRequest);
+//            // update theme
+//            themeDao.save(firstTheme);
+//            themeDao.save(secondTheme);
+//
+//            // test dto
+//            ComplainUser userFromBdd = userDao.findByEmail("nico.bod@gmail.com");
+//            ComplainUserDto complainUserDto = userMapper.toComplainUserDto(userFromBdd);
+//            ComplainUser userTest = userMapper.toComplainUser(complainUserDto);
+//            System.out.println(userTest.toString());
+//            };
+//    }
 
 }

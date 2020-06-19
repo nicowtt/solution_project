@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.UnexpectedRollbackException;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -36,19 +34,50 @@ public class ComplainUserController {
     private JwtTokenUtil jwtTokenUtil;
 
 
-    @PostMapping(value = "/checkUserLogin", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<ComplainUserDto> checkUserLogin(@RequestBody ComplainUserDto complainUserDto) {
+    @PostMapping(value = "/checkLogin", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<ComplainUserDto> checkLogin(@RequestBody ComplainUserDto complainUserDto) {
 
         ComplainUser complainUserInput = complainUserMapper.toComplainUser(complainUserDto);
-        // todo check if user and password is ok
-        ComplainUser fullUserFromDao = complainUserManager.findByEmail(complainUserInput.getEmail());
-        ComplainUserDto fullUserFromDaoDto = complainUserMapper.toComplainUserDto(fullUserFromDao);
-        // token creation
-        final UserDetails userDetails = jwtUserDetailsService
-                .loadUserByUsername(complainUserInput.getEmail());
-        final String token = jwtTokenUtil.generateToken(userDetails);
-        fullUserFromDaoDto.setToken(token);
-        fullUserFromDaoDto.setPassword(null);
-        return ResponseEntity.ok(fullUserFromDaoDto);
+        boolean userInputToValid = complainUserManager.checkIfUserMailAndPasswordIsOk(complainUserInput);
+        if (userInputToValid) {
+            ComplainUser fullUserFromDao = complainUserManager.findByEmail(complainUserInput.getEmail());
+            ComplainUserDto fullUserFromDaoDto = complainUserMapper.toComplainUserDto(fullUserFromDao);
+            // token creation
+            final UserDetails userDetails = jwtUserDetailsService
+                    .loadUserByUsername(complainUserInput.getEmail());
+            final String token = jwtTokenUtil.generateToken(userDetails);
+            fullUserFromDaoDto.setToken(token);
+            fullUserFromDaoDto.setPassword(null);
+            return ResponseEntity.ok(fullUserFromDaoDto);
+        } else {
+            return (new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE));
+        }
+
+    }
+
+    /**
+     * for create new user
+     * @param newUserDto
+     * @return
+     */
+    @PostMapping(value = "/newUser", consumes = "application/json")
+    public ResponseEntity<String> newUser(@RequestBody ComplainUserDto newUserDto) {
+       ComplainUser newUserOnBdd;
+        newUserOnBdd = complainUserManager.addUser(newUserDto);
+
+        if (newUserOnBdd.getId() != null) {
+            return (new ResponseEntity<>(HttpStatus.CREATED));
+        } else {
+            return (new ResponseEntity<>("email already exist",HttpStatus.CONFLICT));
+        }
+    }
+
+    /**
+     * For check if user in progress is already valid
+     * @return
+     */
+    @GetMapping(value = "/userStateChanged")
+    public boolean userStateChange() {
+        return true;
     }
 }

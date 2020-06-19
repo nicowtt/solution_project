@@ -1,0 +1,38 @@
+<div class="raw">
+    <div class="col-sm-12 col-sm-offset-2">
+  
+      <h2 id="frontTitle">Connexion</h2>
+      <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" id="email" class="form-control" formControlName="email"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          <p></p>
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div class="error" *ngIf="f.email.errors.required">Un email est requis</div>
+            <div *ngIf="f.email.errors.email">@ non présent</div>
+        </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" class="form-control" formControlName="password"
+                 class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <p></p>
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div class="error" *ngIf="f.password.errors.required">Veuillez écrire un mot de passe</div>
+            <div *ngIf="f.password.errors.pattern">minimum 3 caractères </div>
+          </div>
+        </div>
+  
+          <div class="form-group">
+            <button [disabled]="loading" class="btn btn-primary" type="submit">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Connexion
+            </button>
+          </div>
+  
+      </form>
+  
+    </div>
+  </div>
