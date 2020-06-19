@@ -43,9 +43,6 @@ public class ComplainRequestControllerIntegrityTest extends UtilsForTest{
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private ComplainrequestManagerImpl complainrequestManager;
-
-    @Autowired
     private ComplainUserDao userDao;
 
     @Autowired
