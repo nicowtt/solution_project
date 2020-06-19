@@ -1,6 +1,5 @@
 package com.nicow.microserviceweb.controllersIntegritiesTest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.nicow.microservicebusiness.impl.ComplainUserManagerImpl;
 import com.nicow.microservicemodel.dto.ComplainUserDto;
 import com.nicow.microservicemodel.entities.ComplainUser;
@@ -34,6 +33,7 @@ public class ComplainUserControllerIntegrityTest extends UtilsForTest {
 
     @Autowired
     private ComplainUserManagerImpl complainUserManager;
+
     private ComplainUserDto complainUserDtoTest;
 
 
@@ -85,8 +85,8 @@ public class ComplainUserControllerIntegrityTest extends UtilsForTest {
         assertEquals(200, status);
         }
 
-    @Test
-    public void context() {
-    }
+//    @Test
+//    public void context() {
+//    }
 
 }

@@ -87,3 +87,13 @@ lmicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/compla
 wmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainRequestManager.java,f/1/f130ca86c4a322a56db38151382aecb99b29132a
 ß
 wmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/impl/ComplainrequestManagerImpl.java,6/4/64864cb66c57d233230ba74725f4adf5e2fa8b23
+{
+Kmicroservicebdd/microservice-web/src/test/ressources/application.properties,7/c/7c12c83067c834535e41ade61afe258f6f4add5e
+¢
+rmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/security/JwtAuthenticationEntryPoint.java,7/a/7a9200372383d589ed5f25e1e0653212009a926f
+ì
+cmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/security/JwtTokenUtil.java,8/8/889985d2dd5cf377cb70420d3d4f0e1117e2c367
+ó
+gmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/security/JwtRequestFilter.java,4/f/4f3a41d2961cbbc75fa8b398a7dcef6cbf18af59
+¿
+èmicroservicebdd/microservice-web/src/test/java/com/nicow/microserviceweb/controllersIntegritiesTest/ComplainRequestControllerIntegrityTest.java,7/c/7cb258a98237b1bd47405729dafdb1468e2baa54
