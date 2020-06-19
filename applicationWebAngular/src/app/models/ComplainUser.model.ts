@@ -1,11 +1,11 @@
-export class UserModel {
+export class ComplainUserModel {
   id: number;
   name: string;
   firstName: string;
   pseudo: string;
   password: string;
   email: string;
-  creationDate: Date;
+  creationDate: string;
   popularity: number;
   token: string;
 

@@ -1,3 +1,4 @@
+import { MatSnackBarModule } from '@angular/material';
 import { ApplicationHttpClientService } from './services/applicationHttpClient.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -12,13 +13,18 @@ import { HeaderComponent } from './header/header.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AlertComponent } from './alert/alert.component';
-import {HeaderInterceptorService} from "./services/header-interceptor.service";
+import {HeaderInterceptorService} from './services/header-interceptor.service';
+import { MainDisplayComponent } from './main-display/main-display.component';
+import { ResponseDisplayComponent } from './response-display/response-display.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
+  { path: 'response/:id', canActivate: [AuthGuardService], component: ResponseDisplayComponent},
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', component: SignupComponent },
-  { path: '', redirectTo: '#', pathMatch: 'full'},
-  { path: '**', redirectTo: '#'}
+  { path: 'main', component: MainDisplayComponent},
+  { path: '', redirectTo: 'main', pathMatch: 'full'},
+  { path: '**', redirectTo: 'main'}
 ];
 
 @NgModule({
@@ -27,7 +33,9 @@ const appRoutes: Routes = [
     SigninComponent,
     SignupComponent,
     HeaderComponent,
-    AlertComponent
+    AlertComponent,
+    MainDisplayComponent,
+    ResponseDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +43,9 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    NoopAnimationsModule,
+    MatSnackBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },

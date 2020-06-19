@@ -13,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.UnexpectedRollbackException;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -73,5 +70,14 @@ public class ComplainUserController {
         } else {
             return (new ResponseEntity<>("email already exist",HttpStatus.CONFLICT));
         }
+    }
+
+    /**
+     * For check if user in progress is already valid
+     * @return
+     */
+    @GetMapping(value = "/userStateChanged")
+    public boolean userStateChange() {
+        return true;
     }
 }

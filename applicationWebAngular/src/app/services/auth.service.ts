@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {UserModel} from '../models/ComplainUser.model';
+import {ComplainUserModel} from '../models/ComplainUser.model';
 import {map} from 'rxjs/operators';
 import {ApplicationHttpClientService} from './applicationHttpClient.service';
 
@@ -10,18 +10,18 @@ import {ApplicationHttpClientService} from './applicationHttpClient.service';
 })
 export class AuthService {
 
-  private currentUserSubject: BehaviorSubject<UserModel>;
-  public currentUser: Observable<UserModel>;
+  private currentUserSubject: BehaviorSubject<ComplainUserModel>;
+  public currentUser: Observable<ComplainUserModel>;
 
-  private userInProgress: UserModel;
+  private userInProgress: ComplainUserModel;
 
 
   constructor(private http: ApplicationHttpClientService) {
-    this.currentUserSubject = new BehaviorSubject<UserModel>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<ComplainUserModel>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): UserModel {
+  public get currentUserValue(): ComplainUserModel {
     return this.currentUserSubject.value;
   }
 

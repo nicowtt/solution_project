@@ -13,17 +13,19 @@ public class ComplainResponse {
     private String response;
     private int popularity;
     private String creatorEmail;
-    private Date creationDate;
+    private String creatorPseudo;
+    private String creationDate;
 
     // constructor
     public ComplainResponse() {
     }
 
-    public ComplainResponse(String id, String response, int popularity, String creatorEmail, Date creationDate) {
+    public ComplainResponse(String id, String response, int popularity, String creatorEmail, String creatorPseudo, String creationDate) {
         this.id = id;
         this.response = response;
         this.popularity = popularity;
         this.creatorEmail = creatorEmail;
+        this.creatorPseudo = creatorPseudo;
         this.creationDate = creationDate;
     }
 
@@ -60,11 +62,15 @@ public class ComplainResponse {
         this.creatorEmail = creatorEmail;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreatorPseudo(String creatorPseudo) { this.creatorPseudo = creatorPseudo;}
+
+    public String getCreatorPseudo() { return creatorPseudo;}
+
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -76,6 +82,7 @@ public class ComplainResponse {
                 ", response='" + response + '\'' +
                 ", popularity=" + popularity +
                 ", creatorEmail='" + creatorEmail + '\'' +
+                ", creatorPseudo='" + creatorPseudo + '\'' +
                 ", creationDate=" + creationDate +
                 '}';
     }

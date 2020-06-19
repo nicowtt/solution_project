@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <div id="MainMenu">
+      <div id="RequestName">{{requestConcerned.request}} <span id='displayDate'> Posté par: {{requestConcerned.creatorPseudo}}
+         le:
+          {{ requestConcerned.creationDate | date: 'dd/MM/yyyy H:mm'}}</span></div>
+      <div class="list-group-item" id="response" *ngFor="let response of responsesList; let i = index">
+        <div>{{response.response}}</div>
+        <div id='displayForAndDate'> Posté par: {{ response.creatorPseudo}}
+          le: {{ response.creationDate | date: 'dd/MM/yyyy H:mm'}}</div>
+      </div>
+    </div>
+  </div>

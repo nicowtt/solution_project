@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 @Document(collection = "complainRequest")
 public class ComplainRequest {
@@ -14,23 +14,29 @@ public class ComplainRequest {
     @Id
     private String id;
     private String request;
+    private String creatorPseudo;
     private String creatorEmail;
-    private Date creationDate;
+    private String creationDate;
     private int popularity;
+    private List<String> userWhoChangePopularityList;
 //    @DBRef(lazy = true)
     private Collection<ComplainResponse> complainResponses=new ArrayList<>();
+    private String themeName;
 
     // constructor
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorEmail, Date creationDate, int popularity, Collection<ComplainResponse> complainResponses) {
+    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, List<String> userWhoChangePopularityList, Collection<ComplainResponse> complainResponses, String themeName) {
         this.id = id;
         this.request = request;
+        this.creatorPseudo = creatorPseudo;
         this.creatorEmail = creatorEmail;
         this.creationDate = creationDate;
         this.popularity = popularity;
+        this.userWhoChangePopularityList = userWhoChangePopularityList;
         this.complainResponses = complainResponses;
+        this.themeName = themeName;
     }
 
     // getters and setters
@@ -50,6 +56,14 @@ public class ComplainRequest {
         this.request = request;
     }
 
+    public String getCreatorPseudo() {
+        return creatorPseudo;
+    }
+
+    public void setCreatorPseudo(String creatorPseudo) {
+        this.creatorPseudo = creatorPseudo;
+    }
+
     public String getCreatorEmail() {
         return creatorEmail;
     }
@@ -58,11 +72,11 @@ public class ComplainRequest {
         this.creatorEmail = creatorEmail;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -78,8 +92,24 @@ public class ComplainRequest {
         return complainResponses;
     }
 
+    public List<String> getUserWhoChangePopularityList() {
+        return userWhoChangePopularityList;
+    }
+
+    public void setUserWhoChangePopularityList(List<String> userWhoChangePopularityList) {
+        this.userWhoChangePopularityList = userWhoChangePopularityList;
+    }
+
     public void setComplainResponses(Collection<ComplainResponse> complainResponses) {
         this.complainResponses = complainResponses;
+    }
+
+    public String getThemeName() {
+        return themeName;
+    }
+
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
     }
 
     // to string
@@ -88,10 +118,17 @@ public class ComplainRequest {
         return "ComplainRequest{" +
                 "id='" + id + '\'' +
                 ", request='" + request + '\'' +
+                ", creatorPseudo='" + creatorPseudo + '\'' +
                 ", creatorEmail='" + creatorEmail + '\'' +
-                ", creationDate=" + creationDate +
+                ", creationDate='" + creationDate + '\'' +
                 ", popularity=" + popularity +
                 ", complainResponses=" + complainResponses +
+                ", themeName='" + themeName + '\'' +
                 '}';
+    }
+
+    // methods
+    public void addUserWhoIncreasePopularity(String userInput) {
+        this.userWhoChangePopularityList.add(userInput);
     }
 }

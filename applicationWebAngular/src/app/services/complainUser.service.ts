@@ -1,24 +1,24 @@
 import { AlertService } from './alert.service';
 import { Router } from '@angular/router';
-import {UserModel} from "../models/ComplainUser.model";
-import {Subject} from "rxjs";
-import {Injectable} from "@angular/core";
-import {ApplicationHttpClientService} from "./applicationHttpClient.service";
+import {ComplainUserModel} from '../models/ComplainUser.model';
+import {Subject} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {ApplicationHttpClientService} from './applicationHttpClient.service';
 
 @Injectable({ providedIn: 'root'})
-export class UserService {
+export class ComplainUserService {
   constructor(private http: ApplicationHttpClientService,
               private alertService : AlertService,
               private router: Router) { }
 
-  private usersList: UserModel[] = [];
-  usersSubject = new Subject<UserModel[]>();
+  private usersList: ComplainUserModel[] = [];
+  usersSubject = new Subject<ComplainUserModel[]>();
 
-  private user: UserModel;
-  userSubject = new Subject<UserModel>();
+  private user: ComplainUserModel;
+  userSubject = new Subject<ComplainUserModel>();
 
 
-  listEmailsSubject = new Subject<string[]>();  
+  listEmailsSubject = new Subject<string[]>();
   userEmails: string[];
 
   emitUsers() {
@@ -38,7 +38,7 @@ export class UserService {
    * @param user
    * @constructor
    */
-  AddUser(user: UserModel, onSucces: Function, onError:Function) {
+  AddUser(user: ComplainUserModel, onSucces: Function, onError:Function) {
     return this.http
     .post(`/newUser`, user)
     .subscribe(

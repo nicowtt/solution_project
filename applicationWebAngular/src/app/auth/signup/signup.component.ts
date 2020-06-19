@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserModel} from "../../models/ComplainUser.model";
-import {UserService} from "../../services/complainUser.service";
+import {ComplainUserModel} from "../../models/ComplainUser.model";
+import {ComplainUserService} from "../../services/complainUser.service";
 import {first} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import { getLocaleDateTimeFormat } from '@angular/common';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +22,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private userService: UserService,
+              private userService: ComplainUserService,
               private route: ActivatedRoute,
               private router: Router
               ) {
@@ -60,13 +61,13 @@ export class SignupComponent implements OnInit {
     }
     // mapp from form
     this.loading = true;
-    const newUser = new UserModel();
+    const newUser = new ComplainUserModel();
     newUser.name = this.f.name.value;
     newUser.firstName = this.f.firstName.value;
     newUser.pseudo = this.f.pseudo.value;
     newUser.email = this.f.email.value;
     newUser.password = this.f.password.value;
-    newUser.creationDate = new Date;
+    newUser.creationDate = new Date().toLocaleString();
 
     this.userService.AddUser(newUser, () => {
       this.router.navigate(['auth/signin']);
