@@ -10,7 +10,7 @@
     <parent>
         <groupId>com.nicow</groupId>
         <artifactId>microservicebdd</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
     <!-- ===== Maven information ===== -->
     <artifactId>microservice-model</artifactId>
@@ -18,7 +18,7 @@
     <!-- ===== global Informations ===== -->
     <name>microservice-model</name>
     <description>module for entities</description>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <!-- =============================================================== -->
     <!-- Dependencies -->
