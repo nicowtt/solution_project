@@ -1,7 +1,6 @@
-import { ComplainResponseModel } from './ComplainResponse.model';
 export class ComplainRequestModel {
 
-    id: number;
+    id: string;
     request: string;
     complainUserId: number;
     creatorPseudo: string;
@@ -11,7 +10,7 @@ export class ComplainRequestModel {
     popularity: number;
     nbrResponse: number;
     themeName: string;
-    complainResponses: ComplainResponseModel[];
+    complainResponsesId: string;
 
     constructor() {}
 }

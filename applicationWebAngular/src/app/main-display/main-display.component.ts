@@ -92,7 +92,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   countNbrOfResponse(request: ComplainRequestModel) {
-    const nbrOfResponse = request.complainResponses.length;
+    const nbrOfResponse = request.complainResponsesId.length;
     request.nbrResponse = nbrOfResponse;
   }
 

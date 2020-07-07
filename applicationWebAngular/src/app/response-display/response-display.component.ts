@@ -19,14 +19,13 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   currentUser: ComplainUserModel;
   userConnected: boolean;
 
-  requestsList: ComplainRequestModel[];
-  requestsSubscription: Subscription;
-
   requestSubscription: Subscription;
   requestConcerned: ComplainRequestModel;
+
+  requestResponsesSubscription: Subscription;
   responseConcerned: ComplainResponseModel;
 
-  responsesList: ComplainResponseModel[];
+  requestResponses: ComplainResponseModel[] = [];
 
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
@@ -38,7 +37,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
     this.requestConcerned = new ComplainRequestModel();
-    // subscription
+    // subscription to request concerned
     this.requestSubscription = this.complainRequestService.requestSubject.subscribe(
       (request: ComplainRequestModel) => {
         this.requestConcerned = request;
@@ -47,16 +46,25 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     );
     this.complainRequestService.getOneRequest(id, () => {
       this.complainRequestService.emitRequest();
-      this.responsesList = this.requestConcerned.complainResponses;
-      this.responsesList.forEach( response => {
-        response.dayUntilToday = this.calculateDiffFromTodayTo(response.creationDate);
+
+      // if request is here -> subscription to responses concerned
+      this.requestResponsesSubscription = this.complainResponseService.requestResponsesSubject.subscribe(
+        (responses: ComplainResponseModel[]) => {
+          this.requestResponses = responses;
+        }
+      );
+      this.complainResponseService.getAllResponseForOneRequest(this.requestConcerned.id, () => {
+        this.requestResponses.forEach( response => {
+          response.dayUntilToday = this.calculateDiffFromTodayTo(response.creationDate);
+        });
+        this.requestResponses.sort(this.comparePopularity); // for display bigger is upper
       });
-    });
+      });
   }
 
   ngOnDestroy() {
-    this.requestsSubscription.unsubscribe();
     this.requestSubscription.unsubscribe();
+    this.requestResponsesSubscription.unsubscribe();
   }
 
   calculateDiffFromTodayTo(dateSent) {
@@ -70,24 +78,24 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   changePopularity(index: number, change: string) {
       if (change === '+') {
-        this.requestConcerned.complainResponses[index].popularity++;
+        this.requestResponses[index].popularity++;
       } else if (change === '-') {
-        this.requestConcerned.complainResponses[index].popularity--;
+        this.requestResponses[index].popularity--;
       }
 
       const userPseudo = this.currentUser.pseudo;
 
-      this.complainResponseService.changeResponsePopularity(this.requestConcerned.complainResponses[index], userPseudo, () => {
+      this.complainResponseService.changeResponsePopularity(this.requestResponses[index], userPseudo, () => {
         // on error
         if (change === '+') {
-          this.requestConcerned.complainResponses[index].popularity--;
+          this.requestResponses[index].popularity--;
         } else if (change === '-') {
-          this.requestConcerned.complainResponses[index].popularity++;
+          this.requestResponses[index].popularity++;
         }
       });
 
 
-      this.responsesList.sort(this.comparePopularity);
+      this.requestResponses.sort(this.comparePopularity);
   }
 
   comparePopularity(a, b) {

@@ -18,23 +18,23 @@ public class ComplainTheme {
     private String creationDate;
     private int popularity;
 //    @DBRef(lazy = true)
-    private Collection<ComplainRequest> complainRequests=new ArrayList<>();
+    private Collection<String> complainRequestsId;
 //    @DBRef
-    private Collection<SubscriptionThemeUser> subscriptionThemeUsers=new ArrayList<>();
+    private Collection<String> subscriptionThemeUsersId;
 
     // constructor
     public ComplainTheme() {
     }
 
-    public ComplainTheme(String id, String name, String photoUrl, String creatorEmail, String creationDate, int popularity, Collection<ComplainRequest> complainRequests, Collection<SubscriptionThemeUser> subscriptionThemeUsers) {
+    public ComplainTheme(String id, String name, String photoUrl, String creatorEmail, String creationDate, int popularity, Collection<String> complainRequestsId, Collection<String> subscriptionThemeUsersId) {
         this.id = id;
         this.name = name;
         this.photoUrl = photoUrl;
         this.creatorEmail = creatorEmail;
         this.creationDate = creationDate;
         this.popularity = popularity;
-        this.complainRequests = complainRequests;
-        this.subscriptionThemeUsers = subscriptionThemeUsers;
+        this.complainRequestsId = complainRequestsId;
+        this.subscriptionThemeUsersId = subscriptionThemeUsersId;
     }
 
     // getters and setters
@@ -86,20 +86,20 @@ public class ComplainTheme {
         this.popularity = popularity;
     }
 
-    public Collection<ComplainRequest> getComplainRequests() {
-        return complainRequests;
+    public Collection<String> getComplainRequestsId() {
+        return complainRequestsId;
     }
 
-    public void setComplainRequests(Collection<ComplainRequest> complainRequests) {
-        this.complainRequests = complainRequests;
+    public void setComplainRequestsId(Collection<String> complainRequestsId) {
+        this.complainRequestsId = complainRequestsId;
     }
 
-    public Collection<SubscriptionThemeUser> getSubscriptionThemeUsers() {
-        return subscriptionThemeUsers;
+    public Collection<String> getSubscriptionThemeUsersId() {
+        return subscriptionThemeUsersId;
     }
 
-    public void setSubscriptionThemeUsers(Collection<SubscriptionThemeUser> subscriptionThemeUsers) {
-        this.subscriptionThemeUsers = subscriptionThemeUsers;
+    public void setSubscriptionThemeUsersId(Collection<String> subscriptionThemeUsersId) {
+        this.subscriptionThemeUsersId = subscriptionThemeUsersId;
     }
 
     // to string
@@ -110,10 +110,13 @@ public class ComplainTheme {
                 ", name='" + name + '\'' +
                 ", photoUrl='" + photoUrl + '\'' +
                 ", creatorEmail='" + creatorEmail + '\'' +
-                ", creationDate=" + creationDate +
+                ", creationDate='" + creationDate + '\'' +
                 ", popularity=" + popularity +
-                ", complainRequests=" + complainRequests +
-                ", subscriptionThemeUsers=" + subscriptionThemeUsers +
+                ", complainRequestsId=" + complainRequestsId +
+                ", subscriptionThemeUsersId=" + subscriptionThemeUsersId +
                 '}';
     }
+
+    // methods
+    public void addComplainRequestId(String requestId) { this.complainRequestsId.add(requestId); }
 }

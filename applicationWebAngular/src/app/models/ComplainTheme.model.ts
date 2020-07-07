@@ -1,5 +1,4 @@
 import { SubscriptionThemeUserModel } from './SubscriptionThemeUser.model';
-import { ComplainRequestModel } from './ComplainRequest.model';
 
 export class ComplainThemeModel {
 
@@ -9,7 +8,7 @@ export class ComplainThemeModel {
   creatorEmail: string;
   creationDate: string;
   popularity: number;
-  complainRequests: ComplainRequestModel[];
+  complainRequestsId: string;
   subscriptionThemeUsers: SubscriptionThemeUserModel[];
 
   constructor() {}

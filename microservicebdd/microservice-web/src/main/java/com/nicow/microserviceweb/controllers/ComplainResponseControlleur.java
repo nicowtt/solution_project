@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -51,6 +53,21 @@ public class ComplainResponseControlleur {
         } else {
             return (new ResponseEntity<>(HttpStatus.FORBIDDEN));
         }
+    }
+
+    @GetMapping(value = "/getAllResponsesForOneRequest/{requestId}")
+    public List<ComplainResponse> getAllResponsesForOneRequest(@PathVariable String requestId) {
+        List<ComplainResponse> responses = new ArrayList<>();
+        Optional<ComplainRequest> requestConcerned = complainRequestDao.findById(requestId);
+        if (requestConcerned.isPresent()) {
+            for (String responseId: requestConcerned.get().getComplainResponsesId() ) {
+                Optional<ComplainResponse> optionalResponse = complainResponseDao.findById(responseId);
+                if (optionalResponse.isPresent()) {
+                    responses.add(optionalResponse.get());
+                }
+            }
+        }
+        return responses;
     }
 
 }
