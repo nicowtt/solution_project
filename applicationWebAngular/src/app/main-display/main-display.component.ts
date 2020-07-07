@@ -1,4 +1,4 @@
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService } from './../services/alert.service';
 import { ComplainUserModel } from './../models/ComplainUser.model';
 import { AuthService } from './../services/auth.service';
@@ -26,16 +26,15 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   currentUser: ComplainUserModel;
   userConnected: boolean;
 
-
   constructor(private complainThemeService: ComplainThemeService,
               private complainRequestService: ComplainRequestService,
               private router: Router,
               private authService: AuthService,
               private alertService: AlertService,
-              private snackBar: MatSnackBar
-              ) {
-                this.authService.currentUser.subscribe(x => this.currentUser = x);
-               }
+              private snackBar: MatSnackBar,
+  ) {
+    this.authService.currentUser.subscribe(x => this.currentUser = x);
+  }
 
   ngOnInit() {
     // subscription
@@ -48,7 +47,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       this.complainThemeService.emitThemes();
     });
 
-    this.requestsSubscription = this.complainRequestService.requestSubject.subscribe(
+    this.requestsSubscription = this.complainRequestService.requestsSubject.subscribe(
       (requests: ComplainRequestModel[]) => {
         this.requestsList = requests;
       }
@@ -56,8 +55,11 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     this.complainRequestService.getAllRequests(() => {
       this.complainRequestService.emitRequests();
       this.requestsList.forEach(request => {
-          this.countNbrOfResponse(request);
+        this.countNbrOfResponse(request);
+        request.dayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
       });
+      this.requestsList.sort(this.comparePopularity); // bigger is upper
+
     });
     // user connected
     if (this.authService.currentUserValue) {
@@ -65,7 +67,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     } else {
       this.userConnected = false;
     }
-
   }
 
   ngOnDestroy() {
@@ -73,13 +74,26 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     this.requestsSubscription.unsubscribe();
   }
 
+  comparePopularity(a, b) {
+    const requestA = a.popularity;
+    const requestB = b.popularity;
+
+    let comparison = 0;
+    if (requestA < requestB) {
+      comparison = 1;
+    } else if (requestA > requestB) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   showResponses(index: number) {
-    this.router.navigate(['/response', index]);
+    this.router.navigate(['/response', this.requestsList[index].id]);
   }
 
   countNbrOfResponse(request: ComplainRequestModel) {
-      const nbrOfResponse = request.complainResponses.length;
-      request.nbrResponse = nbrOfResponse;
+    const nbrOfResponse = request.complainResponses.length;
+    request.nbrResponse = nbrOfResponse;
   }
 
   changePopularity(index: number, change: string) {
@@ -106,5 +120,15 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
       );
     }
+    this.requestsList.sort(this.comparePopularity);
+  }
+
+  calculateDiffFromTodayTo(dateSent) {
+    const currentDate = new Date();
+    dateSent = new Date(dateSent);
+
+    return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
+    currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),
+    dateSent.getDate())) / (1000 * 60 * 60 * 24));
   }
 }

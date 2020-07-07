@@ -55,4 +55,9 @@ public class ComplainRequestControlleur {
             return (new ResponseEntity<>(HttpStatus.FORBIDDEN));
         }
     }
+
+    @GetMapping(value = "/getOneRequest/{requestId}")
+    public Optional<ComplainRequest> getOneRequest(@PathVariable String requestId) {
+        return complainRequestDao.findById(requestId);
+    }
 }

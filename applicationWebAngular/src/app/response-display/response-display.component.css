@@ -1,0 +1,21 @@
+#displayForAndDate {
+  font-size: 70%;
+}
+
+#displayDate {
+  float: right;
+  font-size: 70%;
+}
+
+#popularity {
+  float: left;
+  margin-right: 10px;
+}
+
+#score {
+  margin-left: 10px;
+}
+
+#response {
+  margin-top: 20px;
+}

@@ -68,13 +68,13 @@ public class MicroserviceWebApplication {
 //
 //            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
 //            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nicow", "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<ComplainResponse>(), "corona-virus"));
-//            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate));
-//            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate));
+//            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>()));
+//            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>()));
 //
 //            ComplainTheme secondTheme = themeDao.save(new ComplainTheme(null, "Méteo","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<ComplainRequest>(), new ArrayList<SubscriptionThemeUser>()));
 //            ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "seagul", "steven.seagal@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<ComplainResponse>(), "Méteo"));
-//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", todayDate));
-//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", todayDate));
+//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>()));
+//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>()));
 //
 //            // ajout de la request dans le theme
 //            firstTheme.getComplainRequests().add(firstRequest);

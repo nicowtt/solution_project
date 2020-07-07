@@ -97,3 +97,11 @@ cmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/securi
 gmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/security/JwtRequestFilter.java,4/f/4f3a41d2961cbbc75fa8b398a7dcef6cbf18af59
 ¿
 èmicroservicebdd/microservice-web/src/test/java/com/nicow/microserviceweb/controllersIntegritiesTest/ComplainRequestControllerIntegrityTest.java,7/c/7cb258a98237b1bd47405729dafdb1468e2baa54
+v
+FapplicationWebAngular/src/app/main-display/main-display.component.html,b/9/b9a4bc30576749f2ae3b486bf0820b268bf937e8
+®
+xmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainResponseManager.java,e/0/e0a9e4831a62a48ed77d5da18076efb8e8ad111f
+®
+xmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/impl/ComplainResponseManagerImpl.java,6/e/6ee0cb434697e322c4c62b0d5b16d7e916a65ab9
+•
+umicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainResponseControlleur.java,0/a/0ac131b637b2b150fc3135c8b52519d3fef9847d
