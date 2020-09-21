@@ -92,13 +92,13 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
         } else if (change === '-') {
           this.requestResponses[index].popularity++;
         }
+      }, () => {
+        // on succes
+        this.requestResponses.sort(this.comparePopularity);
       });
-
-
-      this.requestResponses.sort(this.comparePopularity);
   }
 
-  comparePopularity(a, b) {
+  comparePopularity(a: ComplainResponseModel, b: ComplainResponseModel) {
     const responseA = a.popularity;
     const responseB = b.popularity;
 

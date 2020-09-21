@@ -58,7 +58,7 @@ public class MicroserviceWebApplication {
 //            //ajout user
 //            userDao.deleteAll();
 //            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, null, todayDate, "ADMIN"));
-//            userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "mdp", 0, null, todayDate, "USER"));
+//            userDao.save(new ComplainUser(null, "steven", "seagal", "seagul", "steven.seagal@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, null, todayDate, "USER"));
 //            userDao.findAll().forEach(System.out::println);
 //
 //            //ajout d'un theme et d'un request

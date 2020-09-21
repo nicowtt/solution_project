@@ -38,11 +38,12 @@ export class ComplainResponseService {
 
 
 
-  changeResponsePopularity(response: ComplainResponseModel, userPseudo: string, onError: Function) {
+  changeResponsePopularity(response: ComplainResponseModel, userPseudo: string, onError: Function, onSuccess: Function) {
     this.http
       .post<ComplainResponseModel>('/changeResponsePopularity/' + userPseudo, response)
       .subscribe(
         (response) => {
+          onSuccess();
         },
         (error) => {
           this.snackBar.open("Vous avez déja voté!", '', {
