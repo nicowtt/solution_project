@@ -35,7 +35,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
               }
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params.id;
     this.requestConcerned = new ComplainRequestModel();
     // subscription to request concerned
     this.requestSubscription = this.complainRequestService.requestSubject.subscribe(
