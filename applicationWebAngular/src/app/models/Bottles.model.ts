@@ -1,8 +1,11 @@
 export class BottleModel {
 
-  id: number;
   top: string;
   left: string;
+  requestName: string;
 
-  constructor() {}
+  constructor(top: string, left: string) {
+    this.top = top;
+    this.left = left;
+   }
 }

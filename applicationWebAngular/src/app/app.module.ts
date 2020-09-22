@@ -1,4 +1,4 @@
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule, MatTooltipModule } from '@angular/material';
 import { ApplicationHttpClientService } from './services/applicationHttpClient.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -45,7 +45,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     NoopAnimationsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },

@@ -41,7 +41,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.requestSubscription = this.complainRequestService.requestSubject.subscribe(
       (request: ComplainRequestModel) => {
         this.requestConcerned = request;
-        request.dayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
+        request.creationDayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
       }
     );
     this.complainRequestService.getOneRequest(id, () => {

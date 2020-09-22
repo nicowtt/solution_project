@@ -22,12 +22,16 @@ public class ComplainRequest {
 //    @DBRef(lazy = true)
     private Collection<String> complainResponsesId;
     private String themeName;
+    private String lastResponseDate;
 
     // constructor
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, List<String> userWhoChangePopularityList, Collection<String> complainResponsesId, String themeName) {
+    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate,
+                           int popularity, List<String> userWhoChangePopularityList,
+                           Collection<String> complainResponsesId, String themeName,
+                           String lastResponseDate) {
         this.id = id;
         this.request = request;
         this.creatorPseudo = creatorPseudo;
@@ -37,6 +41,7 @@ public class ComplainRequest {
         this.userWhoChangePopularityList = userWhoChangePopularityList;
         this.complainResponsesId = complainResponsesId;
         this.themeName = themeName;
+        this.lastResponseDate = lastResponseDate;
     }
 
     // getters and setters
@@ -112,6 +117,14 @@ public class ComplainRequest {
         this.themeName = themeName;
     }
 
+    public String getLastResponseDate() {
+        return lastResponseDate;
+    }
+
+    public void setLastResponseDate(String lastResponseDate) {
+        this.lastResponseDate = lastResponseDate;
+    }
+
     // to string
     @Override
     public String toString() {
@@ -125,6 +138,7 @@ public class ComplainRequest {
                 ", userWhoChangePopularityList=" + userWhoChangePopularityList +
                 ", complainResponsesId=" + complainResponsesId +
                 ", themeName='" + themeName + '\'' +
+                ", lastResponseDate='" + lastResponseDate + '\'' +
                 '}';
     }
 

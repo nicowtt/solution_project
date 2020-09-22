@@ -2,9 +2,13 @@
   <div class="col-md-12">
     <div class="parent">
       <img class="fond" src="/assets/img/river2.svg" alt="river">
-      <img class="bouteille" src="/assets/img/bottle.png" alt="bottle">
+      <div *ngFor="let bottle of bottles; let i = index">
+        <img [ngStyle]="{'top': [bottle.top], 'left': [bottle.left]}" class="bouteille" src="/assets/img/bottle.png"
+        alt="bottle"
+        matTooltip= {{[bottle.requestName]}}
+        [matTooltipPosition]="'above'"
+        >
       </div>
-  </div>
 </div>
 
 
@@ -44,7 +48,7 @@
 
             <div id='displayForAndDate'> Posté par {{ request.creatorPseudo}}
               <!-- le: {{ request.creationDate | date: 'dd/MM/yyyy H:mm'}} -->
-              il y a {{ request.dayUntilToday }} jours.</div>
+              il y a {{ request.creationDayUntilToday }} jours.</div>
           </div>
         </a>
       </div>

@@ -6,11 +6,12 @@ export class ComplainRequestModel {
     creatorPseudo: string;
     creatorEmail: string;
     creationDate: string;
-    dayUntilToday: number;
+    creationDayUntilToday: number;
     popularity: number;
     nbrResponse: number;
     themeName: string;
     complainResponsesId: string;
+    lastResponseDate: number;
 
     constructor() {}
 }

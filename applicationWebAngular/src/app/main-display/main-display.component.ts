@@ -1,3 +1,5 @@
+import { ComplainResponseModel } from './../models/ComplainResponse.model';
+import { BottleModel } from './../models/Bottles.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService } from './../services/alert.service';
 import { ComplainUserModel } from './../models/ComplainUser.model';
@@ -26,6 +28,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   currentUser: ComplainUserModel;
   userConnected: boolean;
 
+  bottles: BottleModel[] = new Array();
+
   constructor(private complainThemeService: ComplainThemeService,
               private complainRequestService: ComplainRequestService,
               private router: Router,
@@ -44,7 +48,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
     );
     this.complainThemeService.getAllThemes(() => {
-      this.complainThemeService.emitThemes();
     });
 
     this.requestsSubscription = this.complainRequestService.requestsSubject.subscribe(
@@ -56,7 +59,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       this.complainRequestService.emitRequests();
       this.requestsList.forEach(request => {
         this.countNbrOfResponse(request);
-        request.dayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
+        request.creationDayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
+        this.fillBottles();
       });
       this.requestsList.sort(this.comparePopularity); // bigger is upper
 
@@ -130,5 +134,25 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),
     dateSent.getDate())) / (1000 * 60 * 60 * 24));
+  }
+
+  fillBottles() {
+    // INFO :poxXbottle -> min 0px, max 750px(picture) -> last response on request :today = 0px, tomorrow = 100px
+    let posXbottle = 0;
+    // create bottles
+    this.requestsList.forEach(request => {
+      posXbottle = this.calculateDiffFromTodayTo(request.lastResponseDate);
+      if (posXbottle !== 0) {
+        posXbottle = posXbottle * 100;
+      }
+      const bottle = new BottleModel('300px', posXbottle + 'px');
+      bottle.requestName = request.request;
+      // check on console
+      console.log(bottle);
+      // for now we see bottle 7 days after request is posted
+      if (posXbottle <= 700) {
+        this.bottles.push(bottle);
+      }
+    });
   }
 }

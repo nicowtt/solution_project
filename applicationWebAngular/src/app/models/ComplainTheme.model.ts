@@ -1,3 +1,4 @@
+import { BottleModel } from './Bottles.model';
 import { SubscriptionThemeUserModel } from './SubscriptionThemeUser.model';
 
 export class ComplainThemeModel {

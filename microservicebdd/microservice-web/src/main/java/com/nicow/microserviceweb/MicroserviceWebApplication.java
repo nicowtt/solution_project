@@ -22,7 +22,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.nicow"})
@@ -55,6 +57,10 @@ public class MicroserviceWebApplication {
 //            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 //            Date date = new Date();
 //            String todayDate = dateFormat.format(date);
+//            Date yesterdayDate = new Date();
+//            yesterdayDate.setDate(date.getDate() - 1);
+//            String yesterday = dateFormat.format(yesterdayDate);
+//
 //            //ajout user
 //            userDao.deleteAll();
 //            userDao.save(new ComplainUser(null, "nico", "bod", "nicow","nico.bod@gmail.com", "$2a$10$ZrNev/FCEyfKp3.Zc/irx.OrtFuqL7X6t.tJytIOiYLQ458k2jasO", 0, null, todayDate, "ADMIN"));
@@ -67,15 +73,15 @@ public class MicroserviceWebApplication {
 //            responseDao.deleteAll();
 //
 //            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>()));
-//            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nicow", "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>(), "corona-virus"));
+//            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nicow", "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>(), "corona-virus", todayDate));
 //            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>()));
 //            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>()));
 //
 //            ComplainTheme secondTheme = themeDao.save(new ComplainTheme(null, "Méteo","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>()));
-//            ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "seagul", "steven.seagal@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>(), "Méteo"));
-//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>()));
-//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>()));
-//
+//            ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "seagul", "steven.seagal@gmail.com", yesterday, 0, new ArrayList<>(), new ArrayList<>(), "Méteo", yesterday));
+//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", yesterday, new ArrayList<>()));
+//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", yesterday, new ArrayList<>()));
+//            ComplainResponse thirdResponsesSecondRequest = responseDao.save (new ComplainResponse(null, "pas sur", 0, "steven.seagal@gmail.com", "seagul", yesterday, new ArrayList<>()));
 //            // ajout de la request id dans le theme
 //            firstTheme.addComplainRequestId(firstRequest.getId());
 //            secondTheme.addComplainRequestId(secondRequest.getId());
@@ -84,6 +90,7 @@ public class MicroserviceWebApplication {
 //            firstRequest.addResponseIdOnRequest(secondResponseFirstRequest.getId());
 //            secondRequest.addResponseIdOnRequest(firstResponseSecondRequest.getId());
 //            secondRequest.addResponseIdOnRequest(secondResponseSecondRequest.getId());
+//            secondRequest.addResponseIdOnRequest(thirdResponsesSecondRequest.getId());
 //            // update request
 //            requestDao.save(firstRequest);
 //            requestDao.save(secondRequest);

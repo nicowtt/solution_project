@@ -74,7 +74,7 @@ public class ComplainRequestControllerIntegrityTest extends UtilsForTest{
         complainRequest = requestDao.save (new ComplainRequest(null,
                 "debut du confinement trop tard!", "nicow", "test@test.com",
                 null, 0, userAlreadyVoteList, new ArrayList<>(),
-                "corona-virus"));
+                "corona-virus", null));
 
     }
 
