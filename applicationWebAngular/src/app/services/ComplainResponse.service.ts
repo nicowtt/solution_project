@@ -1,5 +1,5 @@
 import { AlertService } from './alert.service';
-import { Subject } from 'rxjs';
+import { onErrorResumeNext, Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ComplainResponseModel } from './../models/ComplainResponse.model';
 import { Injectable } from '@angular/core';
@@ -51,6 +51,22 @@ export class ComplainResponseService {
             verticalPosition: 'top'
           });
           onError();
+        }
+      );
+  }
+
+  addResponse(objectResponse: ComplainResponseModel, requestId: string, onSuccess: Function) {
+    return this.http
+      .post<ComplainResponseModel>('/newResponse/' + requestId, objectResponse)
+      .subscribe(
+        (response) => {
+          onSuccess();
+        },
+        (error) => {
+          this.snackBar.open("Veuillez recommencer", '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
         }
       );
   }

@@ -1,3 +1,5 @@
+import { FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ComplainResponseService } from './../services/ComplainResponse.service';
 import { ComplainUserModel } from './../models/ComplainUser.model';
 import { AuthService } from './../services/auth.service';
@@ -27,14 +29,18 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   requestResponses: ComplainResponseModel[] = [];
 
+  commentForm: FormGroup;
+
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
               private authService: AuthService,
-              private complainResponseService: ComplainResponseService) {
+              private complainResponseService: ComplainResponseService,
+              private formBuilder: FormBuilder) {
                 this.authService.currentUser.subscribe(x => this.currentUser = x);
               }
 
   ngOnInit() {
+    this.initForm();
     const id = this.route.snapshot.params.id;
     this.requestConcerned = new ComplainRequestModel();
     // subscription to request concerned
@@ -48,23 +54,47 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
       this.complainRequestService.emitRequest();
 
       // if request is here -> subscription to responses concerned
-      this.requestResponsesSubscription = this.complainResponseService.requestResponsesSubject.subscribe(
-        (responses: ComplainResponseModel[]) => {
-          this.requestResponses = responses;
-        }
-      );
-      this.complainResponseService.getAllResponseForOneRequest(this.requestConcerned.id, () => {
-        this.requestResponses.forEach( response => {
-          response.dayUntilToday = this.calculateDiffFromTodayTo(response.creationDate);
-        });
-        this.requestResponses.sort(this.comparePopularity); // for display bigger is upper
+      this.updateResponses();
       });
+  }
+
+  updateResponses() {
+    this.requestResponsesSubscription = this.complainResponseService.requestResponsesSubject.subscribe(
+      (responses: ComplainResponseModel[]) => {
+        this.requestResponses = responses;
+      }
+    );
+    this.complainResponseService.getAllResponseForOneRequest(this.requestConcerned.id, () => {
+      this.requestResponses.forEach( response => {
+        response.dayUntilToday = this.calculateDiffFromTodayTo(response.creationDate);
       });
+      this.requestResponses.sort(this.comparePopularity); // for display bigger is upper
+    });
+  }
+
+  initForm() {
+    this.commentForm = this.formBuilder.group({
+      comment: [''],
+    });
   }
 
   ngOnDestroy() {
     this.requestSubscription.unsubscribe();
     this.requestResponsesSubscription.unsubscribe();
+  }
+
+  onSubmitResponse(requestId: string) {
+    const response = new ComplainResponseModel();
+    response.complainUserId = this.currentUser.id;
+    response.creatorPseudo = this.currentUser.pseudo;
+    response.creatorEmail = this.currentUser.email;
+    response.response = this.commentForm.get('comment').value;
+    response.creationDate = new Date().toLocaleString();
+    response.complainRequestId = requestId;
+    console.log(response.toString());
+    this.complainResponseService.addResponse(response, requestId, () => {
+      this.updateResponses();
+    });
   }
 
   calculateDiffFromTodayTo(dateSent) {

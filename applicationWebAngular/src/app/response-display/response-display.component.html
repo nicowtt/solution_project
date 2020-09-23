@@ -3,12 +3,26 @@
 
     <div id="MainMenu">
       <span class="badge badge-info">{{requestConcerned.themeName}}</span>
-      <div id="RequestName">{{requestConcerned.request}}
+      <div id="requestName">{{requestConcerned.request}}
         <span id='displayDate'> Posté par {{requestConcerned.creatorPseudo}}
-        il y a {{ requestConcerned.dayUntilToday }} jours.</span>
+        il y a {{ requestConcerned.creationDayUntilToday }} jours.</span>
       </div>
       <p></p>
+    </div>
 
+    <div id="WriteComment">
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmitResponse(requestConcerned.id)">
+        <div class="form-group shadow-textarea">
+          <label for="responseArea" id="responseAreaLabel">Repondre en tant que {{[currentUser.name]}}</label>
+          <textarea class="form-control z-depth-1" id="responseArea" formControlName="comment" rows="3" placeholder="Ecrivez..."></textarea>
+          <button class="btn btn-primary" style="float: right; margin-top: 5px" type="submit">Envoyer</button>
+        </div>
+      </form>
+    <br>
+
+    </div>
+
+    <div id="Response">
       <div class="list-group" id="response" *ngFor="let response of requestResponses; let i = index">
         <div class="list-group-item" justify-content-center >
            <!-- float left -> popularity -->

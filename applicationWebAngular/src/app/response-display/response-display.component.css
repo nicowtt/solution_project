@@ -19,3 +19,11 @@
 #response {
   margin-top: 20px;
 }
+
+#responseAreaLabel {
+  font-size: 70%;
+}
+
+#requestName {
+  font-size: 120%;
+}

@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,12 @@ public class ComplainResponseControlleur {
     @Autowired
     private ComplainResponseManager complainResponseManager;
 
+    /**
+     * to change response popularity
+     * @param userPseudoInput -> who change
+     * @param complainResponseInput -> response to update
+     * @return string status
+     */
     @PostMapping(value = "/changeResponsePopularity/{userPseudoInput}", consumes = "application/json")
     public ResponseEntity<String> changeResponsePopularity(
             @PathVariable String userPseudoInput,
@@ -55,6 +63,11 @@ public class ComplainResponseControlleur {
         }
     }
 
+    /**
+     * to get all responses for one request
+     * @param requestId -> request concerned
+     * @return list of responses
+     */
     @GetMapping(value = "/getAllResponsesForOneRequest/{requestId}")
     public List<ComplainResponse> getAllResponsesForOneRequest(@PathVariable String requestId) {
         List<ComplainResponse> responses = new ArrayList<>();
@@ -70,4 +83,38 @@ public class ComplainResponseControlleur {
         return responses;
     }
 
+    /**
+     * for add response
+     * @param requestId -> for update this resquest
+     * @param complainResponseInput -> input body
+     * @return string status
+     */
+    @PostMapping(value = "/newResponse/{requestId}", consumes = "application/json")
+    public ResponseEntity<String> addResponse(
+            @PathVariable String requestId,
+            @RequestBody ComplainResponse complainResponseInput) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = new Date();
+        String todayDate = dateFormat.format(date);
+
+        complainResponseInput.setUserWhoChangePopularityList(new ArrayList<>());
+        // write date
+        complainResponseInput.setCreationDate(todayDate);
+        // save
+        ComplainResponse newResponse = complainResponseDao.save(complainResponseInput);
+        // update request
+        Optional<ComplainRequest> optRequest = complainRequestDao.findById(requestId);
+        if (optRequest.isPresent() && newResponse.getId() != null) {
+            ComplainRequest requestToUpdate = optRequest.get();
+            // update last date on request
+            requestToUpdate.setLastResponseDate(complainResponseInput.getCreationDate());
+            // add this new response on request -> responseId
+            requestToUpdate.addResponseIdOnRequest(newResponse.getId());
+            complainRequestDao.save(requestToUpdate);
+            return (new ResponseEntity<>(HttpStatus.OK));
+        } else {
+            return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
 }

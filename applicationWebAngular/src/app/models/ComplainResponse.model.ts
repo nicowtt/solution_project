@@ -1,6 +1,6 @@
 export class ComplainResponseModel {
 
-    id: number;
+    id: string;
     response: string;
     creationDate: string;
     dayUntilToday: number;
@@ -8,7 +8,7 @@ export class ComplainResponseModel {
     creatorEmail: string;
     creatorPseudo: string;
     complainUserId: number;
-    complainRequestId: number;
+    complainRequestId: string;
 
     constructor() {}
 }
