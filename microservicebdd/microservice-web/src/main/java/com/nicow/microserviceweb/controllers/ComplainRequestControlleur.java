@@ -28,9 +28,7 @@ public class ComplainRequestControlleur {
 
     @GetMapping(value = "/getAllRequests")
     public List<ComplainRequest> getAllRequests() {
-        List requestList = new ArrayList();
-        requestList = complainRequestDao.findAll();
-        return requestList;
+        return complainRequestDao.findAll();
     }
 
     @PostMapping(value = "/changeRequestPopularity/{userPseudoInput}", consumes = "application/json")

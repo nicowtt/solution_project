@@ -3,10 +3,11 @@
     <div class="parent">
       <img class="fond" src="/assets/img/river2.svg" alt="river">
       <div *ngFor="let bottle of bottles; let i = index">
-        <img [ngStyle]="{'top': [bottle.top], 'left': [bottle.left]}" class="bouteille" src="/assets/img/bottle.png"
+        <img (click)="showResponses(bottle.requestId)" [ngStyle]="{'top': [bottle.top], 'left': [bottle.left], 'width': [bottle.width]}" class="bouteille" src="/assets/img/bottle.png"
         alt="bottle"
         matTooltip= {{[bottle.requestName]}}
         [matTooltipPosition]="'above'"
+
         >
       </div>
 </div>
@@ -36,7 +37,7 @@
           <!---->
 
           <span class="badge badge-info">{{request.themeName}}</span>
-          <div id="displayRequest" (click)="showResponses(i)">{{request.request}}
+          <div id="displayRequest" (click)="showResponses(request.id)">{{request.request}}
 
             <!-- float right -->
             <span id="nbrResponse" class="badge badge-pill badge-light"><svg class="bi bi-chat" width="1em" height="1em"

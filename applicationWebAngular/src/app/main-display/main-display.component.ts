@@ -56,12 +56,11 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
     );
     this.complainRequestService.getAllRequests(() => {
-      this.complainRequestService.emitRequests();
       this.requestsList.forEach(request => {
         this.countNbrOfResponse(request);
         request.creationDayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
-        this.fillBottles();
       });
+      this.fillBottles();
       this.requestsList.sort(this.comparePopularity); // bigger is upper
 
     });
@@ -91,8 +90,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     return comparison;
   }
 
-  showResponses(index: number) {
-    this.router.navigate(['/response', this.requestsList[index].id]);
+  showResponses(requestId: string) {
+    this.router.navigate(['/response', requestId]);
   }
 
   countNbrOfResponse(request: ComplainRequestModel) {
@@ -136,23 +135,40 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     dateSent.getDate())) / (1000 * 60 * 60 * 24));
   }
 
+  calculateBottleWidth(nbrOfResponse: number) {
+    let width = 5;
+    if (nbrOfResponse > 0) {
+      width += nbrOfResponse;
+    }
+    if (width > 15) {
+      width = 15;
+    }
+    return width;
+  }
+
   fillBottles() {
     // INFO :poxXbottle -> min 0px, max 750px(picture) -> last response on request :today = 0px, tomorrow = 100px
     let posXbottle = 0;
+    let posYbottle = 250;
+    let bottleWidth = 5;
     // create bottles
     this.requestsList.forEach(request => {
       posXbottle = this.calculateDiffFromTodayTo(request.lastResponseDate);
+      bottleWidth = this.calculateBottleWidth(request.nbrResponse);
       if (posXbottle !== 0) {
         posXbottle = posXbottle * 100;
       }
-      const bottle = new BottleModel('300px', posXbottle + 'px');
+      const bottle = new BottleModel(posYbottle + 'px', posXbottle + 'px', bottleWidth + '%');
       bottle.requestName = request.request;
+      bottle.requestId = request.id;
       // check on console
       console.log(bottle);
       // for now we see bottle 7 days after request is posted
-      if (posXbottle <= 700) {
+      if (posXbottle <= 700 && posYbottle <= 400) {
         this.bottles.push(bottle);
       }
+      // increment
+      posYbottle += 30;
     });
   }
 }
