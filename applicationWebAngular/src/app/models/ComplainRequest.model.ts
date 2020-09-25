@@ -14,4 +14,13 @@ export class ComplainRequestModel {
     lastResponseDate: number;
 
     constructor() {}
+
+    toString() {
+      return '{ ' +
+              'request: ' + this.request +
+              ' complainUserId: ' + this.complainUserId +
+              '}';
+    }
+
+
 }

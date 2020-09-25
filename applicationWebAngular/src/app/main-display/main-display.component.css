@@ -1,4 +1,7 @@
 
+.raw {
+  font-family: georgia, "trebuchet ms", arial, serif;
+}
 
 .list-group.panel > .list-group-item {
   border-bottom-right-radius: 4px;

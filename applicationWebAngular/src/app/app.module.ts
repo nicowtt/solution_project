@@ -1,4 +1,4 @@
-import { MatSnackBarModule, MatTooltipModule } from '@angular/material';
+import { MatCheckboxModule, MatFormField, MatFormFieldModule, MatInputModule, MatSelectModule, MatSnackBarModule, MatTooltipModule } from '@angular/material';
 import { ApplicationHttpClientService } from './services/applicationHttpClient.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -17,8 +17,10 @@ import {HeaderInterceptorService} from './services/header-interceptor.service';
 import { MainDisplayComponent } from './main-display/main-display.component';
 import { ResponseDisplayComponent } from './response-display/response-display.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CreateNewRequestComponent } from './create-new-request/create-new-request.component';
 
 const appRoutes: Routes = [
+  { path: 'newRequest', canActivate: [AuthGuardService], component: CreateNewRequestComponent},
   { path: 'response/:id', canActivate: [AuthGuardService], component: ResponseDisplayComponent},
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', component: SignupComponent },
@@ -35,7 +37,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     AlertComponent,
     MainDisplayComponent,
-    ResponseDisplayComponent
+    ResponseDisplayComponent,
+    CreateNewRequestComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,10 @@ const appRoutes: Routes = [
     NoopAnimationsModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCheckboxModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptorService, multi: true },

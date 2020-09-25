@@ -58,4 +58,13 @@ public class ComplainRequestControlleur {
     public Optional<ComplainRequest> getOneRequest(@PathVariable String requestId) {
         return complainRequestDao.findById(requestId);
     }
+
+    @PostMapping(value = "/newRequest", consumes = "application/json")
+    public ResponseEntity<String> addRequest(
+            @RequestBody ComplainRequest complainRequestInput) {
+
+        System.out.println(complainRequestInput.toString());
+
+        return (new ResponseEntity<>(HttpStatus.OK));
+    }
 }

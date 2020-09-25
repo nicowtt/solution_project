@@ -55,6 +55,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
         this.requestsList = requests;
       }
     );
+    //init
     this.complainRequestService.getAllRequests(() => {
       this.requestsList.forEach(request => {
         this.countNbrOfResponse(request);
@@ -170,5 +171,9 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       // increment
       posYbottle += 30;
     });
+  }
+
+  newRequest() {
+    this.router.navigate(['/newRequest']);
   }
 }

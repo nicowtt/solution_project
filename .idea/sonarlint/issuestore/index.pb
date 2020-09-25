@@ -105,3 +105,9 @@ xmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusin
 xmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/impl/ComplainResponseManagerImpl.java,6/e/6ee0cb434697e322c4c62b0d5b16d7e916a65ab9
 ¥
 umicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainResponseControlleur.java,0/a/0ac131b637b2b150fc3135c8b52519d3fef9847d
+m
+=applicationWebAngular/src/app/auth/signup/signup.component.ts,8/3/832a74b44dc7e0bfee7fb27be2f0fe4e1b2ba9c7
+m
+=applicationWebAngular/src/app/auth/signin/signin.component.ts,2/f/2ff251850fc22e8e1fd42ba69cc6bd291fa210bb
+€
+PapplicationWebAngular/src/app/create-new-request/create-new-request.component.ts,4/d/4dd80d631d23d65468c7fb1c4ff58a24b32e0953

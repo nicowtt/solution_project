@@ -75,4 +75,19 @@ export class ComplainRequestService {
       );
     }
 
+    addRequest(newRequest: ComplainRequestModel, onSucces: Function) {
+      return this.http
+      .post<ComplainRequestModel>('/newRequest', newRequest)
+      .subscribe(
+        (response) => {
+          onSucces();
+        },
+        (error) => {
+          this.snackBar.open('Ooups!, Veuillez recommencer.', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      );
+    }
 }
