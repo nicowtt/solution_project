@@ -118,5 +118,7 @@ public class ComplainTheme {
     }
 
     // methods
-    public void addComplainRequestId(String requestId) { this.complainRequestsId.add(requestId); }
+    public void addComplainRequestId(String requestId) {
+        this.complainRequestsId.add(requestId);
+    }
 }

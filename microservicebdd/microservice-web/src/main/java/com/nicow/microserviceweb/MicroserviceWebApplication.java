@@ -74,29 +74,33 @@ public class MicroserviceWebApplication {
 //
 //            ComplainTheme firstTheme = themeDao.save(new ComplainTheme(null, "corona-virus","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>()));
 //            ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nicow", "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>(), "corona-virus", todayDate));
-//            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>()));
-//            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>()));
-//
-//            ComplainTheme secondTheme = themeDao.save(new ComplainTheme(null, "Méteo","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>()));
-//            ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "seagul", "steven.seagal@gmail.com", yesterday, 0, new ArrayList<>(), new ArrayList<>(), "Méteo", yesterday));
-//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", yesterday, new ArrayList<>()));
-//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", yesterday, new ArrayList<>()));
-//            ComplainResponse thirdResponsesSecondRequest = responseDao.save (new ComplainResponse(null, "pas sur", 0, "steven.seagal@gmail.com", "seagul", yesterday, new ArrayList<>()));
 //            // ajout de la request id dans le theme
 //            firstTheme.addComplainRequestId(firstRequest.getId());
-//            secondTheme.addComplainRequestId(secondRequest.getId());
+//            // update theme
+//            themeDao.save(firstTheme);
+//            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>()));
+//            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>()));
 //            // ajout de la response id dans la request
 //            firstRequest.addResponseIdOnRequest(firstResponseFirstRequest.getId());
 //            firstRequest.addResponseIdOnRequest(secondResponseFirstRequest.getId());
+//            // update request
+//            requestDao.save(firstRequest);
+//
+//            ComplainTheme secondTheme = themeDao.save(new ComplainTheme(null, "Méteo","http://photoDeTrucs.com",  "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>()));
+//            ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "seagul", "steven.seagal@gmail.com", yesterday, 0, new ArrayList<>(), new ArrayList<>(), "Méteo", yesterday));
+//            // ajout de la request id dans le theme
+//            secondTheme.addComplainRequestId(secondRequest.getId());
+//            // update theme
+//            themeDao.save(secondTheme);
+//            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", yesterday, new ArrayList<>()));
+//            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", yesterday, new ArrayList<>()));
+//            ComplainResponse thirdResponsesSecondRequest = responseDao.save (new ComplainResponse(null, "pas sur", 0, "steven.seagal@gmail.com", "seagul", yesterday, new ArrayList<>()));
+//            // ajout de la response id dans la request
 //            secondRequest.addResponseIdOnRequest(firstResponseSecondRequest.getId());
 //            secondRequest.addResponseIdOnRequest(secondResponseSecondRequest.getId());
 //            secondRequest.addResponseIdOnRequest(thirdResponsesSecondRequest.getId());
 //            // update request
-//            requestDao.save(firstRequest);
 //            requestDao.save(secondRequest);
-//            // update theme
-//            themeDao.save(firstTheme);
-//            themeDao.save(secondTheme);
 //
 //            // test dto
 //            ComplainUser userFromBdd = userDao.findByEmail("nico.bod@gmail.com");
