@@ -1,3 +1,4 @@
+import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Subscription } from 'rxjs';
 import { ComplainThemeModel } from './../models/ComplainTheme.model';
@@ -29,7 +30,8 @@ export class CreateNewRequestComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private router: Router,
-              private complainThemeService: ComplainThemeService
+              private complainThemeService: ComplainThemeService,
+              private complainRequestService: ComplainRequestService
                ) {
                 this.authService.currentUser.subscribe(x => this.currentUser = x);
                }
@@ -48,7 +50,7 @@ export class CreateNewRequestComponent implements OnInit {
 
   initForm() {
     this.newRequestForm = this.formBuilder.group({
-      request: ['', [Validators.required, Validators.pattern(/[0-9a-zA-Z]{3,}/)]],
+      request: ['', [Validators.required]],
       theme: ['', [Validators.required]]
     });
   }
@@ -66,10 +68,15 @@ export class CreateNewRequestComponent implements OnInit {
     }
     this.loading = true;
 
-    // map
-    let newRequest = new ComplainRequestModel();
+    // map and send to back -> re-rout to main
+    const newRequest = new ComplainRequestModel();
     newRequest.request = this.newRequestForm.get('request').value;
-    // todo envoi au back
+    newRequest.themeName = this.newRequestForm.get('theme').value;
+    newRequest.creatorEmail = this.currentUser.email;
+    newRequest.creatorPseudo = this.currentUser.pseudo;
+    this.complainRequestService.addRequest(newRequest, () => {
+      this.router.navigate(['main']);
+    });
   }
 
   disableSelect(select: boolean) {
