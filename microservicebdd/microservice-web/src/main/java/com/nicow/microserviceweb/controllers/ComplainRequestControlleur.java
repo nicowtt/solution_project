@@ -2,9 +2,7 @@ package com.nicow.microserviceweb.controllers;
 
 import com.nicow.microservicebusiness.contract.ComplainRequestManager;
 import com.nicow.microservicedao.complainDao.ComplainRequestDao;
-import com.nicow.microservicedao.complainDao.ComplainThemeDao;
 import com.nicow.microservicemodel.entities.ComplainRequest;
-import com.nicow.microservicemodel.entities.ComplainTheme;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +24,6 @@ public class ComplainRequestControlleur {
 
     @Autowired
     private ComplainRequestDao complainRequestDao;
-
-    @Autowired
-    private ComplainThemeDao complainThemeDao;
 
     @Autowired
     private ComplainRequestManager complainRequestManager;
@@ -102,23 +97,7 @@ public class ComplainRequestControlleur {
         if (complainRequestSaved.getId() != null) {
             logger.info("new request created by: " + complainRequestInput.getCreatorEmail() + "on: "
                     + complainRequestInput.getCreationDate());
-            ComplainTheme themeOnBdd = complainThemeDao.getByNameEquals(complainRequestSaved.getThemeName());
-            if (themeOnBdd != null) {
-                themeOnBdd.addComplainRequestId(complainRequestSaved.getId());
-                complainThemeDao.save(themeOnBdd);
-                return (new ResponseEntity<>(HttpStatus.OK));
-            } else {
-                ComplainTheme newComplainTheme = new ComplainTheme();
-                newComplainTheme.setCreatorEmail(complainRequestSaved.getCreatorEmail());
-                newComplainTheme.setName(complainRequestSaved.getThemeName());
-                newComplainTheme.setCreationDate(todayDate);
-                newComplainTheme.setComplainRequestsId(new ArrayList<>());
-                newComplainTheme.addComplainRequestId(complainRequestSaved.getId());
-                ComplainTheme newComplainThemeSaved = complainThemeDao.save(newComplainTheme);
-                if (newComplainThemeSaved.getId() != null) {
-                    return (new ResponseEntity<>(HttpStatus.OK));
-                }
-            }
+            return (new ResponseEntity<>(HttpStatus.OK));
         }
         return (new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE));
     }

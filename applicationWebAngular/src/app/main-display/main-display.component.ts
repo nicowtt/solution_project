@@ -1,4 +1,3 @@
-import { ComplainResponseModel } from './../models/ComplainResponse.model';
 import { BottleModel } from './../models/Bottles.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService } from './../services/alert.service';
@@ -7,9 +6,7 @@ import { AuthService } from './../services/auth.service';
 import { Router } from '@angular/router';
 import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
-import { ComplainThemeService } from './../services/ComplainTheme.service';
 import { Subscription } from 'rxjs';
-import { ComplainThemeModel } from './../models/ComplainTheme.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
@@ -19,8 +16,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class MainDisplayComponent implements OnInit, OnDestroy {
 
-  themesList: ComplainThemeModel[];
-  themesSubscription: Subscription;
 
   requestsList: ComplainRequestModel[];
   requestsSubscription: Subscription;
@@ -30,8 +25,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   bottles: BottleModel[] = new Array();
 
-  constructor(private complainThemeService: ComplainThemeService,
-              private complainRequestService: ComplainRequestService,
+  constructor(private complainRequestService: ComplainRequestService,
               private router: Router,
               private authService: AuthService,
               private alertService: AlertService,
@@ -42,14 +36,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // subscription
-    this.themesSubscription = this.complainThemeService.themeSubject.subscribe(
-      (themes: ComplainThemeModel[]) => {
-        this.themesList = themes;
-      }
-    );
-    this.complainThemeService.getAllThemes(() => {
-    });
-
     this.requestsSubscription = this.complainRequestService.requestsSubject.subscribe(
       (requests: ComplainRequestModel[]) => {
         this.requestsList = requests;
@@ -74,7 +60,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.themesSubscription.unsubscribe();
     this.requestsSubscription.unsubscribe();
   }
 

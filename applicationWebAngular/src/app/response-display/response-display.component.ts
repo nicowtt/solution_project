@@ -4,7 +4,6 @@ import { ComplainResponseService } from './../services/ComplainResponse.service'
 import { ComplainUserModel } from './../models/ComplainUser.model';
 import { AuthService } from './../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ComplainThemeService } from './../services/ComplainTheme.service';
 import { ComplainResponseModel } from './../models/ComplainResponse.model';
 import { Subscription } from 'rxjs';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';

@@ -14,8 +14,8 @@
       <mat-form-field appearance="fill">
         <mat-label>thèmes</mat-label>
         <mat-select [disabled]="select" id="theme" formControlName="theme">
-          <mat-option *ngFor="let theme of themesList" [value]="theme.name">
-            {{theme.name}}
+          <mat-option *ngFor="let theme of themesList" [value]="theme">
+            {{theme}}
           </mat-option>
         </mat-select>
       </mat-form-field>
