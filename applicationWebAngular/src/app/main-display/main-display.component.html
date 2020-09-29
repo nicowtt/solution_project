@@ -6,14 +6,14 @@
         <img (click)="showResponses(bottle.requestId)" [ngStyle]="{'top': [bottle.top], 'left': [bottle.left], 'width': [bottle.width]}" class="bouteille" src="/assets/img/bottle.png"
         alt="bottle"
         matTooltip= {{[bottle.requestName]}}
-        [matTooltipPosition]="'above'"
-
-        >
+        [matTooltipPosition]="'above'">
       </div>
-</div>
+    </div>
 
-<div class="row">
-  <div class="col-md-12">
+    <div class="annonce">
+      Les réponses aux sujets sont visible 7 jours...
+    </div>
+
     <div class="newRequest">
       <input (click)="newRequest()" type="text" id="newRequest" class="form-control" placeholder="Créer un nouveau sujet..." />
       <br>
@@ -26,9 +26,9 @@
 <div class="row">
   <div class="col-md-12">
     <div id="MainMenu">
-      <div class="list-group" *ngFor="let request of requestsList; let i = index">
+      <div class="list-group list-group-flush" *ngFor="let request of requestsList; let i = index">
 
-        <a href="#response" class="list-group-item " data-toggle="collapse" data-parent="#MainMenu">
+        <a href="#response" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu">
           <!-- float left -> popularity -->
           <div id="popularity" >
             <button (click)="changePopularity(i, '+')"type="button" class="btn btn-sm" ><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
