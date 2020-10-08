@@ -1,5 +1,6 @@
 <div class="row">
   <div class="col-md-12">
+    
     <div class="parent">
       <img class="fond" src="/assets/img/river2.svg" alt="river">
       <div *ngFor="let bottle of bottles; let i = index">
@@ -18,13 +19,8 @@
       <input (click)="newRequest()" type="text" id="newRequest" class="form-control" placeholder="Créer un nouveau sujet..." />
       <br>
     </div>
-  </div>
-</div>
 
 
-
-<div class="row">
-  <div class="col-md-12">
     <div id="MainMenu">
       <div class="list-group list-group-flush" *ngFor="let request of requestsList; let i = index">
 
@@ -62,5 +58,6 @@
           </div>
         </a>
       </div>
-    </div>
   </div>
+</div>
+

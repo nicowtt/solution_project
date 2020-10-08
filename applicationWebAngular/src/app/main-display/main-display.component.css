@@ -52,7 +52,8 @@
 .annonce {
   position: relative;
   top: -55px;
-  left: 550px;
+  right: 220px;
+  float: right;
   font-style: italic;
 }
 
