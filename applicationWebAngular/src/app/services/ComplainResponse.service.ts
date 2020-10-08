@@ -63,12 +63,31 @@ export class ComplainResponseService {
           onSuccess();
         },
         (error) => {
-          this.snackBar.open("Veuillez recommencer", '', {
+          this.snackBar.open('Veuillez recommencer', '', {
             duration: 3000,
             verticalPosition: 'top'
           });
         }
       );
+  }
+
+  updateResponse(responseToUpdate: ComplainResponseModel) {
+    return this.http
+    .post<ComplainResponseModel>('/updateResponse', responseToUpdate)
+    .subscribe(
+      (response) => {
+        this.snackBar.open('La réponse à été mise à jour', '', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+      },
+      (error) => {
+        this.snackBar.open('erreur ,veuillez recommencer!', '', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+      }
+    );
   }
 
 

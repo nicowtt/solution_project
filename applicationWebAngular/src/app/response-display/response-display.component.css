@@ -39,3 +39,7 @@
 #requestName {
   font-size: 120%;
 }
+
+#modalForModerate {
+  float: right;
+}

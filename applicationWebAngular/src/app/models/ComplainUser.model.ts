@@ -7,6 +7,7 @@ export class ComplainUserModel {
   email: string;
   creationDate: string;
   popularity: number;
+  role: string;
   token: string;
 
   constructor() {}

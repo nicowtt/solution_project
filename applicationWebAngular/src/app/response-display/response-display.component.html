@@ -5,7 +5,7 @@
       <span class="badge badge-info">{{requestConcerned.themeName}}</span>
       <div id="requestName">{{requestConcerned.request}}
         <span id='displayDate'> Posté par {{requestConcerned.creatorPseudo}}
-        il y a {{ requestConcerned.creationDayUntilToday }} jours.</span>
+          il y a {{ requestConcerned.creationDayUntilToday }} jours.</span>
       </div>
       <p></p>
     </div>
@@ -14,37 +14,78 @@
       <form [formGroup]="commentForm" (ngSubmit)="onSubmitResponse(requestConcerned.id)">
         <div class="form-group shadow-textarea">
           <label for="responseArea" id="responseAreaLabel">Repondre en tant que {{[currentUser.name]}}</label>
-          <textarea class="form-control z-depth-1" id="responseArea" formControlName="comment" rows="3" placeholder="Ecrivez..."></textarea>
+          <textarea class="form-control z-depth-1" id="responseArea" formControlName="comment" rows="3"
+            placeholder="Ecrivez..."></textarea>
           <button class="btn btn-primary" style="float: right; margin-top: 5px" type="submit">Envoyer</button>
         </div>
       </form>
-    <br>
+      <br>
 
     </div>
 
     <div id="Response">
       <div class="list-group list-group-flush" id="response" *ngFor="let response of requestResponses; let i = index">
-        <div class="list-group-item" >
-           <!-- float left -> popularity -->
-        <div id="popularity" >
-          <button (click)="changePopularity(i, '+')"type="button" class="btn btn-sm" ><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
-          </svg></button>
+        <div class="list-group-item">
+          <!-- float left -> popularity -->
+          <div id="popularity">
+            <button (click)="changePopularity(i, '+')" type="button" class="btn btn-sm"><svg width="1em" height="1em"
+                viewBox="0 0 16 16" class="bi bi-caret-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M3.204 11L8 5.519 12.796 11H3.204zm-.753-.659l4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z" />
+              </svg></button>
 
-          <div id="score">{{response.popularity}}</div>
+            <div id="score">{{response.popularity}}</div>
 
-          <button (click)="changePopularity(i, '-')"type="button" class="btn btn-sm" >
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M3.204 5L8 10.481 12.796 5H3.204zm-.753.659l4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
-            </svg>
-          </button>
-        </div>
-        <!---->
+            <button (click)="changePopularity(i, '-')" type="button" class="btn btn-sm">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                  d="M3.204 5L8 10.481 12.796 5H3.204zm-.753.659l4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z" />
+              </svg>
+            </button>
+          </div>
+          <!---->
 
-        <div id="response">{{response.response}}</div>
-        <div id='displayForAndDate'> Posté par {{ response.creatorPseudo}}
-          il y a {{ response.dayUntilToday }} jours.</div>
+          <div id="response">{{response.response}}
+            <span>
+
+
+          <div id="modalForModerate" *ngIf= "userConnectedIsModerator">
+            <!-- Button trigger modal -->
+            <button type="button" (click)="preFill(response.response)" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+              moderate
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <form [formGroup]="moderateForm" (ngSubmit)="onSubmitModerate(response)">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <input type="text" id="responseModerate" class="form-control" formControlName="responseModerate"
+                          class="form-control" value= {{response.response}}>
+
+                          <button class="btn btn-outline-secondary"  type="submit" id="buttonNewModerate" >
+                            Moderate
+                          </button>
+
+
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
+          <div id='displayForAndDate'> Posté par {{ response.creatorPseudo}}
+            il y a {{ response.dayUntilToday }} jours.</div>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>

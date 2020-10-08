@@ -19,6 +19,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   currentUser: ComplainUserModel;
   userConnected: boolean;
+  userConnectedIsModerator: boolean;
 
   requestSubscription: Subscription;
   requestConcerned: ComplainRequestModel;
@@ -29,6 +30,8 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   requestResponses: ComplainResponseModel[] = [];
 
   commentForm: FormGroup;
+  moderateForm: FormGroup;
+  preFillresponse: string;
 
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
@@ -55,6 +58,12 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
       // if request is here -> subscription to responses concerned
       this.updateResponses();
       });
+    // moderateur value
+    if (this.currentUser.role === 'ADMIN') {
+      this.userConnectedIsModerator = true;
+    } else {
+      this.userConnectedIsModerator = false;
+    }
   }
 
   updateResponses() {
@@ -75,11 +84,19 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.commentForm = this.formBuilder.group({
       comment: [''],
     });
+    this.moderateForm = this.formBuilder.group({
+      responseModerate: [this.preFillresponse],
+    });
   }
 
   ngOnDestroy() {
     this.requestSubscription.unsubscribe();
     this.requestResponsesSubscription.unsubscribe();
+  }
+
+  preFill(response: string) {
+    this.preFillresponse = response;
+    this.initForm();
   }
 
   onSubmitResponse(requestId: string) {
@@ -138,6 +155,12 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
       comparison = -1;
     }
     return comparison;
+  }
+
+  onSubmitModerate(response: ComplainResponseModel) {
+    response.response = this.moderateForm.get('responseModerate').value;
+
+    this.complainResponseService.updateResponse(response);
   }
 
 }
