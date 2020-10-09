@@ -5,8 +5,6 @@ emicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/dt
 gmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainUser.java,8/7/875295de973133579fdb758ec6b8e5fbeb99071a
 †
 pmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/SubscriptionThemeUser.java,0/d/0dfd40c24831d8d08ff2260cd8d277d7855abedb
-ò
-hmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainTheme.java,4/5/451cda6e25117a5a3052c38ecf7298bd27d2a867
 õ
 kmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainResponse.java,8/6/86262533f32770ce58f7d02bffee78b5bf1e1972
 ö
@@ -43,8 +41,6 @@ Z
 wmicroservicebdd/microservice-model/src/test/java/com/nicow/microservicemodel/mapperUnitTest/ComplainUserMapperTest.java,7/6/76c1e2b7ed99459f50852b299219edb1b32f68c1
 ®
 xmicroservicebdd/microservice-model/src/test/java/com/nicow/microservicemodel/entitiesTest/SubscriptionThemeUserTest.java,3/4/34f427a4fdedb9a0df620ab1b119aff4c9094506
-†
-pmicroservicebdd/microservice-model/src/test/java/com/nicow/microservicemodel/entitiesTest/ComplainThemeTest.java,d/d/dd1004c745461b1a07e7d0e87f61a2fc128f1d7d
 £
 smicroservicebdd/microservice-model/src/test/java/com/nicow/microservicemodel/entitiesTest/ComplainResponseTest.java,9/d/9dccf9c1615215bfcbf5c28d5f0f9036dc18bd5f
 ¢
@@ -73,14 +69,10 @@ fmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/config
 tmicroservicebdd/microservice-business/src/main/java/com/nicow/microservicebusiness/contract/ComplainUserManager.java,8/b/8bc52f26740dd56167ddcd182265af16d315b803
 •
 umicroservicebdd/microservice-web/src/test/java/com/nicow/microserviceweb/controllersIntegritiesTest/UtilsForTest.java,2/e/2e7adc4a007c896a5d8dd956bb936b3079d13e05
-°
-qmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainThemeController.java,5/7/57b190d6fbceb36426f66e77302277b5d9c34490
 §
 tmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainRequestControlleur.java,e/f/ef35f30c1ce1c3c7684e9e8a98bfcc1fb31c0236
 ô
 imicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainUserDao.java,f/b/fb54152ca360ab4f912d055f3128c501205b47a2
-ö
-jmicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainThemeDao.java,0/f/0f1dcf153e397a3043f2538787a00f728668b1ba
 ú
 lmicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainRequestDao.java,c/d/cdcbc2f61c197ec145bcc29e999cced31b31b780
 ß
@@ -111,5 +103,3 @@ m
 =applicationWebAngular/src/app/auth/signin/signin.component.ts,2/f/2ff251850fc22e8e1fd42ba69cc6bd291fa210bb
 Ä
 PapplicationWebAngular/src/app/create-new-request/create-new-request.component.ts,4/d/4dd80d631d23d65468c7fb1c4ff58a24b32e0953
-æ
-çmicroservicebdd/microservice-web/src/test/java/com/nicow/microserviceweb/controllersIntegritiesTest/ComplainThemeControllerIntegrityTest.java,3/8/38bd2cc8475179404160fbc9a0f52a2da30e6210

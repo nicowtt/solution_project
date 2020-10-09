@@ -20,7 +20,6 @@
         </div>
       </form>
       <br>
-
     </div>
 
     <div id="Response">
@@ -46,46 +45,45 @@
           </div>
           <!---->
 
-          <div id="response">{{response.response}}
-            <span>
+          <div id="response">{{response.response}}</div>
 
-
-          <div id="modalForModerate" *ngIf= "userConnectedIsModerator">
-            <!-- Button trigger modal -->
-            <button type="button" (click)="preFill(response.response)" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+          <!-- Button for run modal -->
+          <div id="modalForModerate" *ngIf="userConnectedIsModerator">
+            <button class="btn btn-danger sm" id="modalForModerate" data-toggle="modal" data-target="#moderateModal"
+              (click)="preFill(response)">
               moderate
             </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <form [formGroup]="moderateForm" (ngSubmit)="onSubmitModerate(response)">
-                      <div class="form-group">
-                        <div class="input-group">
-                          <input type="text" id="responseModerate" class="form-control" formControlName="responseModerate"
-                          class="form-control" value= {{response.response}}>
-
-                          <button class="btn btn-outline-secondary"  type="submit" id="buttonNewModerate" >
-                            Moderate
-                          </button>
-
-
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-        </span>
+          <!---->
+
           <div id='displayForAndDate'> Posté par {{ response.creatorPseudo}}
             il y a {{ response.dayUntilToday }} jours.</div>
-
-          </div>
         </div>
       </div>
     </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="moderateModal" tabindex="-1" aria-labelledby="moderateModal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <form [formGroup]="moderateForm">
+                <div class="form-group">
+                  <div class="input-group">
+                    <input type="text" id="responseModerate" class="form-control" formControlName="responseModerate"
+                      class="form-control">
+                    <button class="btn btn-outline-secondary" type="submit" id="buttonNewModerate"
+                      (click)="onSubmitModerate()">
+                      Moderate
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---->
+
+  </div>
+</div>

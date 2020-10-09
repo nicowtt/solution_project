@@ -31,7 +31,9 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   commentForm: FormGroup;
   moderateForm: FormGroup;
+
   preFillresponse: string;
+  moderateResponse: ComplainResponseModel;
 
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
@@ -94,8 +96,9 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.requestResponsesSubscription.unsubscribe();
   }
 
-  preFill(response: string) {
-    this.preFillresponse = response;
+  preFill(response: ComplainResponseModel) {
+    this.preFillresponse = response.response;
+    this.moderateResponse = response;
     this.initForm();
   }
 
@@ -157,10 +160,10 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     return comparison;
   }
 
-  onSubmitModerate(response: ComplainResponseModel) {
-    response.response = this.moderateForm.get('responseModerate').value;
-
-    this.complainResponseService.updateResponse(response);
+  onSubmitModerate() {
+    this.moderateResponse.response = this.moderateForm.get('responseModerate').value;
+    console.log(this.moderateResponse);
+    this.complainResponseService.updateResponse(this.moderateResponse);
   }
 
 }
