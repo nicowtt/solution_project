@@ -8,7 +8,7 @@ export class ComplainResponseModel {
     creatorEmail: string;
     creatorPseudo: string;
     complainUserId: number;
-    complainRequestId: string;
+    requestId: string;
 
     constructor() {}
 }

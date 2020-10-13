@@ -109,7 +109,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     response.creatorEmail = this.currentUser.email;
     response.response = this.commentForm.get('comment').value;
     response.creationDate = new Date().toLocaleString();
-    response.complainRequestId = requestId;
+    response.requestId = requestId;
     console.log(response.toString());
     this.complainResponseService.addResponse(response, requestId, () => {
       this.updateResponses();
@@ -165,5 +165,14 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     console.log(this.moderateResponse);
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
+
+  deleteResponse(index: number) {
+    if(confirm('Supprimer cette réponse?')) {
+        this.complainResponseService.deleteResponse(this.requestResponses[index], () => {
+          this.requestResponses.splice(index, 1);
+          console.log(this.requestResponses);
+        });
+      }
+    }
 
 }

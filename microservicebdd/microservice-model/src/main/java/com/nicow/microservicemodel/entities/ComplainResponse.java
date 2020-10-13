@@ -17,13 +17,15 @@ public class ComplainResponse {
     private String creatorPseudo;
     private String creationDate;
     private List<String> userWhoChangePopularityList;
+    private String requestId;
 
 
     // constructor
     public ComplainResponse() {
     }
 
-    public ComplainResponse(String id, String response, int popularity, String creatorEmail, String creatorPseudo, String creationDate, List<String> userWhoChangePopularityList) {
+    public ComplainResponse(String id, String response, int popularity, String creatorEmail, String creatorPseudo,
+                            String creationDate, List<String> userWhoChangePopularityList, String requestId) {
         this.id = id;
         this.response = response;
         this.popularity = popularity;
@@ -31,6 +33,7 @@ public class ComplainResponse {
         this.creatorPseudo = creatorPseudo;
         this.creationDate = creationDate;
         this.userWhoChangePopularityList = userWhoChangePopularityList;
+        this.requestId = requestId;
     }
 
     // getters and setters
@@ -86,6 +89,14 @@ public class ComplainResponse {
         this.userWhoChangePopularityList = userWhoChangePopularityList;
     }
 
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
     // to string
     @Override
     public String toString() {
@@ -97,6 +108,7 @@ public class ComplainResponse {
                 ", creatorPseudo='" + creatorPseudo + '\'' +
                 ", creationDate='" + creationDate + '\'' +
                 ", userWhoChangePopularityList=" + userWhoChangePopularityList +
+                ", requestId='" + requestId + '\'' +
                 '}';
     }
 

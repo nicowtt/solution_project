@@ -90,6 +90,26 @@ export class ComplainResponseService {
     );
   }
 
+  deleteResponse(responseToDelete: ComplainResponseModel, onSuccess: any) {
+    return this.http
+    .post<ComplainResponseModel>('/deleteResponse', responseToDelete)
+    .subscribe(
+      (response) => {
+        this.snackBar.open('reponse suprimmée', '', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+        onSuccess();
+      },
+      (error) => {
+        this.snackBar.open('erreur, veuillez recommencez', '', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+      }
+    );
+  }
+
 
 
 }

@@ -65,8 +65,8 @@ public class MicroserviceWebApplication {
 
             ComplainRequest firstRequest = requestDao.save (new ComplainRequest(null, "debut du confinement trop tard!", "nicow", "nico.bod@gmail.com", todayDate, 0, new ArrayList<>(), new ArrayList<>(), "corona-virus", todayDate));
             // creation of response
-            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>()));
-            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>()));
+            ComplainResponse firstResponseFirstRequest = responseDao.save (new ComplainResponse(null, "pas d'accord, il y aurais plus de mort!", 0, "steven.seagal@gmail.com" , "seagul", todayDate, new ArrayList<>(), firstRequest.getId()));
+            ComplainResponse secondResponseFirstRequest = responseDao.save (new ComplainResponse(null, "d'accord, ça aurais été mieux", 0, "nico.bod@gmail.com", "nicow", todayDate, new ArrayList<>(), firstRequest.getId()));
             // ajout de la response id dans la request
             firstRequest.addResponseIdOnRequest(firstResponseFirstRequest.getId());
             firstRequest.addResponseIdOnRequest(secondResponseFirstRequest.getId());
@@ -76,9 +76,15 @@ public class MicroserviceWebApplication {
             ComplainRequest secondRequest = requestDao.save (new ComplainRequest(null, "temp pourris la semaine prochaine", "seagul", "steven.seagal@gmail.com", yesterday, 0, new ArrayList<>(), new ArrayList<>(), "Méteo", yesterday));
             // ajout de la request id dans le theme
             // create responses
-            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null, "c'est vrai", 0, "nico.bod@gmail.com", "nicow", yesterday, new ArrayList<>()));
-            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null, "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", yesterday, new ArrayList<>()));
-            ComplainResponse thirdResponsesSecondRequest = responseDao.save (new ComplainResponse(null, "pas sur", 0, "steven.seagal@gmail.com", "seagul", yesterday, new ArrayList<>()));
+            ComplainResponse firstResponseSecondRequest = responseDao.save (new ComplainResponse(null,
+                    "c'est vrai", 0, "nico.bod@gmail.com", "nicow", yesterday,
+                    new ArrayList<>(), secondRequest.getId()));
+            ComplainResponse secondResponseSecondRequest = responseDao.save (new ComplainResponse(null,
+                    "non pas le samedi", 0, "steven.seagal@gmail.com" , "seagul", yesterday,
+                    new ArrayList<>(), secondRequest.getId()));
+            ComplainResponse thirdResponsesSecondRequest = responseDao.save (new ComplainResponse(null,
+                    "pas sur", 0, "steven.seagal@gmail.com", "seagul", yesterday,
+                    new ArrayList<>(), secondRequest.getId()));
             // ajout de la response id dans la request
             secondRequest.addResponseIdOnRequest(firstResponseSecondRequest.getId());
             secondRequest.addResponseIdOnRequest(secondResponseSecondRequest.getId());

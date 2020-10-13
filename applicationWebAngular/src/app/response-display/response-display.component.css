@@ -43,3 +43,9 @@
 #modalForModerate {
   float: right;
 }
+
+#deleteResponse {
+  float: right;
+  margin-left: 5px;
+}
+

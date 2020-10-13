@@ -20,7 +20,7 @@ public class ComplainRequest {
     private int popularity;
     private List<String> userWhoChangePopularityList;
 //    @DBRef(lazy = true)
-    private Collection<String> complainResponsesId;
+    private List<String> complainResponsesId;
     private String themeName;
     private String lastResponseDate;
 
@@ -30,7 +30,7 @@ public class ComplainRequest {
 
     public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate,
                            int popularity, List<String> userWhoChangePopularityList,
-                           Collection<String> complainResponsesId, String themeName,
+                           List<String> complainResponsesId, String themeName,
                            String lastResponseDate) {
         this.id = id;
         this.request = request;
@@ -101,11 +101,11 @@ public class ComplainRequest {
         this.userWhoChangePopularityList = userWhoChangePopularityList;
     }
 
-    public Collection<String> getComplainResponsesId() {
+    public List<String> getComplainResponsesId() {
         return complainResponsesId;
     }
 
-    public void setComplainResponsesId(Collection<String> complainResponsesId) {
+    public void setComplainResponsesId(List<String> complainResponsesId) {
         this.complainResponsesId = complainResponsesId;
     }
 

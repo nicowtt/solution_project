@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -125,6 +126,31 @@ public class ComplainResponseControlleur {
         ComplainResponse updatedResponse = complainResponseDao.save(complainResponseInput);
         if (updatedResponse != null) {
             logger.info("la reponse d'id: " + updatedResponse.getId() + " à été maj");
+            return (new ResponseEntity<>(HttpStatus.OK));
+        } else {
+            return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
+
+    @PostMapping(value = "/deleteResponse", consumes = "application/json")
+    public ResponseEntity<String> deleteResponse(
+            @RequestBody ComplainResponse complainResponseInput) {
+        // get list of response on request
+        Optional<ComplainRequest> requestOnBdd = complainRequestDao.findById(complainResponseInput.getRequestId());
+        if (requestOnBdd.isPresent()) {
+            // update list of Response on request and save updated request
+            ComplainRequest requestUpdated = requestOnBdd.get();
+            List<String> responsesList = requestUpdated.getComplainResponsesId();
+            List<String> updatedResponsesList = new ArrayList<>();
+            for (String responseId: responsesList ) {
+                if (!responseId.equals(complainResponseInput.getId())) {
+                    updatedResponsesList.add(responseId);
+                }
+            }
+            requestUpdated.setComplainResponsesId(updatedResponsesList);
+            complainRequestDao.save(requestUpdated);
+            // delete response
+            complainResponseDao.delete(complainResponseInput);
             return (new ResponseEntity<>(HttpStatus.OK));
         } else {
             return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
