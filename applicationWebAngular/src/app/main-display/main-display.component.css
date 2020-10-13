@@ -1,4 +1,7 @@
 
+.raw {
+  font-family: georgia, "trebuchet ms", arial, serif;
+}
 
 .list-group.panel > .list-group-item {
   border-bottom-right-radius: 4px;
@@ -21,5 +24,36 @@
   margin-left: 10px;
 }
 
+#displayForAndDate {
+  font-size: 70%;
+}
 
+.parent {
+  position: relative;
+  top: 0px;
+  right: 100px;
+  width: 750px;
+  height: auto;
+  margin-bottom: 25px;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.fond {
+  position: relative;
+  top: 0px;
+  border-radius: 25px;
+}
+.bouteille {
+  position: absolute;
+  height: auto;
+}
+
+.annonce {
+  position: relative;
+  top: -55px;
+  right: 220px;
+  float: right;
+  font-style: italic;
+}
 

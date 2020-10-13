@@ -20,14 +20,18 @@ public class ComplainRequest {
     private int popularity;
     private List<String> userWhoChangePopularityList;
 //    @DBRef(lazy = true)
-    private Collection<ComplainResponse> complainResponses=new ArrayList<>();
+    private List<String> complainResponsesId;
     private String themeName;
+    private String lastResponseDate;
 
     // constructor
     public ComplainRequest() {
     }
 
-    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate, int popularity, List<String> userWhoChangePopularityList, Collection<ComplainResponse> complainResponses, String themeName) {
+    public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate,
+                           int popularity, List<String> userWhoChangePopularityList,
+                           List<String> complainResponsesId, String themeName,
+                           String lastResponseDate) {
         this.id = id;
         this.request = request;
         this.creatorPseudo = creatorPseudo;
@@ -35,8 +39,9 @@ public class ComplainRequest {
         this.creationDate = creationDate;
         this.popularity = popularity;
         this.userWhoChangePopularityList = userWhoChangePopularityList;
-        this.complainResponses = complainResponses;
+        this.complainResponsesId = complainResponsesId;
         this.themeName = themeName;
+        this.lastResponseDate = lastResponseDate;
     }
 
     // getters and setters
@@ -88,10 +93,6 @@ public class ComplainRequest {
         this.popularity = popularity;
     }
 
-    public Collection<ComplainResponse> getComplainResponses() {
-        return complainResponses;
-    }
-
     public List<String> getUserWhoChangePopularityList() {
         return userWhoChangePopularityList;
     }
@@ -100,8 +101,12 @@ public class ComplainRequest {
         this.userWhoChangePopularityList = userWhoChangePopularityList;
     }
 
-    public void setComplainResponses(Collection<ComplainResponse> complainResponses) {
-        this.complainResponses = complainResponses;
+    public List<String> getComplainResponsesId() {
+        return complainResponsesId;
+    }
+
+    public void setComplainResponsesId(List<String> complainResponsesId) {
+        this.complainResponsesId = complainResponsesId;
     }
 
     public String getThemeName() {
@@ -110,6 +115,14 @@ public class ComplainRequest {
 
     public void setThemeName(String themeName) {
         this.themeName = themeName;
+    }
+
+    public String getLastResponseDate() {
+        return lastResponseDate;
+    }
+
+    public void setLastResponseDate(String lastResponseDate) {
+        this.lastResponseDate = lastResponseDate;
     }
 
     // to string
@@ -122,8 +135,10 @@ public class ComplainRequest {
                 ", creatorEmail='" + creatorEmail + '\'' +
                 ", creationDate='" + creationDate + '\'' +
                 ", popularity=" + popularity +
-                ", complainResponses=" + complainResponses +
+                ", userWhoChangePopularityList=" + userWhoChangePopularityList +
+                ", complainResponsesId=" + complainResponsesId +
                 ", themeName='" + themeName + '\'' +
+                ", lastResponseDate='" + lastResponseDate + '\'' +
                 '}';
     }
 
@@ -131,4 +146,5 @@ public class ComplainRequest {
     public void addUserWhoIncreasePopularity(String userInput) {
         this.userWhoChangePopularityList.add(userInput);
     }
+    public void addResponseIdOnRequest(String responseId) { this.complainResponsesId.add(responseId); }
 }

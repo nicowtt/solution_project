@@ -1,15 +1,9 @@
 package com.nicow.microserviceweb.controllersIntegritiesTest;
 
-import com.nicow.microservicebusiness.impl.ComplainrequestManagerImpl;
-import com.nicow.microservicebusiness.securitytoken.JwtUserDetailsService;
 import com.nicow.microservicedao.complainDao.ComplainRequestDao;
-import com.nicow.microservicedao.complainDao.ComplainThemeDao;
 import com.nicow.microservicedao.complainDao.ComplainUserDao;
-import com.nicow.microservicemodel.dto.ComplainUserDto;
 import com.nicow.microservicemodel.entities.*;
 import com.nicow.microserviceweb.controllers.ComplainRequestControlleur;
-import com.nicow.microserviceweb.controllers.ComplainUserController;
-import com.nicow.microserviceweb.security.JwtTokenUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,12 +40,8 @@ public class ComplainRequestControllerIntegrityTest extends UtilsForTest{
     private ComplainUserDao userDao;
 
     @Autowired
-    private ComplainThemeDao themeDao;
-
-    @Autowired
     private ComplainRequestDao requestDao;
 
-    private ComplainTheme complainTheme;
     private ComplainRequest complainRequest;
     private ComplainUser complainUser;
 
@@ -67,14 +57,10 @@ public class ComplainRequestControllerIntegrityTest extends UtilsForTest{
                 "test@test.com", "mdp",
                 0, null, null, "ADMIN"));
 
-        complainTheme = themeDao.save(new ComplainTheme(null, "corona-virus",
-                "http://photoDeTrucs.com",  "test@test.com", null,
-                0, new ArrayList<>(), new ArrayList<>()));
-
         complainRequest = requestDao.save (new ComplainRequest(null,
                 "debut du confinement trop tard!", "nicow", "test@test.com",
                 null, 0, userAlreadyVoteList, new ArrayList<>(),
-                "corona-virus"));
+                "corona-virus", null));
 
     }
 
@@ -82,7 +68,6 @@ public class ComplainRequestControllerIntegrityTest extends UtilsForTest{
     public void CleanAfter() {
         Query query = new Query();
         query.addCriteria(Criteria.where("creatorEmail").is("test@test.com"));
-        mongoTemplate.remove(query, ComplainTheme.class);
         mongoTemplate.remove(query, ComplainRequest.class);
         Query query2 = new Query();
         query.addCriteria(Criteria.where("email").is("test@test.com"));

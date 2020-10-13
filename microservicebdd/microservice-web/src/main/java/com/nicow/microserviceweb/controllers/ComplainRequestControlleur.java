@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,13 +28,21 @@ public class ComplainRequestControlleur {
     @Autowired
     private ComplainRequestManager complainRequestManager;
 
+    /**
+     * to get all requests
+     * @return all requests
+     */
     @GetMapping(value = "/getAllRequests")
     public List<ComplainRequest> getAllRequests() {
-        List requestList = new ArrayList();
-        requestList = complainRequestDao.findAll();
-        return requestList;
+        return complainRequestDao.findAll();
     }
 
+    /**
+     * to change request popularity
+     * @param userPseudoInput
+     * @param complainRequestInput
+     * @return 200 if ok
+     */
     @PostMapping(value = "/changeRequestPopularity/{userPseudoInput}", consumes = "application/json")
     public ResponseEntity<String> changeRequestPopularity(
             @PathVariable String userPseudoInput,
@@ -54,5 +64,41 @@ public class ComplainRequestControlleur {
         } else {
             return (new ResponseEntity<>(HttpStatus.FORBIDDEN));
         }
+    }
+
+    /**
+     * to get only one request
+     * @param requestId
+     * @return the request
+     */
+    @GetMapping(value = "/getOneRequest/{requestId}")
+    public Optional<ComplainRequest> getOneRequest(@PathVariable String requestId) {
+        return complainRequestDao.findById(requestId);
+    }
+
+    /**
+     * to create new request
+     * @param complainRequestInput
+     * @return 200 if ok
+     */
+    @PostMapping(value = "/newRequest", consumes = "application/json")
+    public ResponseEntity<String> addRequest(
+            @RequestBody ComplainRequest complainRequestInput) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Date date = new Date();
+        String todayDate = dateFormat.format(date);
+
+        complainRequestInput.setCreationDate(todayDate);
+        complainRequestInput.setUserWhoChangePopularityList(new ArrayList<>());
+        complainRequestInput.setComplainResponsesId(new ArrayList<>());
+        complainRequestInput.setLastResponseDate(todayDate);
+
+        ComplainRequest complainRequestSaved = complainRequestDao.save(complainRequestInput);
+        if (complainRequestSaved.getId() != null) {
+            logger.info("new request created by: " + complainRequestInput.getCreatorEmail() + "on: "
+                    + complainRequestInput.getCreationDate());
+            return (new ResponseEntity<>(HttpStatus.OK));
+        }
+        return (new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE));
     }
 }

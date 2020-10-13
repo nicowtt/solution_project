@@ -16,7 +16,7 @@ public class ComplainRequestTest {
         complainRequest.setCreationDate(null);
         complainRequest.setPopularity(0);
         complainRequest.setRequest("deconfinement trop rapide?");
-        complainRequest.setComplainResponses(null);
+        complainRequest.setComplainResponsesId(null);
 
         Assert.assertEquals("ComplainRequest{id='1', request='deconfinement trop rapide?', " +
                 "creatorEmail='test@test.com', creationDate=null, popularity=0, complainResponses=null}",

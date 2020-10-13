@@ -1,0 +1,54 @@
+<div class="raw">
+  <div class="col-md-12 ">
+
+    <h2 id="frontTitle">Nouveau sujet:</h2>
+
+    <form [formGroup]="newRequestForm" (ngSubmit)="onSubmit()">
+
+      <br>
+      <p>
+        <mat-checkbox (click)="disableSelect(select)">Créer thème</mat-checkbox>
+      </p>
+
+      <!-- select-->
+      <mat-form-field appearance="fill">
+        <mat-label>thèmes</mat-label>
+        <mat-select [disabled]="select" id="theme" formControlName="theme">
+          <mat-option *ngFor="let theme of themesList" [value]="theme">
+            {{theme}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- new theme-->
+        <div class="form-group" *ngIf="select">
+          <label for="theme">Nouveau thème: </label>
+          <input type="text" id="theme" class="form-control" formControlName="theme" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f.theme.errors }" />
+          <p></p>
+          <div *ngIf="submitted && f.theme.errors" class="invalid-feedback">
+            <div class="error" *ngIf="f.theme.errors.required">Theme requis</div>
+          </div>
+        </div>
+
+      <!-- new request-->
+      <div class="form-group">
+        <label for="request">Sujet:</label>
+        <input type="text" id="request" class="form-control" formControlName="request" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.request.errors }" />
+        <p></p>
+        <div *ngIf="submitted && f.request.errors" class="invalid-feedback">
+          <div class="error" *ngIf="f.request.errors.required">Sujet requis</div>
+        </div>
+      </div>
+
+        <button [disabled]="loading" class="btn btn-primary" type="submit" id="buttonNewRequest">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Créer
+        </button>
+
+    </form>
+
+  </div>
+</div>
+

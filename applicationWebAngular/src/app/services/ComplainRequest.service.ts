@@ -15,11 +15,16 @@ export class ComplainRequestService {
               private snackBar: MatSnackBar) {}
 
     private requestsList: ComplainRequestModel[] = [];
+    private request: ComplainRequestModel;
 
-    requestSubject = new Subject<ComplainRequestModel[]>();
+    requestsSubject = new Subject<ComplainRequestModel[]>();
+    requestSubject = new Subject<ComplainRequestModel>();
 
     emitRequests() {
-      this.requestSubject.next(this.requestsList);
+      this.requestsSubject.next(this.requestsList);
+    }
+    emitRequest() {
+      this.requestSubject.next(this.request);
     }
 
     getAllRequests(onSuccess: Function) {
@@ -33,6 +38,22 @@ export class ComplainRequestService {
         },
         (error) => {
           console.log('erreur de chargement des thèmes!' + error);
+          this.alertService.error('erreur reseau, veuillez recommencez!');
+        }
+      );
+    }
+
+    getOneRequest(requestId: number, onSuccess: Function) {
+      this.http
+      .get<ComplainRequestModel>('/getOneRequest/' + requestId )
+      .subscribe(
+        (response) => {
+          this.request = response;
+          this.emitRequest();
+          onSuccess();
+        },
+        (error) => {
+          console.log('erreur lors du chargement de la request!' + error);
           this.alertService.error('erreur reseau, veuillez recommencez!');
         }
       );
@@ -54,4 +75,19 @@ export class ComplainRequestService {
       );
     }
 
+    addRequest(newRequest: ComplainRequestModel, onSucces: Function) {
+      return this.http
+      .post<ComplainRequestModel>('/newRequest', newRequest)
+      .subscribe(
+        (response) => {
+          onSucces();
+        },
+        (error) => {
+          this.snackBar.open('Ooups!, Veuillez recommencer.', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      );
+    }
 }

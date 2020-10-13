@@ -1,16 +1,26 @@
-import { ComplainResponseModel } from './ComplainResponse.model';
 export class ComplainRequestModel {
 
-    id: number;
+    id: string;
     request: string;
     complainUserId: number;
     creatorPseudo: string;
     creatorEmail: string;
     creationDate: string;
+    creationDayUntilToday: number;
     popularity: number;
     nbrResponse: number;
     themeName: string;
-    complainResponses: ComplainResponseModel[];
+    complainResponsesId: string;
+    lastResponseDate: number;
 
     constructor() {}
+
+    toString() {
+      return '{ ' +
+              'request: ' + this.request +
+              ' complainUserId: ' + this.complainUserId +
+              '}';
+    }
+
+
 }

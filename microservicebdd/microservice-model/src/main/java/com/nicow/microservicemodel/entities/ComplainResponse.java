@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "complainresponse")
 public class ComplainResponse {
@@ -15,18 +16,24 @@ public class ComplainResponse {
     private String creatorEmail;
     private String creatorPseudo;
     private String creationDate;
+    private List<String> userWhoChangePopularityList;
+    private String requestId;
+
 
     // constructor
     public ComplainResponse() {
     }
 
-    public ComplainResponse(String id, String response, int popularity, String creatorEmail, String creatorPseudo, String creationDate) {
+    public ComplainResponse(String id, String response, int popularity, String creatorEmail, String creatorPseudo,
+                            String creationDate, List<String> userWhoChangePopularityList, String requestId) {
         this.id = id;
         this.response = response;
         this.popularity = popularity;
         this.creatorEmail = creatorEmail;
         this.creatorPseudo = creatorPseudo;
         this.creationDate = creationDate;
+        this.userWhoChangePopularityList = userWhoChangePopularityList;
+        this.requestId = requestId;
     }
 
     // getters and setters
@@ -74,6 +81,22 @@ public class ComplainResponse {
         this.creationDate = creationDate;
     }
 
+    public List<String> getUserWhoChangePopularityList() {
+        return userWhoChangePopularityList;
+    }
+
+    public void setUserWhoChangePopularityList(List<String> userWhoChangePopularityList) {
+        this.userWhoChangePopularityList = userWhoChangePopularityList;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
     // to string
     @Override
     public String toString() {
@@ -83,7 +106,14 @@ public class ComplainResponse {
                 ", popularity=" + popularity +
                 ", creatorEmail='" + creatorEmail + '\'' +
                 ", creatorPseudo='" + creatorPseudo + '\'' +
-                ", creationDate=" + creationDate +
+                ", creationDate='" + creationDate + '\'' +
+                ", userWhoChangePopularityList=" + userWhoChangePopularityList +
+                ", requestId='" + requestId + '\'' +
                 '}';
+    }
+
+    // methods
+    public void addUserWhoIncreasePopularity(String userInput) {
+        this.userWhoChangePopularityList.add(userInput);
     }
 }
