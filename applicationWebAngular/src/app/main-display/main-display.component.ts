@@ -16,6 +16,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class MainDisplayComponent implements OnInit, OnDestroy {
 
+  userConnectedIsModerator: Boolean;
 
   requestsList: ComplainRequestModel[];
   requestsSubscription: Subscription;
@@ -54,6 +55,11 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     // user connected
     if (this.authService.currentUserValue) {
       this.userConnected = true;
+      if (this.currentUser.role === 'ADMIN') {
+        this.userConnectedIsModerator = true;
+      } else {
+        this.userConnectedIsModerator = false;
+      }
     } else {
       this.userConnected = false;
     }
@@ -160,5 +166,13 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   newRequest() {
     this.router.navigate(['/newRequest']);
+  }
+
+  deleteRequest(index: number) {
+    if(confirm('Supprimer cette requête?')) {
+      this.complainRequestService.deleteRequest(this.requestsList[index], () => {
+        this.requestsList.splice(index, 1);
+      });
+    }
   }
 }

@@ -90,4 +90,20 @@ export class ComplainRequestService {
         }
       );
     }
+
+    deleteRequest(requestToDelete: ComplainRequestModel, onSucces: Function) {
+      return this.http
+      .post<ComplainRequestModel>('/deleteRequest', requestToDelete)
+      .subscribe(
+        (response) => {
+          onSucces();
+        },
+        (error) => {
+          this.snackBar.open('Veuillez recommencez.', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      );
+    }
 }
