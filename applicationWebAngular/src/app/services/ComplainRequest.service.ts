@@ -106,4 +106,23 @@ export class ComplainRequestService {
         }
       );
     }
+
+    updateRequest(requestToUpdate: ComplainRequestModel) {
+      return this.http
+      .post<ComplainRequestModel>('/updateRequest', requestToUpdate)
+      .subscribe(
+        (response) => {
+          this.snackBar.open('La réquest à été mise à jour', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        },
+        (error) => {
+          this.snackBar.open('erreur ,veuillez recommencer!', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      );
+    }
 }

@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { BottleModel } from './../models/Bottles.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService } from './../services/alert.service';
@@ -16,7 +17,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class MainDisplayComponent implements OnInit, OnDestroy {
 
-  userConnectedIsModerator: Boolean;
+  userConnectedIsModerator: boolean;
 
   requestsList: ComplainRequestModel[];
   requestsSubscription: Subscription;
@@ -26,16 +27,23 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   bottles: BottleModel[] = new Array();
 
+  preFillRequest: string;
+  moderateRequest: ComplainRequestModel;
+
+  moderateForm: FormGroup;
+
   constructor(private complainRequestService: ComplainRequestService,
               private router: Router,
               private authService: AuthService,
               private alertService: AlertService,
               private snackBar: MatSnackBar,
+              private formBuilder: FormBuilder
   ) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
+    this.initForm();
     // subscription
     this.requestsSubscription = this.complainRequestService.requestsSubject.subscribe(
       (requests: ComplainRequestModel[]) => {
@@ -65,8 +73,26 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
+  initForm() {
+    this.moderateForm = this.formBuilder.group({
+      requestModerate: [this.preFillRequest],
+    });
+  }
+
   ngOnDestroy() {
     this.requestsSubscription.unsubscribe();
+  }
+
+  preFill(request: ComplainRequestModel) {
+    this.preFillRequest = request.request;
+    this.moderateRequest = request;
+    this.initForm();
+  }
+
+  onSubmitModerate() {
+    this.moderateRequest.request = this.moderateForm.get('requestModerate').value;
+    console.log(this.moderateRequest);
+    this.complainRequestService.updateRequest(this.moderateRequest);
   }
 
   comparePopularity(a, b) {
@@ -141,7 +167,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   fillBottles() {
     // INFO :poxXbottle -> min 0px, max 750px(picture) -> last response on request :today = 0px, tomorrow = 100px
     let posXbottle = 0;
-    let posYbottle = 250;
+    let posYbottle = 260;
     let bottleWidth = 5;
     // create bottles
     this.requestsList.forEach(request => {
@@ -156,7 +182,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       // check on console
       console.log(bottle);
       // for now we see bottle 7 days after request is posted
-      if (posXbottle <= 700 && posYbottle <= 400) {
+      if (posXbottle <= 700 && posYbottle <= 450) {
         this.bottles.push(bottle);
       }
       // increment

@@ -128,4 +128,17 @@ public class ComplainRequestControlleur {
             return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
+
+    @PostMapping(value = "/updateRequest", consumes = "application/json")
+    public ResponseEntity<String> updateRequest(
+            @RequestBody ComplainRequest complainRequestInput) {
+        // save
+        ComplainRequest updatedRequest = complainRequestDao.save(complainRequestInput);
+        if (updatedRequest!= null) {
+            logger.info("la request d'id: " + updatedRequest.getId() + " à été maj");
+            return (new ResponseEntity<>(HttpStatus.OK));
+        } else {
+            return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
 }
