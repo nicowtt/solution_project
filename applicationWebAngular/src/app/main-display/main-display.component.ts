@@ -158,7 +158,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   }
 
-  calculateDiffFromTodayTo(inputDate: string) {
+  calculateDiffFromTodayTo(inputDate) {
     const currentDate = new Date();
     const dateSent = new Date(inputDate);
 
