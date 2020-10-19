@@ -5,7 +5,7 @@
       <span class="badge badge-info">{{requestConcerned.themeName}}</span>
       <div id="requestName">{{requestConcerned.request}}
         <span id='displayDate'> Posté par {{requestConcerned.creatorPseudo}}
-          il y a {{ requestConcerned.creationDayUntilToday }} jours.</span>
+          il y a {{ requestConcerned.creationDaysUntilToday }} jours.</span>
       </div>
       <p></p>
     </div>
@@ -69,9 +69,19 @@
           </div>
           <!---->
 
-
           <div id='displayForAndDate'> Posté par {{ response.creatorPseudo}}
-            il y a {{ response.dayUntilToday }} jours.</div>
+            <!-- le: {{ request.creationDate | date: 'dd/MM/yyyy H:mm'}} -->
+            <span *ngIf="response.creationDaysUntilToday > 0">
+              il y a {{ response.creationDaysUntilToday }} jour(s).
+            </span>
+            <span *ngIf="response.creationDaysUntilToday < 1 && response.creationHoursUntilToday > 0">
+              il y a {{ response.creationHoursUntilToday }} heure(s).
+            </span>
+            <span *ngIf="response.creationDaysUntilToday < 1 && response.creationHoursUntilToday < 1">
+              il y a {{ response.creationMinutesUntilToday }} minute(s).
+            </span>
+
+        </div>
         </div>
       </div>
     </div>

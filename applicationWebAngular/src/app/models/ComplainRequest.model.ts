@@ -6,7 +6,9 @@ export class ComplainRequestModel {
     creatorPseudo: string;
     creatorEmail: string;
     creationDate: string;
-    creationDayUntilToday: number;
+    creationDaysUntilToday: number;
+    creationHoursUntilToday: number;
+    creationMinutesUntilToday: number;
     popularity: number;
     nbrResponse: number;
     themeName: string;

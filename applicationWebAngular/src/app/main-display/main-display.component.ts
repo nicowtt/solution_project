@@ -54,7 +54,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     this.complainRequestService.getAllRequests(() => {
       this.requestsList.forEach(request => {
         this.countNbrOfResponse(request);
-        request.creationDayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
+        this.calculateRequestDiffFromTodayTo(request);
       });
       this.fillBottles();
       this.requestsList.sort(this.comparePopularity); // bigger is upper
@@ -144,9 +144,23 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     this.requestsList.sort(this.comparePopularity);
   }
 
-  calculateDiffFromTodayTo(dateSent) {
+  calculateRequestDiffFromTodayTo(request) {
     const currentDate = new Date();
-    dateSent = new Date(dateSent);
+    const dateSent = new Date(request.creationDate);
+
+    request.creationDaysUntilToday = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
+    currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),
+    dateSent.getDate())) / (1000 * 60 * 60 * 24));
+
+    request.creationHoursUntilToday = currentDate.getHours() - dateSent.getHours();
+
+    request.creationMinutesUntilToday = currentDate.getMinutes() - dateSent.getMinutes();
+
+  }
+
+  calculateDiffFromTodayTo(inputDate: string) {
+    const currentDate = new Date();
+    const dateSent = new Date(inputDate);
 
     return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),

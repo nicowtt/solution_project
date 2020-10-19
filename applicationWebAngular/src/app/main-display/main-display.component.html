@@ -86,7 +86,15 @@
 
           <div id='displayForAndDate'> Posté par {{ request.creatorPseudo}}
             <!-- le: {{ request.creationDate | date: 'dd/MM/yyyy H:mm'}} -->
-            il y a {{ request.creationDayUntilToday }} jours.</div>
+            <span *ngIf="request.creationDaysUntilToday > 0">
+              il y a {{ request.creationDaysUntilToday }} jour(s).
+            </span>
+            <span *ngIf="request.creationDaysUntilToday < 1 && request.creationHoursUntilToday > 0">
+              il y a {{ request.creationHoursUntilToday }} heure(s).
+            </span>
+            <span *ngIf="request.creationDaysUntilToday < 1 && request.creationHoursUntilToday < 1">
+              il y a {{ request.creationMinutesUntilToday }} minute(s).
+            </span>
 
         </div>
       </div>
