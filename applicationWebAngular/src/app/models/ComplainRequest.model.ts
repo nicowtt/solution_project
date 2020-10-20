@@ -1,3 +1,5 @@
+import { BottleModel } from './Bottles.model';
+
 export class ComplainRequestModel {
 
     id: string;
@@ -14,6 +16,8 @@ export class ComplainRequestModel {
     themeName: string;
     complainResponsesId: string;
     lastResponseDate: number;
+    bottle: BottleModel;
+    forgotten: boolean;
 
     constructor() {}
 

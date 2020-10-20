@@ -43,7 +43,7 @@ export class CreateNewRequestComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.complainRequestService.getAllRequests(() => {
+    this.complainRequestService.getAllRequestsNotForgotten(() => {
       this.requestsList.forEach(element => {
         this.themesList.add(element.themeName);
       });

@@ -23,6 +23,7 @@ public class ComplainRequest {
     private List<String> complainResponsesId;
     private String themeName;
     private String lastResponseDate;
+    private Boolean forgotten;
 
     // constructor
     public ComplainRequest() {
@@ -31,7 +32,7 @@ public class ComplainRequest {
     public ComplainRequest(String id, String request, String creatorPseudo, String creatorEmail, String creationDate,
                            int popularity, List<String> userWhoChangePopularityList,
                            List<String> complainResponsesId, String themeName,
-                           String lastResponseDate) {
+                           String lastResponseDate, Boolean forgotten) {
         this.id = id;
         this.request = request;
         this.creatorPseudo = creatorPseudo;
@@ -42,6 +43,7 @@ public class ComplainRequest {
         this.complainResponsesId = complainResponsesId;
         this.themeName = themeName;
         this.lastResponseDate = lastResponseDate;
+        this.forgotten = forgotten;
     }
 
     // getters and setters
@@ -125,6 +127,10 @@ public class ComplainRequest {
         this.lastResponseDate = lastResponseDate;
     }
 
+    public Boolean isForgetIt() { return forgotten; }
+
+    public void setForgetIt(Boolean forgotten) { this.forgotten = forgotten; }
+
     // to string
     @Override
     public String toString() {
@@ -139,6 +145,7 @@ public class ComplainRequest {
                 ", complainResponsesId=" + complainResponsesId +
                 ", themeName='" + themeName + '\'' +
                 ", lastResponseDate='" + lastResponseDate + '\'' +
+                ", forgetIt=" + forgotten +
                 '}';
     }
 

@@ -42,6 +42,11 @@ public class ComplainRequestControlleur {
         return complainRequestDao.findAll();
     }
 
+    @GetMapping(value = "/getAllRequestsNotForgotten")
+    public List<ComplainRequest> getAllRequestsNotForgotten() {
+        return complainRequestDao.findAllByForgottenFalse();
+    }
+
     /**
      * to change request popularity
      * @param userPseudoInput

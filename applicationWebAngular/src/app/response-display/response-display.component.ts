@@ -113,6 +113,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     console.log(response.toString());
     this.complainResponseService.addResponse(response, requestId, () => {
       this.updateResponses();
+      this.commentForm.get('comment').setValue('');
     });
   }
 

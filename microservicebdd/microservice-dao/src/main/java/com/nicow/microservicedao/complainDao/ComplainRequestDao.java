@@ -9,4 +9,5 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ComplainRequestDao extends MongoRepository<ComplainRequest, String> {
+    List<ComplainRequest> findAllByForgottenFalse();
 }

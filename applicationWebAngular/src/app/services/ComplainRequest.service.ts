@@ -27,9 +27,9 @@ export class ComplainRequestService {
       this.requestSubject.next(this.request);
     }
 
-    getAllRequests(onSuccess: Function) {
+    getAllRequestsNotForgotten(onSuccess: Function) {
       this.http
-      .get<ComplainRequestModel[]>('/getAllRequests')
+      .get<ComplainRequestModel[]>('/getAllRequestsNotForgotten')
       .subscribe(
         (response) => {
           this.requestsList = response;

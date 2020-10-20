@@ -32,6 +32,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   moderateForm: FormGroup;
 
+  dayForForget = 7;
+
   constructor(private complainRequestService: ComplainRequestService,
               private router: Router,
               private authService: AuthService,
@@ -51,14 +53,14 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
     );
     //init
-    this.complainRequestService.getAllRequests(() => {
+    this.complainRequestService.getAllRequestsNotForgotten(() => {
       this.requestsList.forEach(request => {
         this.countNbrOfResponse(request);
         this.calculateRequestDiffFromTodayTo(request);
+        this.forgetIt();
       });
       this.fillBottles();
       this.requestsList.sort(this.comparePopularity); // bigger is upper
-
     });
     // user connected
     if (this.authService.currentUserValue) {
@@ -156,6 +158,19 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
     request.creationMinutesUntilToday = currentDate.getMinutes() - dateSent.getMinutes();
 
+
+
+  }
+
+  forgetIt() {
+    for (let index = 0; index < this.requestsList.length; index++) {
+      const request = this.requestsList[index];
+      if (request.creationDaysUntilToday >= this.dayForForget) {
+        request.forgotten = true;
+        this.complainRequestService.updateRequest(request);
+        this.requestsList.splice(index, 1);
+      }
+    }
   }
 
   calculateDiffFromTodayTo(inputDate) {
@@ -170,7 +185,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   calculateBottleWidth(nbrOfResponse: number) {
     let width = 5;
     if (nbrOfResponse > 0) {
-      width += nbrOfResponse;
+      width += (nbrOfResponse / 2);
     }
     if (width > 15) {
       width = 15;
@@ -200,7 +215,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
         this.bottles.push(bottle);
       }
       // increment
-      posYbottle += 30;
+      posYbottle += 15;
     });
   }
 
