@@ -1,3 +1,5 @@
+import { BottleModel } from './Bottles.model';
+
 export class ComplainRequestModel {
 
     id: string;
@@ -6,12 +8,16 @@ export class ComplainRequestModel {
     creatorPseudo: string;
     creatorEmail: string;
     creationDate: string;
-    creationDayUntilToday: number;
+    creationDaysUntilToday: number;
+    creationHoursUntilToday: number;
+    creationMinutesUntilToday: number;
     popularity: number;
     nbrResponse: number;
     themeName: string;
     complainResponsesId: string;
     lastResponseDate: number;
+    bottle: BottleModel;
+    forgotten: boolean;
 
     constructor() {}
 

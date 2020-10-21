@@ -2,7 +2,9 @@ package com.nicow.microserviceweb.controllers;
 
 import com.nicow.microservicebusiness.contract.ComplainRequestManager;
 import com.nicow.microservicedao.complainDao.ComplainRequestDao;
+import com.nicow.microservicedao.complainDao.ComplainResponseDao;
 import com.nicow.microservicemodel.entities.ComplainRequest;
+import com.nicow.microservicemodel.entities.ComplainResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class ComplainRequestControlleur {
     private ComplainRequestDao complainRequestDao;
 
     @Autowired
+    private ComplainResponseDao complainResponseDao;
+
+    @Autowired
     private ComplainRequestManager complainRequestManager;
 
     /**
@@ -35,6 +40,11 @@ public class ComplainRequestControlleur {
     @GetMapping(value = "/getAllRequests")
     public List<ComplainRequest> getAllRequests() {
         return complainRequestDao.findAll();
+    }
+
+    @GetMapping(value = "/getAllRequestsNotForgotten")
+    public List<ComplainRequest> getAllRequestsNotForgotten() {
+        return complainRequestDao.findAllByForgottenFalse();
     }
 
     /**
@@ -100,5 +110,40 @@ public class ComplainRequestControlleur {
             return (new ResponseEntity<>(HttpStatus.OK));
         }
         return (new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE));
+    }
+
+    @PostMapping(value = "/deleteRequest", consumes = "application/json")
+    public ResponseEntity<String> deleteResponse(
+            @RequestBody ComplainRequest complainRequestInput) {
+        // delete all response associate
+        for (String requestResponseId: complainRequestInput.getComplainResponsesId()) {
+            Optional<ComplainResponse> responseToDeleteOpt = complainResponseDao.findById(requestResponseId);
+            if (responseToDeleteOpt.isPresent()) {
+                ComplainResponse responseToDelete = responseToDeleteOpt.get();
+                complainResponseDao.delete(responseToDelete);
+            }
+        }
+        // delete request
+        Optional<ComplainRequest> requestToDeleteOpt = complainRequestDao.findById(complainRequestInput.getId());
+        if (requestToDeleteOpt.isPresent()) {
+            ComplainRequest requestToDelete = requestToDeleteOpt.get();
+            complainRequestDao.delete(requestToDelete);
+            return (new ResponseEntity<>(HttpStatus.OK));
+        } else {
+            return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
+
+    @PostMapping(value = "/updateRequest", consumes = "application/json")
+    public ResponseEntity<String> updateRequest(
+            @RequestBody ComplainRequest complainRequestInput) {
+        // save
+        ComplainRequest updatedRequest = complainRequestDao.save(complainRequestInput);
+        if (updatedRequest!= null) {
+            logger.info("la request d'id: " + updatedRequest.getId() + " à été maj");
+            return (new ResponseEntity<>(HttpStatus.OK));
+        } else {
+            return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        }
     }
 }

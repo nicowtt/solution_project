@@ -51,7 +51,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.requestSubscription = this.complainRequestService.requestSubject.subscribe(
       (request: ComplainRequestModel) => {
         this.requestConcerned = request;
-        request.creationDayUntilToday = this.calculateDiffFromTodayTo(request.creationDate);
+        this.calculateRequestDiffFromTodayTo(request);
       }
     );
     this.complainRequestService.getOneRequest(id, () => {
@@ -76,7 +76,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     );
     this.complainResponseService.getAllResponseForOneRequest(this.requestConcerned.id, () => {
       this.requestResponses.forEach( response => {
-        response.dayUntilToday = this.calculateDiffFromTodayTo(response.creationDate);
+        this.calculateResponseDiffFromTodayTo(response);
       });
       this.requestResponses.sort(this.comparePopularity); // for display bigger is upper
     });
@@ -113,16 +113,36 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     console.log(response.toString());
     this.complainResponseService.addResponse(response, requestId, () => {
       this.updateResponses();
+      this.commentForm.get('comment').setValue('');
     });
   }
 
-  calculateDiffFromTodayTo(dateSent) {
+  calculateResponseDiffFromTodayTo(response) {
     const currentDate = new Date();
-    dateSent = new Date(dateSent);
+    const dateSent = new Date(response.creationDate);
 
-    return Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
+    response.creationDaysUntilToday = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),
     dateSent.getDate())) / (1000 * 60 * 60 * 24));
+
+    response.creationHoursUntilToday = currentDate.getHours() - dateSent.getHours();
+
+    response.creationMinutesUntilToday = currentDate.getMinutes() - dateSent.getMinutes();
+
+  }
+
+  calculateRequestDiffFromTodayTo(request) {
+    const currentDate = new Date();
+    const dateSent = new Date(request.creationDate);
+
+    request.creationDaysUntilToday = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
+    currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),
+    dateSent.getDate())) / (1000 * 60 * 60 * 24));
+
+    request.creationHoursUntilToday = currentDate.getHours() - dateSent.getHours();
+
+    request.creationMinutesUntilToday = currentDate.getMinutes() - dateSent.getMinutes();
+
   }
 
   changePopularity(index: number, change: string) {

@@ -27,9 +27,9 @@ export class ComplainRequestService {
       this.requestSubject.next(this.request);
     }
 
-    getAllRequests(onSuccess: Function) {
+    getAllRequestsNotForgotten(onSuccess: Function) {
       this.http
-      .get<ComplainRequestModel[]>('/getAllRequests')
+      .get<ComplainRequestModel[]>('/getAllRequestsNotForgotten')
       .subscribe(
         (response) => {
           this.requestsList = response;
@@ -84,6 +84,41 @@ export class ComplainRequestService {
         },
         (error) => {
           this.snackBar.open('Ooups!, Veuillez recommencer.', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      );
+    }
+
+    deleteRequest(requestToDelete: ComplainRequestModel, onSucces: Function) {
+      return this.http
+      .post<ComplainRequestModel>('/deleteRequest', requestToDelete)
+      .subscribe(
+        (response) => {
+          onSucces();
+        },
+        (error) => {
+          this.snackBar.open('Veuillez recommencez.', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      );
+    }
+
+    updateRequest(requestToUpdate: ComplainRequestModel) {
+      return this.http
+      .post<ComplainRequestModel>('/updateRequest', requestToUpdate)
+      .subscribe(
+        (response) => {
+          this.snackBar.open('La réquest à été mise à jour', '', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        },
+        (error) => {
+          this.snackBar.open('erreur ,veuillez recommencer!', '', {
             duration: 3000,
             verticalPosition: 'top'
           });
