@@ -44,9 +44,7 @@
 }
 
 .annonce {
-  position: relative;
-  top: -35px;
-  float: right;
+  float: left;
   font-style: italic;
 }
 
