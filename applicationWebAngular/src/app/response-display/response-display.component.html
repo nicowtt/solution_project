@@ -23,7 +23,7 @@
     </div>
 
     <div id="Response">
-      <div class="list-group list-group-flush" id="response" *ngFor="let response of requestResponses; let i = index">
+      <div class="list-group list-group-flush " id="response" *ngFor="let response of requestResponses; let i = index">
         <div class="list-group-item">
           <!-- float left -> popularity -->
           <div id="popularity">
@@ -69,7 +69,7 @@
           </div>
           <!---->
 
-          <div id='displayForAndDate'> Posté par {{ response.creatorPseudo}}
+          <div id='displayForAndDate'> Posté par <span style="color: cornflowerblue;">{{ response.creatorPseudo}}</span>
             <!-- le: {{ request.creationDate | date: 'dd/MM/yyyy H:mm'}} -->
             <span *ngIf="response.creationDaysUntilToday > 0">
               il y a {{ response.creationDaysUntilToday }} jour(s).

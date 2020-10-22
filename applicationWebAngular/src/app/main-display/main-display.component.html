@@ -8,11 +8,12 @@
           [ngStyle]="{'top': [bottle.top], 'left': [bottle.left], 'width': [bottle.width]}" class="bouteille"
           src="/assets/img/bottle.png" alt="bottle" matTooltip={{[bottle.requestName]}} [matTooltipPosition]="'above'">
       </div>
+      <div class="annonce">
+        Les sujets sans réponse pendant 7 jours ne sont plus visible ...
+      </div>
     </div>
 
-    <div class="annonce">
-      Les sujets sans réponse pendant 7 jours ne sont plus visible ...
-    </div>
+
 
     <div class="newRequest">
       <input (click)="newRequest()" type="text" id="newRequest" class="form-control"
@@ -84,7 +85,7 @@
 
           </div>
 
-          <div id='displayForAndDate'> Posté par {{ request.creatorPseudo}}
+          <div id='displayForAndDate'> Posté par <span style="color: cornflowerblue;">{{ request.creatorPseudo}}</span>
             <!-- le: {{ request.creationDate | date: 'dd/MM/yyyy H:mm'}} -->
             <span *ngIf="request.creationDaysUntilToday > 0">
               il y a {{ request.creationDaysUntilToday }} jour(s).
