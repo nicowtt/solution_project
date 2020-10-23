@@ -11,6 +11,7 @@ export class ComplainResponseModel {
     creatorPseudo: string;
     complainUserId: number;
     requestId: string;
+    commentList: string[];
 
-    constructor() {}
+    constructor() { }
 }

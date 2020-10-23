@@ -33,7 +33,13 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   moderateForm: FormGroup;
 
   preFillresponse: string;
+  preFillResponseIndex: number;
   moderateResponse: ComplainResponseModel;
+
+  commentsConcerned: string[];
+
+  isNotCollapsed = -1;
+  seeComments = false;
 
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
@@ -99,6 +105,14 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   preFill(response: ComplainResponseModel) {
     this.preFillresponse = response.response;
     this.moderateResponse = response;
+    this.initForm();
+  }
+
+  preFillForComment(response: ComplainResponseModel, indexOfResponse: number) {
+    this.preFillresponse = response.response;
+    this.preFillResponseIndex = indexOfResponse;
+    this.commentsConcerned = this.requestResponses[indexOfResponse].commentList;
+    this.isNotCollapsed = this.preFillResponseIndex;
     this.initForm();
   }
 
@@ -186,13 +200,28 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
 
-  deleteResponse(index: number) {
-    if(confirm('Supprimer cette réponse?')) {
-        this.complainResponseService.deleteResponse(this.requestResponses[index], () => {
-          this.requestResponses.splice(index, 1);
-          console.log(this.requestResponses);
-        });
-      }
+  onSubmitComment() {
+    if (this.requestResponses[this.preFillResponseIndex].commentList == null) {
+      this.requestResponses[this.preFillResponseIndex].commentList = [];
     }
+    this.requestResponses[this.preFillResponseIndex].commentList.push(this.commentForm.get('comment').value);
+    this.complainResponseService.updateResponse(this.requestResponses[this.preFillResponseIndex]);
+  }
 
+  deleteResponse(index: number) {
+    if (confirm('Supprimer cette réponse?')) {
+      this.complainResponseService.deleteResponse(this.requestResponses[index], () => {
+        this.requestResponses.splice(index, 1);
+        console.log(this.requestResponses);
+      });
+    }
+  }
+
+  showComments() {
+    if (this.seeComments) {
+      this.seeComments = false;
+    } else {
+      this.seeComments = true;
+    }
+  }
 }
