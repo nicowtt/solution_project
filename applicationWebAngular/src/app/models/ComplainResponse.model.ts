@@ -1,3 +1,5 @@
+import { ComplainCommentModel } from './ComplainComment.model';
+
 export class ComplainResponseModel {
 
     id: string;
@@ -11,6 +13,7 @@ export class ComplainResponseModel {
     creatorPseudo: string;
     complainUserId: number;
     requestId: string;
+    commentList: ComplainCommentModel[];
 
-    constructor() {}
+    constructor() { }
 }

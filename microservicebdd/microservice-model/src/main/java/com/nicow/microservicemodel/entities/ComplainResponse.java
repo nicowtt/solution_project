@@ -3,6 +3,7 @@ package com.nicow.microservicemodel.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class ComplainResponse {
     private String creationDate;
     private List<String> userWhoChangePopularityList;
     private String requestId;
+    private List<ComplainComment> commentList;
 
 
     // constructor
@@ -34,6 +36,7 @@ public class ComplainResponse {
         this.creationDate = creationDate;
         this.userWhoChangePopularityList = userWhoChangePopularityList;
         this.requestId = requestId;
+        this.commentList = new ArrayList<>();
     }
 
     // getters and setters
@@ -97,6 +100,14 @@ public class ComplainResponse {
         this.requestId = requestId;
     }
 
+    public List<ComplainComment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<ComplainComment> commentList) {
+        this.commentList = commentList;
+    }
+
     // to string
     @Override
     public String toString() {
@@ -109,6 +120,7 @@ public class ComplainResponse {
                 ", creationDate='" + creationDate + '\'' +
                 ", userWhoChangePopularityList=" + userWhoChangePopularityList +
                 ", requestId='" + requestId + '\'' +
+                ", commentList=" + commentList +
                 '}';
     }
 
@@ -116,4 +128,5 @@ public class ComplainResponse {
     public void addUserWhoIncreasePopularity(String userInput) {
         this.userWhoChangePopularityList.add(userInput);
     }
+    public void addCommentOnResponseCommentList(ComplainComment commentInput) { this.commentList.add(commentInput); }
 }

@@ -102,6 +102,7 @@ public class ComplainRequestControlleur {
         complainRequestInput.setUserWhoChangePopularityList(new ArrayList<>());
         complainRequestInput.setComplainResponsesId(new ArrayList<>());
         complainRequestInput.setLastResponseDate(todayDate);
+        complainRequestInput.setForgetIt(false);
 
         ComplainRequest complainRequestSaved = complainRequestDao.save(complainRequestInput);
         if (complainRequestSaved.getId() != null) {

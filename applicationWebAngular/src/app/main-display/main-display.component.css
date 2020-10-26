@@ -35,6 +35,7 @@
 .fond {
   position: relative;
   top: 0px;
+  left: 220px;
   border-radius: 25px;
 }
 .bouteille {
@@ -43,10 +44,7 @@
 }
 
 .annonce {
-  position: relative;
-  top: -55px;
-  right: 220px;
-  float: right;
+  float: left;
   font-style: italic;
 }
 

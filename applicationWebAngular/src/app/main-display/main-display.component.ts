@@ -205,13 +205,14 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       if (posXbottle !== 0) {
         posXbottle = posXbottle * 100;
       }
+      posXbottle += 220; // shift for "fond"
       const bottle = new BottleModel(posYbottle + 'px', posXbottle + 'px', bottleWidth + '%');
       bottle.requestName = request.request;
       bottle.requestId = request.id;
       // check on console
       console.log(bottle);
       // for now we see bottle 7 days after request is posted
-      if (posXbottle <= 700 && posYbottle <= 450) {
+      if (posXbottle <= 920 && posYbottle <= 450) { // +220 on posXbottle for "fond" shift
         this.bottles.push(bottle);
       }
       // increment

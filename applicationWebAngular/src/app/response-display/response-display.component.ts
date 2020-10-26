@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComplainRequestService } from '../services/ComplainRequest.service';
+import { ComplainCommentModel } from '../models/ComplainComment.model';
 
 @Component({
   selector: 'app-response-display',
@@ -33,7 +34,11 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   moderateForm: FormGroup;
 
   preFillresponse: string;
+  preFillResponseIndex: number;
   moderateResponse: ComplainResponseModel;
+
+  isNotCollapsed = -1;
+  seeComments = false;
 
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
@@ -99,6 +104,13 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   preFill(response: ComplainResponseModel) {
     this.preFillresponse = response.response;
     this.moderateResponse = response;
+    this.initForm();
+  }
+
+  preFillForComment(response: ComplainResponseModel, indexOfResponse: number) {
+    this.preFillresponse = response.response;
+    this.preFillResponseIndex = indexOfResponse;
+    this.isNotCollapsed = this.preFillResponseIndex;
     this.initForm();
   }
 
@@ -186,13 +198,36 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
 
-  deleteResponse(index: number) {
-    if(confirm('Supprimer cette réponse?')) {
-        this.complainResponseService.deleteResponse(this.requestResponses[index], () => {
-          this.requestResponses.splice(index, 1);
-          console.log(this.requestResponses);
-        });
-      }
-    }
 
+  onSubmitComment() {
+    if (this.requestResponses[this.preFillResponseIndex].commentList == null) {
+      this.requestResponses[this.preFillResponseIndex].commentList = [];
+    }
+    const newComment = new ComplainCommentModel();
+    newComment.comment = this.commentForm.get('comment').value;
+    newComment.creatorEmail = this.currentUser.email;
+    newComment.creatorPseudo = this.currentUser.pseudo;
+    newComment.responseId = this.requestResponses[this.preFillResponseIndex].id;
+    this.complainResponseService.addComment(newComment, this.requestResponses[this.preFillResponseIndex].id, () => {
+      this.updateResponses();
+      this.commentForm.get('comment').setValue('');
+    });
+  }
+
+  deleteResponse(index: number) {
+    if (confirm('Supprimer cette réponse?')) {
+      this.complainResponseService.deleteResponse(this.requestResponses[index], () => {
+        this.requestResponses.splice(index, 1);
+        console.log(this.requestResponses);
+      });
+    }
+  }
+
+  showComments() {
+    if (this.seeComments) {
+      this.seeComments = false;
+    } else {
+      this.seeComments = true;
+    }
+  }
 }

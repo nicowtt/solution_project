@@ -41,6 +41,10 @@
   float: right;
 }
 
+#modalForcomment {
+  float: right;
+}
+
 #deleteResponse {
   float: right;
   margin-left: 5px;
@@ -48,5 +52,32 @@
 
 #moderateResponse {
   margin-right: -15px;
+}
+
+
+#buttonNewComment {
+  margin-left: 5px;
+  size: 60%;
+  float: right;
+}
+
+.comments {
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+  position: relative;
+  left: 55px;
+  
+}
+
+.comments li {
+  display:inline-block;
+  position: relative;
+
+
+  margin-top: 5px;
+  padding: 0;
+  height: 1.6em;
+  border-radius: 4px;
 }
 

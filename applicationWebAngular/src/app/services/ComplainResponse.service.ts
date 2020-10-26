@@ -4,6 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ComplainResponseModel } from './../models/ComplainResponse.model';
 import { Injectable } from '@angular/core';
 import { ApplicationHttpClientService } from './applicationHttpClient.service';
+import { ComplainCommentModel } from '../models/ComplainComment.model';
+import { ComplainRequestModel } from '../models/ComplainRequest.model';
 
 @Injectable({ providedIn: 'root' })
 export class ComplainResponseService {
@@ -103,6 +105,23 @@ export class ComplainResponseService {
       },
       (error) => {
         this.snackBar.open('erreur, veuillez recommencez', '', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+      }
+    );
+  }
+
+
+  addComment(newComment: ComplainCommentModel, responseId: string, onSuccess: any) {
+    return this.http
+    .post<ComplainRequestModel>('/newComment/' + responseId, newComment)
+    .subscribe(
+      (response) => {
+        onSuccess();
+      },
+      (error) => {
+        this.snackBar.open('Ooups!, Veuillez recommencer.', '', {
           duration: 3000,
           verticalPosition: 'top'
         });
