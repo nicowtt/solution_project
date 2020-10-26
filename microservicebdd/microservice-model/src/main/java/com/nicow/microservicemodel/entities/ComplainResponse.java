@@ -19,7 +19,7 @@ public class ComplainResponse {
     private String creationDate;
     private List<String> userWhoChangePopularityList;
     private String requestId;
-    private List<String> commentList;
+    private List<ComplainComment> commentList;
 
 
     // constructor
@@ -100,11 +100,11 @@ public class ComplainResponse {
         this.requestId = requestId;
     }
 
-    public List<String> getCommentList() {
+    public List<ComplainComment> getCommentList() {
         return commentList;
     }
 
-    public void setCommentList(List<String> commentList) {
+    public void setCommentList(List<ComplainComment> commentList) {
         this.commentList = commentList;
     }
 
@@ -128,4 +128,5 @@ public class ComplainResponse {
     public void addUserWhoIncreasePopularity(String userInput) {
         this.userWhoChangePopularityList.add(userInput);
     }
+    public void addCommentOnResponseCommentList(ComplainComment commentInput) { this.commentList.add(commentInput); }
 }

@@ -65,13 +65,16 @@
   list-style-type: none;
   padding: 0;
   width: 15em;
+  position: relative;
+  left: 55px;
+  
 }
 
 .comments li {
   display:inline-block;
   position: relative;
-  left: 45px;
-  background-color: #EEE;
+
+
   margin-top: 5px;
   padding: 0;
   height: 1.6em;

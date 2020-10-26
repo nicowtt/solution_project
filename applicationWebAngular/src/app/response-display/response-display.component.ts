@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComplainRequestService } from '../services/ComplainRequest.service';
+import { ComplainCommentModel } from '../models/ComplainComment.model';
 
 @Component({
   selector: 'app-response-display',
@@ -35,8 +36,6 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   preFillresponse: string;
   preFillResponseIndex: number;
   moderateResponse: ComplainResponseModel;
-
-  commentsConcerned: string[];
 
   isNotCollapsed = -1;
   seeComments = false;
@@ -111,7 +110,6 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   preFillForComment(response: ComplainResponseModel, indexOfResponse: number) {
     this.preFillresponse = response.response;
     this.preFillResponseIndex = indexOfResponse;
-    this.commentsConcerned = this.requestResponses[indexOfResponse].commentList;
     this.isNotCollapsed = this.preFillResponseIndex;
     this.initForm();
   }
@@ -200,12 +198,20 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
 
+
   onSubmitComment() {
     if (this.requestResponses[this.preFillResponseIndex].commentList == null) {
       this.requestResponses[this.preFillResponseIndex].commentList = [];
     }
-    this.requestResponses[this.preFillResponseIndex].commentList.push(this.commentForm.get('comment').value);
-    this.complainResponseService.updateResponse(this.requestResponses[this.preFillResponseIndex]);
+    const newComment = new ComplainCommentModel();
+    newComment.comment = this.commentForm.get('comment').value;
+    newComment.creatorEmail = this.currentUser.email;
+    newComment.creatorPseudo = this.currentUser.pseudo;
+    newComment.responseId = this.requestResponses[this.preFillResponseIndex].id;
+    this.complainResponseService.addComment(newComment, this.requestResponses[this.preFillResponseIndex].id, () => {
+      this.updateResponses();
+      this.commentForm.get('comment').setValue('');
+    });
   }
 
   deleteResponse(index: number) {

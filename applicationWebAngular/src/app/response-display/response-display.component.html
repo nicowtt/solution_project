@@ -74,8 +74,8 @@
           <!-- Button for comment -->
           <div id="modalForcomment">
             <button class="btn btn-outline-success btn-sm" id="modalForcomment" data-toggle="modal" data-target="#commentModal"
-              (click)="preFillForComment(response, i) ">
-              répondre
+              (click)="preFillForComment(response, i); seeComments = true; isNotCollapsed = i ">
+              Commenter
             </button>
           </div>
           <!---->
@@ -105,7 +105,9 @@
           <div *ngIf="isNotCollapsed == i && seeComments" id="'collapse' + i" class="collapse show" aria-labelledby="headingOne"
               data-parent="#accordion" aria-expanded="false" aria-controls="'collapse' + i">
                 <ul class="comments" *ngFor="let comment of response.commentList; let i = index">
-                  <li>{{comment}}</li>
+                  <li><div style="color: cornflowerblue; font-size: small;">{{comment.creatorPseudo}}:</div>
+                    {{comment.comment}}
+                  </li>
                 </ul>
           </div>
 

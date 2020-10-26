@@ -1,10 +1,10 @@
+import { ComplainCommentModel } from './../models/ComplainComment.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { AlertService } from './alert.service';
 import { ApplicationHttpClientService } from './applicationHttpClient.service';
 import { Injectable } from '@angular/core';
-import { ComplainUserModel } from './../models/ComplainUser.model';
 
 
 @Injectable({ providedIn: 'root'})
