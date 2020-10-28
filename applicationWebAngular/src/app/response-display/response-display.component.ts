@@ -243,6 +243,13 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
+  deleteComment(response: ComplainResponseModel ,index: number) {
+    if (confirm('Supprimmer ce commentaire?')) {
+        response.commentList.splice(index, 1);
+        this.complainResponseService.updateResponse(response);
+    }
+  }
+
   showComments() {
     if (this.seeComments) {
       this.seeComments = false;
