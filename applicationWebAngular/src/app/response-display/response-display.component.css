@@ -67,7 +67,7 @@
   width: 15em;
   position: relative;
   left: 55px;
-  
+
 }
 
 .comments li {
@@ -79,5 +79,20 @@
   padding: 0;
   height: 1.6em;
   border-radius: 4px;
+}
+
+#moderateComment {
+  position: relative;
+  top: -1px;
+}
+
+#deleteComment {
+  position: relative;
+  top: -1px;
+  left: -15px;
+}
+
+#badgNbrComment {
+  margin-left: 5px;
 }
 

@@ -103,3 +103,9 @@ m
 =applicationWebAngular/src/app/auth/signin/signin.component.ts,2/f/2ff251850fc22e8e1fd42ba69cc6bd291fa210bb
 €
 PapplicationWebAngular/src/app/create-new-request/create-new-request.component.ts,4/d/4dd80d631d23d65468c7fb1c4ff58a24b32e0953
+¤
+tmicroservicebdd/microservice-web/src/main/java/com/nicow/microserviceweb/controllers/ComplainCommentControlleur.java,a/e/ae4ab1f144000cfb7f3ab01d0506b289dc9e10a2
+œ
+lmicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/complainDao/ComplainCommentDao.java,7/f/7fdd6dd0346ed8384b24b0fd8a04f35713ae818e
+š
+jmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainComment.java,5/c/5cc4b42b1be653257ad82aba73eaded22c3520fc

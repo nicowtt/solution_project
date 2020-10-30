@@ -35,7 +35,10 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   preFillresponse: string;
   preFillResponseIndex: number;
+  preFillComment: string;
   moderateResponse: ComplainResponseModel;
+  moderateComment: string;
+  moderateCommentIndex: number;
 
   isNotCollapsed = -1;
   seeComments = false;
@@ -82,8 +85,15 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.complainResponseService.getAllResponseForOneRequest(this.requestConcerned.id, () => {
       this.requestResponses.forEach( response => {
         this.calculateResponseDiffFromTodayTo(response);
+        this.calculateTotalComment();
       });
       this.requestResponses.sort(this.comparePopularity); // for display bigger is upper
+    });
+  }
+
+  calculateTotalComment() {
+    this.requestResponses.forEach(response => {
+      response.totalComment = response.commentList.length;
     });
   }
 
@@ -93,6 +103,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     });
     this.moderateForm = this.formBuilder.group({
       responseModerate: [this.preFillresponse],
+      commentModerate: [this.preFillComment]
     });
   }
 
@@ -111,6 +122,14 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.preFillresponse = response.response;
     this.preFillResponseIndex = indexOfResponse;
     this.isNotCollapsed = this.preFillResponseIndex;
+    this.initForm();
+  }
+
+  preFillForModerateComment(response: ComplainResponseModel, indexOfComment: number) {
+    this.preFillresponse = response.response;
+    this.preFillComment = response.commentList[indexOfComment].comment;
+    this.moderateCommentIndex = indexOfComment;
+    this.moderateResponse = response;
     this.initForm();
   }
 
@@ -192,8 +211,16 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     return comparison;
   }
 
-  onSubmitModerate() {
+  onSubmitModerateResponse() {
     this.moderateResponse.response = this.moderateForm.get('responseModerate').value;
+    console.log(this.moderateResponse);
+    this.complainResponseService.updateResponse(this.moderateResponse);
+  }
+
+  onSubmitModerateComment() {
+    this.moderateComment = this.moderateForm.get('commentModerate').value;
+    console.log(this.moderateComment);
+    this.moderateResponse.commentList[this.moderateCommentIndex].comment = this.moderateComment;
     console.log(this.moderateResponse);
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
@@ -220,6 +247,13 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
         this.requestResponses.splice(index, 1);
         console.log(this.requestResponses);
       });
+    }
+  }
+
+  deleteComment(response: ComplainResponseModel ,index: number) {
+    if (confirm('Supprimmer ce commentaire?')) {
+        response.commentList.splice(index, 1);
+        this.complainResponseService.updateResponse(response);
     }
   }
 
