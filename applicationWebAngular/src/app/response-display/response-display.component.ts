@@ -85,8 +85,15 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.complainResponseService.getAllResponseForOneRequest(this.requestConcerned.id, () => {
       this.requestResponses.forEach( response => {
         this.calculateResponseDiffFromTodayTo(response);
+        this.calculateTotalComment();
       });
       this.requestResponses.sort(this.comparePopularity); // for display bigger is upper
+    });
+  }
+
+  calculateTotalComment() {
+    this.requestResponses.forEach(response => {
+      response.totalComment = response.commentList.length;
     });
   }
 
