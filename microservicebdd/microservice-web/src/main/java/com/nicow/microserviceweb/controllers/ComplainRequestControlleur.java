@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +45,7 @@ public class ComplainRequestControlleur {
 
     @GetMapping(value = "/getAllRequestsNotForgotten")
     public List<ComplainRequest> getAllRequestsNotForgotten() {
+        complainRequestManager.forgetOldRequests(7);
         return complainRequestDao.findAllByForgottenFalse();
     }
 
