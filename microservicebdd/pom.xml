@@ -21,7 +21,7 @@
 
 	<!-- ===== global Informations ===== -->
 	<name>${projectName}</name>
-	<url>http://localhost:9001</url>
+	<url>http://localhost:9002</url>
 	<description>link with bdd</description>
 
 	<!-- =============================================================== -->
