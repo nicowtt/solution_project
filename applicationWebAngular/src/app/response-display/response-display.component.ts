@@ -41,6 +41,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   moderateCommentIndex: number;
 
   isNotCollapsed = -1;
+  oldIsNotCollapsed = -1;
   seeComments = false;
 
   constructor(private complainRequestService: ComplainRequestService,
@@ -141,6 +142,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     response.response = this.commentForm.get('comment').value;
     response.creationDate = new Date().toLocaleString();
     response.requestId = requestId;
+    response.commentList = [];
     console.log(response.toString());
     this.complainResponseService.addResponse(response, requestId, () => {
       this.updateResponses();
@@ -257,11 +259,19 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
-  showComments() {
+  showComments(indexOfresponse: number) {
     if (this.seeComments) {
-      this.seeComments = false;
+      if (indexOfresponse === this.oldIsNotCollapsed ) {
+        this.seeComments = false;
+      } else if (indexOfresponse !== this.oldIsNotCollapsed ) {
+        this.oldIsNotCollapsed = this.isNotCollapsed;
+        this.seeComments = true;
+      } else {
+        this.seeComments = true;
+      }
     } else {
       this.seeComments = true;
+      this.oldIsNotCollapsed = this.isNotCollapsed;
     }
   }
 }

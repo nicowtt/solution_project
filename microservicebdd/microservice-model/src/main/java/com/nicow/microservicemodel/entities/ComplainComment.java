@@ -3,7 +3,7 @@ package com.nicow.microservicemodel.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "complainRequest")
+@Document(collection = "complainComment")
 public class ComplainComment {
 
     @Id
