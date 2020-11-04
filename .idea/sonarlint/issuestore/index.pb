@@ -111,7 +111,7 @@ lmicroservicebdd/microservice-dao/src/main/java/com/nicow/microservicedao/compla
 jmicroservicebdd/microservice-model/src/main/java/com/nicow/microservicemodel/entities/ComplainComment.java,5/c/5cc4b42b1be653257ad82aba73eaded22c3520fc
 S
 #microservicebdd/microservicebdd.iml,3/a/3a4ac8ae4664f45500612da08dae172e424f8f03
-D
-docker/mongo-init.sh,e/9/e9327b0ffed15b2128dda7afdf0826e6f9f29634
 I
 docker/docker-compose.yml,3/f/3fe733692645251b38d6ef0a55b2d48c3a1cf387
+D
+docker/mongo-init.js,e/0/e049597ad05cdfadeec83427ec74d8a4f4ec15a3
