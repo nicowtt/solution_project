@@ -57,7 +57,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       this.requestsList.forEach(request => {
         this.countNbrOfResponse(request);
         this.calculateRequestDiffFromTodayTo(request);
-        this.forgetIt();
       });
       this.fillBottles();
       this.requestsList.sort(this.comparePopularity); // bigger is upper
@@ -160,17 +159,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
 
 
-  }
-
-  forgetIt() {
-    for (let index = 0; index < this.requestsList.length; index++) {
-      const request = this.requestsList[index];
-      if (request.creationDaysUntilToday >= this.dayForForget) {
-        request.forgotten = true;
-        this.complainRequestService.updateRequest(request);
-        this.requestsList.splice(index, 1);
-      }
-    }
   }
 
   calculateDiffFromTodayTo(inputDate) {

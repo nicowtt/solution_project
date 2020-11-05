@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 public interface ComplainRequestManager {
 
     Boolean checkIfUserCanUpdateRequestPopularity(ComplainRequest requestInput, String pseudoInput);
+    void forgetOldRequests(int days);
 }
