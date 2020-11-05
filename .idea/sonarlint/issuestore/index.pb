@@ -115,3 +115,12 @@ I
 docker/docker-compose.yml,3/f/3fe733692645251b38d6ef0a55b2d48c3a1cf387
 D
 docker/mongo-init.js,e/0/e049597ad05cdfadeec83427ec74d8a4f4ec15a3
+P
+ applicationWebAngular/Dockerfile,a/0/a0ad16f232870617089bd2b46a2fb779580f18d6
+J
+microservicebdd/Dockerfile,2/8/28c1dbb3b81d115e215ebcc19eac5a5b1c664354
+J
+microservicebdd/.gitignore,9/4/949937c9ed21da965de8ed3d5b494a5f41cced50
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
