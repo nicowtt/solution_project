@@ -1,4 +1,4 @@
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ComplainResponseService } from './../services/ComplainResponse.service';
 import { ComplainUserModel } from './../models/ComplainUser.model';
@@ -31,6 +31,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   requestResponses: ComplainResponseModel[] = [];
 
   commentForm: FormGroup;
+  submitted = false;
   moderateForm: FormGroup;
 
   preFillresponse: string;
@@ -44,8 +45,11 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   oldIsNotCollapsed = -1;
   seeComments = false;
 
+  link = false;
+
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
+              private router: Router,
               private authService: AuthService,
               private complainResponseService: ComplainResponseService,
               private formBuilder: FormBuilder) {
@@ -77,6 +81,28 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     }
   }
 
+  initForm() {
+    this.commentForm = this.formBuilder.group({
+      comment: ['', [Validators.required]],
+      addLink: ['', [Validators.required]]
+    });
+    this.moderateForm = this.formBuilder.group({
+      responseModerate: [this.preFillresponse],
+      commentModerate: [this.preFillComment]
+    });
+  }
+
+  // easy access to form fields
+  get cf() { return this.commentForm.controls; }
+
+  addLink(link: boolean) {
+    if (link) {
+      this.link = false;
+    } else {
+      this.link = true;
+    }
+  }
+
   updateResponses() {
     this.requestResponsesSubscription = this.complainResponseService.requestResponsesSubject.subscribe(
       (responses: ComplainResponseModel[]) => {
@@ -95,16 +121,6 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   calculateTotalComment() {
     this.requestResponses.forEach(response => {
       response.totalComment = response.commentList.length;
-    });
-  }
-
-  initForm() {
-    this.commentForm = this.formBuilder.group({
-      comment: [''],
-    });
-    this.moderateForm = this.formBuilder.group({
-      responseModerate: [this.preFillresponse],
-      commentModerate: [this.preFillComment]
     });
   }
 
@@ -135,11 +151,24 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   }
 
   onSubmitResponse(requestId: string) {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.commentForm.get('comment').value === '' && !this.link) {
+      return;
+    }
+    if (this.commentForm.get('comment').value === '' ||
+        this.commentForm.get('addLink').value === '' &&
+        this.link) {
+      return;
+    }
+
     const response = new ComplainResponseModel();
     response.complainUserId = this.currentUser.id;
     response.creatorPseudo = this.currentUser.pseudo;
     response.creatorEmail = this.currentUser.email;
     response.response = this.commentForm.get('comment').value;
+    response.extLink = this.commentForm.get('addLink').value;
     response.creationDate = new Date().toLocaleString();
     response.requestId = requestId;
     response.commentList = [];
