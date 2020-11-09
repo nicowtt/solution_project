@@ -35,16 +35,16 @@ services:
     networks:
       - network-solution
 
-  applicationwebangular:
+  angular_solution_front:
     depends_on:
       - mongodb
       - microservice_solution_back
     build:
       context: ../applicationWebAngular
       dockerfile: Dockerfile
-    container_name: applicationwebangular
+    container_name: angular_solution_front
     volumes:
-      - './applicationwebangular:/usr/src/app'
+      - './angular_solution_front:/usr/src/app'
     ports:
       - '4201:4201'
     command: >
