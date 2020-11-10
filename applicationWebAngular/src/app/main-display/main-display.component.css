@@ -41,6 +41,7 @@
 .bouteille {
   position: absolute;
   height: auto;
+  cursor: pointer;
 }
 
 .annonce {

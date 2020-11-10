@@ -13,7 +13,7 @@
     <div id="WriteComment">
       <form [formGroup]="commentForm" (ngSubmit)="onSubmitResponse(requestConcerned.id)">
         <div class="form-group shadow-textarea">
-          <label for="responseArea" id="responseAreaLabel">Repondre en tant que {{[currentUser.name]}}</label>
+          <label for="responseArea" id="responseAreaLabel">Répondre en tant que {{[currentUser.pseudo]}}</label>
           <textarea class="form-control z-depth-1" id="responseArea" formControlName="comment" rows="3"
             placeholder="Ecrivez..." [ngClass]="{ 'is-invalid': submitted && cf.comment.errors }"></textarea>
              <div *ngIf="submitted && cf.comment.errors" class="invalid-feedback">
