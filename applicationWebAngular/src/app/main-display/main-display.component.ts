@@ -29,6 +29,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   preFillRequest: string;
   moderateRequest: ComplainRequestModel;
+  prefillThemeRequest: string;
 
   moderateForm: FormGroup;
 
@@ -77,6 +78,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   initForm() {
     this.moderateForm = this.formBuilder.group({
       requestModerate: [this.preFillRequest],
+      requestThemeModerate: [this.prefillThemeRequest]
     });
   }
 
@@ -87,11 +89,13 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   preFill(request: ComplainRequestModel) {
     this.preFillRequest = request.request;
     this.moderateRequest = request;
+    this.prefillThemeRequest = request.themeName;
     this.initForm();
   }
 
   onSubmitModerate() {
     this.moderateRequest.request = this.moderateForm.get('requestModerate').value;
+    this.moderateRequest.themeName = this.moderateForm.get('requestThemeModerate').value;
     console.log(this.moderateRequest);
     this.complainRequestService.updateRequest(this.moderateRequest);
   }
@@ -156,9 +160,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     request.creationHoursUntilToday = currentDate.getHours() - dateSent.getHours();
 
     request.creationMinutesUntilToday = currentDate.getMinutes() - dateSent.getMinutes();
-
-
-
   }
 
   calculateDiffFromTodayTo(inputDate) {

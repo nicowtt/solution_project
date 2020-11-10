@@ -109,8 +109,10 @@
           <div class="modal-body">
             <form [formGroup]="moderateForm">
               <div class="form-group">
-                <div class="input-group">
+                <div class="input">
                   <input type="text" id="requestModerate" class="form-control" formControlName="requestModerate"
+                    class="form-control">
+                  <input type="text" id="requestThemeModerate" class="form-control" formControlName="requestThemeModerate"
                     class="form-control">
                   <button class="btn btn-outline-secondary" type="submit" id="buttonNewModerate"
                     (click)="onSubmitModerate()">
