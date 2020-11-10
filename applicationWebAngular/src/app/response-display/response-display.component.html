@@ -15,12 +15,28 @@
         <div class="form-group shadow-textarea">
           <label for="responseArea" id="responseAreaLabel">Repondre en tant que {{[currentUser.name]}}</label>
           <textarea class="form-control z-depth-1" id="responseArea" formControlName="comment" rows="3"
-            placeholder="Ecrivez..."></textarea>
-          <button class="btn btn-primary" style="float: right; margin-top: 5px" type="submit">Envoyer</button>
+            placeholder="Ecrivez..." [ngClass]="{ 'is-invalid': submitted && cf.comment.errors }"></textarea>
+             <div *ngIf="submitted && cf.comment.errors" class="invalid-feedback">
+              <div class="error" *ngIf="cf.comment.errors.required">Commentaire requis</div>
+            </div>
+            <p></p>
+            <mat-checkbox (click)="addLink(link)">Ajoutez un lien</mat-checkbox>
+            <!-- add new link-->
+            <div class="form-group" *ngIf="link">
+              <input type="text" placeholder="ajouter un lien" id="addLink" class="form-control" formControlName="addLink" class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && cf.addLink.errors }" />
+              <p></p>
+              <div *ngIf="submitted && cf.addLink.errors" class="invalid-feedback">
+            <div class="error" *ngIf="cf.addLink.errors.required">Lien requis</div>
+            <!-- add new link-->
+          </div>
+        </div>
+          <button class="btn btn-primary" style="float: right; margin-top: -5px" type="submit">Envoyer</button>
         </div>
       </form>
       <br>
     </div>
+
 
     <div id="Response">
       <div class="list-group list-group-flush " id="response" *ngFor="let response of requestResponses; let i = index">
@@ -46,7 +62,8 @@
           </div>
           <!---->
 
-          <div id="response">{{response.response}}</div>
+          <div id="response">{{response.response}} </div>
+          <a href="{{response.extLink}}"> {{response.extLink}}</a>
 
           <!-- Button for delete response -->
           <div id="deleteResponse" *ngIf="userConnectedIsModerator">

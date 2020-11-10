@@ -4,6 +4,7 @@ export class ComplainResponseModel {
 
     id: string;
     response: string;
+    extLink: string;
     creationDate: string;
     creationDaysUntilToday: number;
     creationHoursUntilToday: number;

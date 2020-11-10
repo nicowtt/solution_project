@@ -13,6 +13,7 @@ public class ComplainResponse {
     @Id
     private String id;
     private String response;
+    private String extLink;
     private int popularity;
     private String creatorEmail;
     private String creatorPseudo;
@@ -30,6 +31,7 @@ public class ComplainResponse {
                             String creationDate, List<String> userWhoChangePopularityList, String requestId) {
         this.id = id;
         this.response = response;
+        this.extLink = null;
         this.popularity = popularity;
         this.creatorEmail = creatorEmail;
         this.creatorPseudo = creatorPseudo;
@@ -51,6 +53,10 @@ public class ComplainResponse {
     public String getResponse() {
         return response;
     }
+
+    public String getExtLink() { return extLink; }
+
+    public void setExtLink(String extLink) { this.extLink = extLink; }
 
     public void setResponse(String response) {
         this.response = response;
@@ -114,6 +120,7 @@ public class ComplainResponse {
         return "ComplainResponse{" +
                 "id='" + id + '\'' +
                 ", response='" + response + '\'' +
+                ", extLink='" + extLink + '\'' +
                 ", popularity=" + popularity +
                 ", creatorEmail='" + creatorEmail + '\'' +
                 ", creatorPseudo='" + creatorPseudo + '\'' +
