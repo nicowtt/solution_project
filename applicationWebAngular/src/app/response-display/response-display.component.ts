@@ -37,9 +37,11 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   preFillresponse: string;
   preFillResponseIndex: number;
   preFillComment: string;
+  preFillLink: string;
   moderateResponse: ComplainResponseModel;
   moderateComment: string;
   moderateCommentIndex: number;
+  moderateLink: string;
 
   isNotCollapsed = -1;
   oldIsNotCollapsed = -1;
@@ -88,7 +90,8 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     });
     this.moderateForm = this.formBuilder.group({
       responseModerate: [this.preFillresponse],
-      commentModerate: [this.preFillComment]
+      commentModerate: [this.preFillComment],
+      linkModerate: [this.preFillLink]
     });
   }
 
@@ -132,6 +135,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   preFill(response: ComplainResponseModel) {
     this.preFillresponse = response.response;
     this.moderateResponse = response;
+    this.preFillLink = response.extLink;
     this.initForm();
   }
 
@@ -244,6 +248,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   onSubmitModerateResponse() {
     this.moderateResponse.response = this.moderateForm.get('responseModerate').value;
+    this.moderateResponse.extLink = this.moderateForm.get('linkModerate').value;
     console.log(this.moderateResponse);
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
