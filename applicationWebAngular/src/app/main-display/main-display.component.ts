@@ -47,6 +47,17 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
+    this.updateRequests();
+  }
+
+  initForm() {
+    this.moderateForm = this.formBuilder.group({
+      requestModerate: [this.preFillRequest],
+      requestThemeModerate: [this.prefillThemeRequest]
+    });
+  }
+
+  updateRequests() {
     // subscription
     this.requestsSubscription = this.complainRequestService.requestsSubject.subscribe(
       (requests: ComplainRequestModel[]) => {
@@ -73,13 +84,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     } else {
       this.userConnected = false;
     }
-  }
-
-  initForm() {
-    this.moderateForm = this.formBuilder.group({
-      requestModerate: [this.preFillRequest],
-      requestThemeModerate: [this.prefillThemeRequest]
-    });
   }
 
   ngOnDestroy() {
@@ -123,22 +127,34 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   changePopularity(index: number, change: string) {
-    if (this.userConnected) {
-      if (change === '+') {
-        this.requestsList[index].popularity++;
-      } else if (change === '-') {
-        this.requestsList[index].popularity--;
-      }
+    let userAlreadyVoted = false;
 
-      const userPseudo = this.currentUser.pseudo;
-      this.complainRequestService.changeRequestPopularity(this.requestsList[index], userPseudo, () => {
-        // on error
-        if (change === '+') {
-          this.requestsList[index].popularity--;
-        } else if (change === '-') {
-          this.requestsList[index].popularity++;
+    if (this.userConnected) {
+      // check if user has already voted
+      this.requestsList[index].userWhoChangePopularityList.forEach(userWhoChange => {
+        if (userWhoChange === this.currentUser.pseudo) {
+          userAlreadyVoted = true;
         }
       });
+
+      if (!userAlreadyVoted) {
+        if (change === '+') {
+          this.requestsList[index].popularity++;
+        } else if (change === '-') {
+          this.requestsList[index].popularity--;
+        }
+
+        const userPseudo = this.currentUser.pseudo;
+        this.complainRequestService.changeRequestPopularity(this.requestsList[index], userPseudo, () => {
+          this.updateRequests();
+        });
+      } else {
+        this.snackBar.open("Vous avez déja voté!", '', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+      }
+
     } else {
       this.snackBar.open('Vous devez être connecté pour avoir accés à cette fonction', '', {
         duration: 3000,
@@ -146,7 +162,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
       );
     }
-    this.requestsList.sort(this.comparePopularity);
   }
 
   calculateRequestDiffFromTodayTo(request) {

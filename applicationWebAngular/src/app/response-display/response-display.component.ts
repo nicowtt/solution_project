@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ComplainResponseService } from './../services/ComplainResponse.service';
@@ -21,6 +22,8 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   currentUser: ComplainUserModel;
   userConnected: boolean;
   userConnectedIsModerator: boolean;
+
+  idOfRequest: number;
 
   requestSubscription: Subscription;
   requestConcerned: ComplainRequestModel;
@@ -52,6 +55,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
               private router: Router,
+              private snackBar: MatSnackBar,
               private authService: AuthService,
               private complainResponseService: ComplainResponseService,
               private formBuilder: FormBuilder) {
@@ -60,7 +64,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    const id = this.route.snapshot.params.id;
+    this.idOfRequest = this.route.snapshot.params.id;
     this.requestConcerned = new ComplainRequestModel();
     // subscription to request concerned
     this.requestSubscription = this.complainRequestService.requestSubject.subscribe(
@@ -69,7 +73,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
         this.calculateRequestDiffFromTodayTo(request);
       }
     );
-    this.complainRequestService.getOneRequest(id, () => {
+    this.complainRequestService.getOneRequest(this.idOfRequest, () => {
       this.complainRequestService.emitRequest();
 
       // if request is here -> subscription to responses concerned
@@ -212,6 +216,16 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   }
 
   changePopularity(index: number, change: string) {
+    let userAlreadyVoted = false;
+
+    // check if user has already voted
+    this.requestResponses[index].userWhoChangePopularityList.forEach(userWhoChange => {
+      if (userWhoChange === this.currentUser.pseudo) {
+        userAlreadyVoted = true;
+      }
+    });
+
+    if (!userAlreadyVoted) {
       if (change === '+') {
         this.requestResponses[index].popularity++;
       } else if (change === '-') {
@@ -219,18 +233,16 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
       }
 
       const userPseudo = this.currentUser.pseudo;
-
       this.complainResponseService.changeResponsePopularity(this.requestResponses[index], userPseudo, () => {
-        // on error
-        if (change === '+') {
-          this.requestResponses[index].popularity--;
-        } else if (change === '-') {
-          this.requestResponses[index].popularity++;
-        }
-      }, () => {
         // on succes
-        this.requestResponses.sort(this.comparePopularity);
+        this.updateResponses();
       });
+    } else {
+  this.snackBar.open("Vous avez déja voté!", '', {
+    duration: 3000,
+    verticalPosition: 'top'
+  });
+}
   }
 
   comparePopularity(a: ComplainResponseModel, b: ComplainResponseModel) {

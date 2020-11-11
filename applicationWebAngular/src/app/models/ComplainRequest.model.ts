@@ -12,6 +12,7 @@ export class ComplainRequestModel {
     creationHoursUntilToday: number;
     creationMinutesUntilToday: number;
     popularity: number;
+    userWhoChangePopularityList: string[];
     nbrResponse: number;
     themeName: string;
     complainResponsesId: string;
