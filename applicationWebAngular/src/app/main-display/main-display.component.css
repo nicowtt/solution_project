@@ -10,15 +10,19 @@
 #popularity {
   float: left;
   margin-right: 10px;
-  margin-top: -10px;
 }
 
 #score {
-  margin-left: 10px;
+  margin-left: 0px;
+}
+
+#badgeTheme {
+  margin-right: 10px;
 }
 
 #displayForAndDate {
   font-size: 70%;
+  margin-left: 80px;
 }
 
 .parent {
@@ -55,4 +59,6 @@
 
 .list-group-item {
   margin-bottom: 0px;
+  box-shadow: 8px 8px 12px #aaa;
+  border-radius: 35px;
 }
