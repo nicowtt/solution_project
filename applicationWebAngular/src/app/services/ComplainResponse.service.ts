@@ -40,7 +40,7 @@ export class ComplainResponseService {
 
 
 
-  changeResponsePopularity(response: ComplainResponseModel, userPseudo: string, onError: Function, onSuccess: Function) {
+  changeResponsePopularity(response: ComplainResponseModel, userPseudo: string, onSuccess: Function) {
     this.http
       .post<ComplainResponseModel>('/changeResponsePopularity/' + userPseudo, response)
       .subscribe(
@@ -52,7 +52,6 @@ export class ComplainResponseService {
             duration: 3000,
             verticalPosition: 'top'
           });
-          onError();
         }
       );
   }

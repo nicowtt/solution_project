@@ -47,6 +47,17 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
+    this.updateRequests();
+  }
+
+  initForm() {
+    this.moderateForm = this.formBuilder.group({
+      requestModerate: [this.preFillRequest],
+      requestThemeModerate: [this.prefillThemeRequest]
+    });
+  }
+
+  updateRequests() {
     // subscription
     this.requestsSubscription = this.complainRequestService.requestsSubject.subscribe(
       (requests: ComplainRequestModel[]) => {
@@ -73,13 +84,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     } else {
       this.userConnected = false;
     }
-  }
-
-  initForm() {
-    this.moderateForm = this.formBuilder.group({
-      requestModerate: [this.preFillRequest],
-      requestThemeModerate: [this.prefillThemeRequest]
-    });
   }
 
   ngOnDestroy() {
@@ -123,22 +127,34 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   changePopularity(index: number, change: string) {
-    if (this.userConnected) {
-      if (change === '+') {
-        this.requestsList[index].popularity++;
-      } else if (change === '-') {
-        this.requestsList[index].popularity--;
-      }
+    let userAlreadyVoted = false;
 
-      const userPseudo = this.currentUser.pseudo;
-      this.complainRequestService.changeRequestPopularity(this.requestsList[index], userPseudo, () => {
-        // on error
-        if (change === '+') {
-          this.requestsList[index].popularity--;
-        } else if (change === '-') {
-          this.requestsList[index].popularity++;
+    if (this.userConnected) {
+      // check if user has already voted
+      this.requestsList[index].userWhoChangePopularityList.forEach(userWhoChange => {
+        if (userWhoChange === this.currentUser.pseudo) {
+          userAlreadyVoted = true;
         }
       });
+
+      if (!userAlreadyVoted) {
+        if (change === '+') {
+          this.requestsList[index].popularity++;
+        } else if (change === '-') {
+          this.requestsList[index].popularity--;
+        }
+
+        const userPseudo = this.currentUser.pseudo;
+        this.complainRequestService.changeRequestPopularity(this.requestsList[index], userPseudo, () => {
+          this.updateRequests();
+        });
+      } else {
+        this.snackBar.open("Vous avez déja voté!", '', {
+          duration: 3000,
+          verticalPosition: 'top'
+        });
+      }
+
     } else {
       this.snackBar.open('Vous devez être connecté pour avoir accés à cette fonction', '', {
         duration: 3000,
@@ -146,7 +162,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
       );
     }
-    this.requestsList.sort(this.comparePopularity);
   }
 
   calculateRequestDiffFromTodayTo(request) {
@@ -187,6 +202,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     let posXbottle = 0;
     let posYbottle = 260;
     let bottleWidth = 5;
+    let decal = true;
     // create bottles
     this.requestsList.forEach(request => {
       posXbottle = this.calculateDiffFromTodayTo(request.lastResponseDate);
@@ -194,23 +210,44 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       if (posXbottle !== 0) {
         posXbottle = posXbottle * 100;
       }
-      posXbottle += 220; // shift for "fond"
+      // display decals
+      if (decal) {
+        posXbottle += 5;
+        decal = false;
+      } else {
+        posXbottle -= 5;
+        decal = true;
+      }
       const bottle = new BottleModel(posYbottle + 'px', posXbottle + 'px', bottleWidth + '%');
       bottle.requestName = request.request;
       bottle.requestId = request.id;
       // check on console
       console.log(bottle);
       // for now we see bottle 7 days after request is posted
-      if (posXbottle <= 920 && posYbottle <= 450) { // +220 on posXbottle for "fond" shift
+      if (posXbottle <= 705 && posYbottle <= 450) {
         this.bottles.push(bottle);
       }
       // increment
-      posYbottle += 15;
+      //posYbottle += 15;
+      posYbottle += 10;
     });
   }
 
   newRequest() {
-    this.router.navigate(['/newRequest']);
+    let nbrOfRequest = 0;
+    this.requestsList.forEach(request => {
+      nbrOfRequest++;
+    });
+    console.log(nbrOfRequest);
+    if (nbrOfRequest < 20) {
+      this.router.navigate(['/newRequest']);
+    } else {
+      this.snackBar.open('limite de sujets atteinte !, veuillez attendre qu\'un sujet soit oublié.', '', {
+        duration: 5000,
+        verticalPosition: 'top'
+      });
+    }
+
   }
 
   deleteRequest(index: number) {

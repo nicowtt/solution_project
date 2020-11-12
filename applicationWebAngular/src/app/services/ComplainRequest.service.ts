@@ -59,18 +59,14 @@ export class ComplainRequestService {
       );
     }
 
-    changeRequestPopularity(request: ComplainRequestModel, userPseudo: string, onError: Function) {
+    changeRequestPopularity(request: ComplainRequestModel, userPseudo: string, onSucces) {
       this.http
       .post<ComplainRequestModel>('/changeRequestPopularity/' + userPseudo, request)
       .subscribe(
         (response) => {
+          onSucces();
         },
         (error) => {
-          this.snackBar.open("Vous avez déja voté!", '', {
-            duration: 3000,
-            verticalPosition: 'top'
-          });
-          onError();
         }
       );
     }

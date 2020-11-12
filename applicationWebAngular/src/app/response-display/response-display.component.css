@@ -3,12 +3,20 @@
 }
 
 .list-group-item {
-  margin-bottom: 0px;
-  margin-top: 0px;
+  margin-bottom: -10px;
+  margin-top: -10px;
+  box-shadow: 8px 8px 12px #aaa;
+  border-radius: 35px;
+  border-color: darkgray;
+}
+
+#displayLink {
+  margin-left: 85px;
 }
 
 #displayForAndDate {
   font-size: 70%;
+  margin-left: 85px;
 }
 
 #displayDate {
@@ -22,7 +30,7 @@
 }
 
 #score {
-  margin-left: 10px;
+  margin-left: 0px;
 }
 
 #response {
@@ -64,17 +72,15 @@
 .comments {
   list-style-type: none;
   padding: 0;
-  width: 15em;
+  width: 25em;
   position: relative;
   left: 55px;
-
+  margin: -5px;
 }
 
 .comments li {
   display:inline-block;
   position: relative;
-
-
   margin-top: 5px;
   padding: 0;
   height: 1.6em;
