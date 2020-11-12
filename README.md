@@ -50,7 +50,7 @@ vers le dossier: microserviceBdd/executable
 - Modifier le nom du nouveau jar dans le fichier Dockerfile
 
 ## Contribution
-[Github du projet](https://github.com/nicowtt/solution_project)
+[Github du projet](https://github.com/nicowtt/discut_project.git)
 
 * 1: clone repository
 * 2: Créer une nouvelle branche
