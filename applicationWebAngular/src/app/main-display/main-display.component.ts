@@ -202,6 +202,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     let posXbottle = 0;
     let posYbottle = 260;
     let bottleWidth = 5;
+    let decal = true;
     // create bottles
     this.requestsList.forEach(request => {
       posXbottle = this.calculateDiffFromTodayTo(request.lastResponseDate);
@@ -209,23 +210,44 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       if (posXbottle !== 0) {
         posXbottle = posXbottle * 100;
       }
-      posXbottle += 220; // shift for "fond"
+      // display decals
+      if (decal) {
+        posXbottle += 5;
+        decal = false;
+      } else {
+        posXbottle -= 5;
+        decal = true;
+      }
       const bottle = new BottleModel(posYbottle + 'px', posXbottle + 'px', bottleWidth + '%');
       bottle.requestName = request.request;
       bottle.requestId = request.id;
       // check on console
       console.log(bottle);
       // for now we see bottle 7 days after request is posted
-      if (posXbottle <= 920 && posYbottle <= 450) { // +220 on posXbottle for "fond" shift
+      if (posXbottle <= 705 && posYbottle <= 450) {
         this.bottles.push(bottle);
       }
       // increment
-      posYbottle += 15;
+      //posYbottle += 15;
+      posYbottle += 10;
     });
   }
 
   newRequest() {
-    this.router.navigate(['/newRequest']);
+    let nbrOfRequest = 0;
+    this.requestsList.forEach(request => {
+      nbrOfRequest++;
+    });
+    console.log(nbrOfRequest);
+    if (nbrOfRequest < 20) {
+      this.router.navigate(['/newRequest']);
+    } else {
+      this.snackBar.open('limite de sujets atteinte !, veuillez attendre qu\'un sujet soit oublié.', '', {
+        duration: 5000,
+        verticalPosition: 'top'
+      });
+    }
+
   }
 
   deleteRequest(index: number) {

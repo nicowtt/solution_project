@@ -1,18 +1,15 @@
 <div class="row">
   <div class="col-md-12">
 
-    <div class="d-none d-lg-block d-xl-block">
       <div class="parent">
-        <img class="fond" src="/assets/img/river2.svg" alt="river">
+        <img class="fond" src="/assets/img/river2.svg" alt="river"
+        >
         <div *ngFor="let bottle of bottles; let i = index">
           <img (click)="showResponses(bottle.requestId)"
             [ngStyle]="{'top': [bottle.top], 'left': [bottle.left], 'width': [bottle.width]}" class="bouteille"
             src="/assets/img/bottle.png" alt="bottle" matTooltip={{[bottle.requestName]}} [matTooltipPosition]="'above'">
         </div>
       </div>
-    </div>
-
-
 
     <div class="annonce">
       Les sujets sont éphémères, sans réponse pendant 7 jours, ils ne sont plus visible ...
@@ -21,7 +18,6 @@
       <input (click)="newRequest()" type="text" id="newRequest" class="form-control"
         placeholder="Créer un nouveau sujet..." />
     </div>
-
 
     <div id="MainMenu">
       <div class="list-group list-group-flush" *ngFor="let request of requestsList; let i = index">
