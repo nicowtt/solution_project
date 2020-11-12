@@ -11,6 +11,10 @@ pour un nouveau cycle de 7 jours.
 * Chaque sujet/réponse à une note, l'utilisateur peu voter 1 fois afin de le faire monter 
 ou descendre par rapport aux autres pour améliorer la visibilité du sujet/réponse.
 
+## Aperçu du site
+![alt text](https://github.com/nicowtt/solution_project/blob/master/discutProject.jpg)<br>
+#### [Lien du site](http://discut.hopto.org/)
+
 ### Techniques utilisés pour ce projet:
 Ce projet se compose de deux applications et d'une base de donnée:_
 * Application Web crée avec le framework Angular en version 9 (typeScript).
@@ -54,11 +58,6 @@ vers le dossier: microserviceBdd/executable
 * 3: "Commit" les évolutions / changements (git commit -am "add some feature")
 * 4: "Push" la nouvelle branche (git push origin my-new-feature)
 * 5: Créer une nouvelle "pull request"
-
-## Aperçu du site
-![alt text](https://github.com/nicowtt/solution_project/blob/master/discutProject.jpg)<br>
-####[Lien du site](http://discut.hopto.org/)
-
 
 ## Licence
     Copyright (C) 2020  BODELLE Nicolas
