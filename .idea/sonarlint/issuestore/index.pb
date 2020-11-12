@@ -128,3 +128,5 @@ Q
 !applicationWebAngular/src/main.ts,3\4\34a13bfbde6d91956dd100203ef75c862dfe65bc
 [
 +applicationWebAngular/src/app/app.module.ts,2\4\240e9e29b62fcea1f8f3d2b9a9e2d8bdf195816b
+`
+0applicationWebAngular/src/app/app.component.html,1/3/13c72d2e9ac7ae536545d347d3b4af7a31cf23d5
