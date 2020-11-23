@@ -9,6 +9,7 @@ import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-main-display',
@@ -47,7 +48,21 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.updateRequests();
+
+    this.authService.userStateChange(
+      // on succes
+      () => {
+        this.updateRequests();
+      }
+      // on error
+      , () => {
+        console.log ('Token périmé!');
+        this.snackBar.open('Vous devez vous re-connecter !', '', {
+          duration: 5000,
+          verticalPosition: 'top'
+        });
+        this.router.navigate(['auth/signin']);
+      } );
   }
 
   initForm() {
@@ -87,7 +102,10 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.requestsSubscription.unsubscribe();
+    if (this.requestsSubscription != null) {
+      this.requestsSubscription.unsubscribe();
+    }
+
   }
 
   preFill(request: ComplainRequestModel) {

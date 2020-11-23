@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {ComplainUserModel} from '../models/ComplainUser.model';
-import {map} from 'rxjs/operators';
-import {ApplicationHttpClientService} from './applicationHttpClient.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ComplainUserModel } from '../models/ComplainUser.model';
+import { map } from 'rxjs/operators';
+import { ApplicationHttpClientService } from './applicationHttpClient.service';
 
 
 @Injectable({
@@ -25,11 +25,8 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  /**
-   * User sign in
-   * @param email
-   * @param password
-   */
+
+  /*
   signInUser(email, password) {
     return this.http.post<any>('/checkLogin', { email, password })
       .pipe(map(user => {
@@ -45,6 +42,40 @@ export class AuthService {
         return user;
       }));
   }
+  */
+
+  signInUser(email, password, onSucces: any, onError: any) {
+    return this.http
+      .post<any>('/checkLogin', { email, password })
+      .subscribe(
+        (Response) => {
+          this.userInProgress = Response;
+          // console.log('only token: ' + this.userInProgress.token);
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(this.userInProgress));
+          localStorage.setItem('currentUserToken', JSON.stringify(this.userInProgress.token));
+          this.currentUserSubject.next(this.userInProgress);
+          console.log('local quand sigIn: ' + localStorage.getItem('currentUser'));
+          onSucces();
+        },
+        (error) => {
+            onError();
+        }
+      );
+  }
+
+  userStateChange(onSuccess: any, onError: any) {
+    return this.http
+    .get<any>('/userStateChanged/')
+    .subscribe(
+      (Response) => {
+        onSuccess();
+      },
+      (error) => {
+        onError();
+      });
+    }
+
 
   /**
    * User logOut
@@ -70,6 +101,6 @@ export class AuthService {
   //     }
   //     ));
   // }
-  }
+}
 
 
