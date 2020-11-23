@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ComplainUserModel } from '../models/ComplainUser.model';
@@ -16,7 +18,9 @@ export class AuthService {
   private userInProgress: ComplainUserModel;
 
 
-  constructor(private http: ApplicationHttpClientService) {
+  constructor(private http: ApplicationHttpClientService,
+              private snackBar: MatSnackBar,
+              private router: Router) {
     this.currentUserSubject = new BehaviorSubject<ComplainUserModel>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -64,7 +68,7 @@ export class AuthService {
       );
   }
 
-  userStateChange(onSuccess: any, onError: any) {
+  userStateChange(onSuccess: any) {
     return this.http
     .get<any>('/userStateChanged/')
     .subscribe(
@@ -72,7 +76,12 @@ export class AuthService {
         onSuccess();
       },
       (error) => {
-        onError();
+        console.log ('Token périmé!');
+        this.snackBar.open('Vous devez vous re-connecter !', '', {
+          duration: 5000,
+          verticalPosition: 'top'
+        });
+        this.router.navigate(['auth/signin']);
       });
     }
 

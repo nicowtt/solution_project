@@ -48,20 +48,10 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-
     this.authService.userStateChange(
       // on succes
       () => {
         this.updateRequests();
-      }
-      // on error
-      , () => {
-        console.log ('Token périmé!');
-        this.snackBar.open('Vous devez vous re-connecter !', '', {
-          duration: 5000,
-          verticalPosition: 'top'
-        });
-        this.router.navigate(['auth/signin']);
       } );
   }
 
