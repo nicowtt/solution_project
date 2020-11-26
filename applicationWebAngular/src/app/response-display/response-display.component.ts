@@ -191,13 +191,23 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     const currentDate = new Date();
     const dateSent = new Date(response.creationDate);
 
+
+
     response.creationDaysUntilToday = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),
     dateSent.getDate())) / (1000 * 60 * 60 * 24));
-
     response.creationHoursUntilToday = currentDate.getHours() - dateSent.getHours();
-
     response.creationMinutesUntilToday = currentDate.getMinutes() - dateSent.getMinutes();
+
+    response.commentList.forEach(comment => {
+      const commentSended = new Date(comment.creationDate);
+      comment.creationDaysUntilToday = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
+      currentDate.getDate()) - Date.UTC(commentSended.getFullYear(), commentSended.getMonth(),
+      commentSended.getDate())) / (1000 * 60 * 60 * 24));
+      comment.creationHoursUntilToday = currentDate.getHours() - commentSended.getHours();
+      comment.creationMinutesUntilToday = currentDate.getMinutes() - commentSended.getMinutes();
+    });
+
 
   }
 
