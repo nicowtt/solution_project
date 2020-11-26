@@ -9,6 +9,7 @@ import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { style } from '@angular/animations';
 
 @Component({
   selector: 'app-main-display',
@@ -47,7 +48,11 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.updateRequests();
+    this.authService.userStateChange(
+      // on succes
+      () => {
+        this.updateRequests();
+      } );
   }
 
   initForm() {
@@ -87,7 +92,10 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.requestsSubscription.unsubscribe();
+    if (this.requestsSubscription != null) {
+      this.requestsSubscription.unsubscribe();
+    }
+
   }
 
   preFill(request: ComplainRequestModel) {
@@ -167,14 +175,19 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   calculateRequestDiffFromTodayTo(request) {
     const currentDate = new Date();
     const dateSent = new Date(request.creationDate);
+    const lastResponse = new Date(request.lastResponseDate);
 
     request.creationDaysUntilToday = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
     currentDate.getDate()) - Date.UTC(dateSent.getFullYear(), dateSent.getMonth(),
     dateSent.getDate())) / (1000 * 60 * 60 * 24));
-
     request.creationHoursUntilToday = currentDate.getHours() - dateSent.getHours();
-
     request.creationMinutesUntilToday = currentDate.getMinutes() - dateSent.getMinutes();
+
+    request.lastReponseDaysUntilToday = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(),
+    currentDate.getDate()) - Date.UTC(lastResponse.getFullYear(), lastResponse.getMonth(),
+    lastResponse.getDate())) / (1000 * 60 * 60 * 24));
+    request.lastReponseHoursUntilToday = currentDate.getHours() - lastResponse.getHours();
+    request.lastReponseMinutesUntilToday = currentDate.getMinutes() - lastResponse.getMinutes();
   }
 
   calculateDiffFromTodayTo(inputDate) {

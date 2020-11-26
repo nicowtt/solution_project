@@ -95,6 +95,16 @@
             <span *ngIf="request.creationDaysUntilToday < 1 && request.creationHoursUntilToday < 1">
               il y a {{ request.creationMinutesUntilToday }} minute(s).
             </span>
+            <span style="font-style: italic"> Dernère réponse il y a </span>
+            <span *ngIf="request.lastReponseDaysUntilToday > 0">
+              {{ request.lastReponseDaysUntilToday }} jour(s).
+            </span>
+            <span *ngIf="request.lastReponseDaysUntilToday < 1 && request.lastReponseHoursUntilToday > 0">
+              {{ request.lastReponseHoursUntilToday }} heure(s).
+            </span>
+            <span *ngIf="request.lastReponseDaysUntilToday < 1 && request.lastReponseHoursUntilToday < 1">
+              {{ request.lastReponseMinutesUntilToday }} minute(s).
+            </span>
 
         </div>
       </div>

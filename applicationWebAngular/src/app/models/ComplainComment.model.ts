@@ -7,6 +7,9 @@ export class ComplainCommentModel {
   creatorEmail: string;
   creationDate: string;
   responseId: string;
+  creationDaysUntilToday: number;
+  creationHoursUntilToday: number;
+  creationMinutesUntilToday: number;
 
   constructor() {}
 

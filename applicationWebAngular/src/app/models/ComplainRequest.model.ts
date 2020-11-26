@@ -16,7 +16,10 @@ export class ComplainRequestModel {
     nbrResponse: number;
     themeName: string;
     complainResponsesId: string;
-    lastResponseDate: number;
+    lastResponseDate: string;
+    lastReponseDaysUntilToday: number;
+    lastReponseHoursUntilToday: number;
+    lastReponseMinutesUntilToday: number;
     bottle: BottleModel;
     forgotten: boolean;
 

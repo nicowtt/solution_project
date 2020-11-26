@@ -51,28 +51,19 @@ export class SigninComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.signInUser(this.f.email.value, this.f.password.value)
-      .subscribe(
-        data => {
-          this.router.navigate([this.returnUrl]);
-        },
-        (error: HttpErrorResponse) => {
-          if (error.status === 406) {
-            this.alertService.error("Le nom d'utilisateur ou le mot de passe est incorrect");
-            setTimeout(() => {
-              this.alertService.clear();
-            }, 2000);
-            console.log("Le nom d'utilisateur ou le mot de passe est incorrect");
-          } else {
-            this.alertService.error(error.message);
-            setTimeout(() => {
-              this.alertService.clear();
-            }, 2000);
-            console.log(error.message);
-          }
-          this.loading = false;
-        }
-      );
+    this.authService.signInUser(this.f.email.value, this.f.password.value, () => {
+      // succes
+      this.router.navigate([this.returnUrl]);
+    },
+    () => {
+      // error
+      this.alertService.error("Le nom d'utilisateur ou le mot de passe est incorrect");
+        setTimeout(() => {
+          this.alertService.clear();
+        }, 2000);
+        console.log("Le nom d'utilisateur ou le mot de passe est incorrect");
+      this.loading = false;
+    });
   }
 
   newSignUp() {
