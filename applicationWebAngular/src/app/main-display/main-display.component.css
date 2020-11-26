@@ -58,4 +58,5 @@
   margin-bottom: 0px;
   box-shadow: 8px 8px 12px #aaa;
   border-radius: 35px;
+  word-break: break-all;
 }
