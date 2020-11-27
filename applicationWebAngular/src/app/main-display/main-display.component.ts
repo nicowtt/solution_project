@@ -48,11 +48,12 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.authService.userStateChange(
-      // on succes
-      () => {
-        this.updateRequests();
-      } );
+    if (this.currentUser != null) {
+      this.authService.userStateChange(
+        // on succes
+        () => { } );
+    }
+    this.updateRequests();
   }
 
   initForm() {
