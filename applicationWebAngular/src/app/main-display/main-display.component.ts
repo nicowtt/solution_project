@@ -51,10 +51,9 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     if (this.currentUser != null) {
       this.authService.userStateChange(
         // on succes
-        () => {
-          this.updateRequests();
-        } );
+        () => { } );
     }
+    this.updateRequests();
   }
 
   initForm() {
