@@ -3,8 +3,12 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/microservicebdd" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservicebdd/microservice-business" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservicebdd/microservice-business/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservicebdd/microservice-dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservicebdd/microservice-dao/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservicebdd/microservice-model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservicebdd/microservice-model/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/microservicebdd/microservice-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservicebdd/microservice-web/src/main/java" charset="UTF-8" />
   </component>
 </project>
