@@ -10,6 +10,7 @@ import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { style } from '@angular/animations';
+import { ProgressWebsocketService } from '../services/progress.websocket.service';
 
 @Component({
   selector: 'app-main-display',
@@ -41,7 +42,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private alertService: AlertService,
               private snackBar: MatSnackBar,
-              private formBuilder: FormBuilder
+              private formBuilder: FormBuilder,
+              private progressWebsocketService: ProgressWebsocketService
   ) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -54,6 +56,32 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
         () => { } );
     }
     this.updateRequests();
+    this.initProgressWebSocket();
+  }
+
+  /**
+   * Subscribe to the client broker.
+   * Return the current status of the batch.
+   */
+   private initProgressWebSocket = () => {
+    const obs = this.progressWebsocketService.getObservable();
+
+    obs.subscribe({
+      next: this.onNewProgressMsg,
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+
+  /**
+   * Apply result of the java server notification to the view.
+   */
+  private onNewProgressMsg = receivedMsg => {
+    if (receivedMsg.type === 'SUCCESS') {
+      this.requestsList.push(receivedMsg.message);
+      this.updateRequests();
+    }
   }
 
   initForm() {

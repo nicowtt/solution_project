@@ -87,6 +87,18 @@
 				<scope>test</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-websocket</artifactId>
+				<version>2.4.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-messaging</artifactId>
+				<version>5.4.5</version>
+			</dependency>
+
 			<!-- Drivers MongoDb -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>

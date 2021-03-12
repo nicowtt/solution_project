@@ -10,9 +10,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +33,9 @@ public class ComplainRequestControlleur {
 
     @Autowired
     private ComplainRequestManager complainRequestManager;
+
+    @Autowired
+    private SimpMessagingTemplate websocket;
 
     /**
      * to get all requests
@@ -110,6 +113,9 @@ public class ComplainRequestControlleur {
         if (complainRequestSaved.getId() != null) {
             logger.info("new request created by: " + complainRequestInput.getCreatorEmail() + "on: "
                     + complainRequestInput.getCreationDate());
+
+            this.broadcast(complainRequestSaved);
+
             return (new ResponseEntity<>(HttpStatus.OK));
         }
         return (new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE));
@@ -148,5 +154,9 @@ public class ComplainRequestControlleur {
         } else {
             return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
         }
+    }
+
+    private void broadcast(ComplainRequest complainRequest) {
+        websocket.convertAndSend("/topic/request", complainRequest);
     }
 }
