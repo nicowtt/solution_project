@@ -5,6 +5,7 @@ import com.nicow.microservicedao.complainDao.ComplainRequestDao;
 import com.nicow.microservicedao.complainDao.ComplainResponseDao;
 import com.nicow.microservicemodel.entities.ComplainRequest;
 import com.nicow.microservicemodel.entities.ComplainResponse;
+import com.nicow.microservicemodel.events.ComplainRequestEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,14 @@ public class ComplainRequestControlleur {
         // update
         if (userIsAuthorized) {
             complainRequestInput.addUserWhoIncreasePopularity(userPseudoInput);
+
+            // brodcast for update request
+            this.broadcast(new ComplainRequestEvent(
+                    this,
+                    ComplainRequestEvent.TYPE.UPDATE,
+                    complainRequestInput
+            ));
+
             complainRequestDao.save(complainRequestInput);
             logger.info("User " + userPseudoInput + " change popularity of: " + complainRequestInput.getRequest());
             return (new ResponseEntity<>(HttpStatus.OK));
@@ -114,7 +123,11 @@ public class ComplainRequestControlleur {
             logger.info("new request created by: " + complainRequestInput.getCreatorEmail() + "on: "
                     + complainRequestInput.getCreationDate());
 
-            this.broadcast(complainRequestSaved);
+            // broadcast new complainRequest
+            this.broadcast(new ComplainRequestEvent(
+                    this,
+                    ComplainRequestEvent.TYPE.CREATE,
+                    complainRequestSaved));
 
             return (new ResponseEntity<>(HttpStatus.OK));
         }
@@ -136,6 +149,14 @@ public class ComplainRequestControlleur {
         Optional<ComplainRequest> requestToDeleteOpt = complainRequestDao.findById(complainRequestInput.getId());
         if (requestToDeleteOpt.isPresent()) {
             ComplainRequest requestToDelete = requestToDeleteOpt.get();
+
+            // brodcast for delete request
+            this.broadcast(new ComplainRequestEvent(
+                    this,
+                    ComplainRequestEvent.TYPE.DELETE,
+                    requestToDelete
+                    ));
+
             complainRequestDao.delete(requestToDelete);
             return (new ResponseEntity<>(HttpStatus.OK));
         } else {
@@ -146,6 +167,14 @@ public class ComplainRequestControlleur {
     @PostMapping(value = "/updateRequest", consumes = "application/json")
     public ResponseEntity<String> updateRequest(
             @RequestBody ComplainRequest complainRequestInput) {
+
+        // brodcast for update request
+        this.broadcast(new ComplainRequestEvent(
+                this,
+                ComplainRequestEvent.TYPE.UPDATE,
+                complainRequestInput
+        ));
+
         // save
         ComplainRequest updatedRequest = complainRequestDao.save(complainRequestInput);
         if (updatedRequest!= null) {
@@ -156,7 +185,7 @@ public class ComplainRequestControlleur {
         }
     }
 
-    private void broadcast(ComplainRequest complainRequest) {
-        websocket.convertAndSend("/topic/request", complainRequest);
+    private void broadcast(ComplainRequestEvent complainRequestEvent) {
+        websocket.convertAndSend("/topic/request", complainRequestEvent);
     }
 }

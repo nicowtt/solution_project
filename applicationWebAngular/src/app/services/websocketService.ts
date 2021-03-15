@@ -14,7 +14,7 @@ export class WebSocketService {
     heartbeatIncoming: 0,
     heartbeatOutgoing: 20000,
     reconnectDelay: 10000,
-    debug: (str) => { console.log(str); }
+    // debug: (str) => { console.log(str); }
   };
 
   constructor(

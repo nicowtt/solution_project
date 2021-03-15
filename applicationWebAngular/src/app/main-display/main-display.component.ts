@@ -9,7 +9,6 @@ import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { style } from '@angular/animations';
 import { ProgressWebsocketService } from '../services/progress.websocket.service';
 
 @Component({
@@ -18,10 +17,9 @@ import { ProgressWebsocketService } from '../services/progress.websocket.service
   styleUrls: ['./main-display.component.css']
 })
 export class MainDisplayComponent implements OnInit, OnDestroy {
-
   userConnectedIsModerator: boolean;
 
-  requestsList: ComplainRequestModel[];
+  requestsList: ComplainRequestModel[] = new Array();
   requestsSubscription: Subscription;
 
   currentUser: ComplainUserModel;
@@ -40,11 +38,10 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   constructor(private complainRequestService: ComplainRequestService,
               private router: Router,
               private authService: AuthService,
-              private alertService: AlertService,
               private snackBar: MatSnackBar,
               private formBuilder: FormBuilder,
               private progressWebsocketService: ProgressWebsocketService
-  ) {
+              ) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -59,39 +56,88 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     this.initProgressWebSocket();
   }
 
+  initForm() {
+    this.moderateForm = this.formBuilder.group({
+      requestModerate: [this.preFillRequest],
+      requestThemeModerate: [this.prefillThemeRequest],
+    });
+  }
+
   /**
    * Subscribe to the client broker.
    * Return the current status of the batch.
    */
-   private initProgressWebSocket = () => {
+  private initProgressWebSocket = () => {
     const obs = this.progressWebsocketService.getObservable();
 
     obs.subscribe({
       next: this.onNewProgressMsg,
-      error: err => {
+      error: (err) => {
         console.log(err);
-      }
+      },
     });
-  }
+  };
 
   /**
    * Apply result of the java server notification to the view.
    */
-  private onNewProgressMsg = receivedMsg => {
-    if (receivedMsg.type === 'SUCCESS') {
-      this.requestsList.push(receivedMsg.message);
-      this.updateRequests();
+  private onNewProgressMsg = (receivedMsg) => {
+    if (receivedMsg.type === "SUCCESS") {
+      const type = receivedMsg.message.type;
+      switch (type) {
+        case "CREATE": {
+          this.wsAddNewRequest(receivedMsg.message.complainRequest);
+          break;
+        }
+        case "UPDATE": {
+          this.wsUpdateRequest(receivedMsg.message.complainRequest);
+          break;
+        }
+        case "DELETE": {
+          this.wsDeleteRequest(receivedMsg.message.complainRequest);
+          break;
+        }
+        default: {
+          console.log("error on complainRequest type");
+        }
+      }
     }
+  };
+
+  private wsAddNewRequest(complainRequest: ComplainRequestModel) {
+    this.requestsList.push(complainRequest);
+    this.updateRequests();
   }
 
-  initForm() {
-    this.moderateForm = this.formBuilder.group({
-      requestModerate: [this.preFillRequest],
-      requestThemeModerate: [this.prefillThemeRequest]
+  private wsUpdateRequest(complainRequest: ComplainRequestModel) {
+    let index = 0;
+    let idToUpdate = complainRequest.id;
+    this.requestsList.forEach((request) => {
+      if (request.id !== idToUpdate) {
+        index++;
+      } else {
+        this.requestsList.splice(index, 1);
+      }
     });
+    this.requestsList.push(complainRequest);
+    this.updateRequests();
+  }
+
+  private wsDeleteRequest(complainRequest: ComplainRequestModel) {
+    let index = 0;
+    let idToRemove = complainRequest.id;
+    this.requestsList.forEach((request) => {
+      if (request.id !== idToRemove) {
+        index++;
+      } else {
+        this.requestsList.splice(index, 1);
+      }
+    });
+    this.updateRequests();
   }
 
   updateRequests() {
+    this.bottles = [];
     // subscription
     this.requestsSubscription = this.complainRequestService.requestsSubject.subscribe(
       (requests: ComplainRequestModel[]) => {
@@ -124,7 +170,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     if (this.requestsSubscription != null) {
       this.requestsSubscription.unsubscribe();
     }
-
   }
 
   preFill(request: ComplainRequestModel) {
@@ -191,7 +236,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
           verticalPosition: 'top'
         });
       }
-
     } else {
       this.snackBar.open('Vous devez être connecté pour avoir accés à cette fonction', '', {
         duration: 3000,
@@ -263,8 +307,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       const bottle = new BottleModel(posYbottle + 'px', posXbottle + 'px', bottleWidth + '%');
       bottle.requestName = request.request;
       bottle.requestId = request.id;
-      // check on console
-      console.log(bottle);
       // for now we see bottle 7 days after request is posted
       if (posXbottle <= 705 && posYbottle <= 450) {
         this.bottles.push(bottle);
@@ -289,7 +331,6 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
         verticalPosition: 'top'
       });
     }
-
   }
 
   deleteRequest(index: number) {
