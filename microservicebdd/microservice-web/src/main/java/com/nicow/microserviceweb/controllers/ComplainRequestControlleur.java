@@ -9,9 +9,9 @@ import com.nicow.microservicemodel.events.ComplainRequestEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
@@ -36,7 +36,7 @@ public class ComplainRequestControlleur {
     private ComplainRequestManager complainRequestManager;
 
     @Autowired
-    private SimpMessagingTemplate websocket;
+    private ApplicationEventPublisher eventPublisher;
 
     /**
      * to get all requests
@@ -75,12 +75,8 @@ public class ComplainRequestControlleur {
         if (userIsAuthorized) {
             complainRequestInput.addUserWhoIncreasePopularity(userPseudoInput);
 
-            // brodcast for update request
-            this.broadcast(new ComplainRequestEvent(
-                    this,
-                    ComplainRequestEvent.TYPE.UPDATE,
-                    complainRequestInput
-            ));
+            // notify update request
+            this.notify(ComplainRequestEvent.TYPE.UPDATE, complainRequestInput);
 
             complainRequestDao.save(complainRequestInput);
             logger.info("User " + userPseudoInput + " change popularity of: " + complainRequestInput.getRequest());
@@ -123,11 +119,8 @@ public class ComplainRequestControlleur {
             logger.info("new request created by: " + complainRequestInput.getCreatorEmail() + "on: "
                     + complainRequestInput.getCreationDate());
 
-            // broadcast new complainRequest
-            this.broadcast(new ComplainRequestEvent(
-                    this,
-                    ComplainRequestEvent.TYPE.CREATE,
-                    complainRequestSaved));
+            // notify new complainRequest
+            this.notify(ComplainRequestEvent.TYPE.CREATE, complainRequestSaved);
 
             return (new ResponseEntity<>(HttpStatus.OK));
         }
@@ -150,12 +143,8 @@ public class ComplainRequestControlleur {
         if (requestToDeleteOpt.isPresent()) {
             ComplainRequest requestToDelete = requestToDeleteOpt.get();
 
-            // brodcast for delete request
-            this.broadcast(new ComplainRequestEvent(
-                    this,
-                    ComplainRequestEvent.TYPE.DELETE,
-                    requestToDelete
-                    ));
+            // notify deleting complainRequest
+            this.notify(ComplainRequestEvent.TYPE.DELETE, requestToDelete);
 
             complainRequestDao.delete(requestToDelete);
             return (new ResponseEntity<>(HttpStatus.OK));
@@ -168,12 +157,8 @@ public class ComplainRequestControlleur {
     public ResponseEntity<String> updateRequest(
             @RequestBody ComplainRequest complainRequestInput) {
 
-        // brodcast for update request
-        this.broadcast(new ComplainRequestEvent(
-                this,
-                ComplainRequestEvent.TYPE.UPDATE,
-                complainRequestInput
-        ));
+        // notify update request
+        this.notify(ComplainRequestEvent.TYPE.UPDATE, complainRequestInput);
 
         // save
         ComplainRequest updatedRequest = complainRequestDao.save(complainRequestInput);
@@ -185,7 +170,7 @@ public class ComplainRequestControlleur {
         }
     }
 
-    private void broadcast(ComplainRequestEvent complainRequestEvent) {
-        websocket.convertAndSend("/topic/request", complainRequestEvent);
+    void notify(ComplainRequestEvent.TYPE type, ComplainRequest complainRequest) {
+        eventPublisher.publishEvent(new ComplainRequestEvent(this, type, complainRequest));
     }
 }

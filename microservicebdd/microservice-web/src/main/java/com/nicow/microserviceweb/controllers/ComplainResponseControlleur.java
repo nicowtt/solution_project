@@ -5,9 +5,11 @@ import com.nicow.microservicedao.complainDao.ComplainRequestDao;
 import com.nicow.microservicedao.complainDao.ComplainResponseDao;
 import com.nicow.microservicemodel.entities.ComplainRequest;
 import com.nicow.microservicemodel.entities.ComplainResponse;
+import com.nicow.microservicemodel.events.ComplainRequestEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -33,6 +34,9 @@ public class ComplainResponseControlleur {
 
     @Autowired
     private ComplainResponseManager complainResponseManager;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     /**
      * to change response popularity
@@ -112,7 +116,11 @@ public class ComplainResponseControlleur {
             requestToUpdate.setLastResponseDate(complainResponseInput.getCreationDate());
             // add this new response on request -> responseId
             requestToUpdate.addResponseIdOnRequest(newResponse.getId());
+            // notify update request
+            this.notifyRequestEvent(ComplainRequestEvent.TYPE.UPDATE, requestToUpdate);
+
             complainRequestDao.save(requestToUpdate);
+
             return (new ResponseEntity<>(HttpStatus.OK));
         } else {
             return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -148,6 +156,9 @@ public class ComplainResponseControlleur {
                 }
             }
             requestUpdated.setComplainResponsesId(updatedResponsesList);
+            // notify update request
+            this.notifyRequestEvent(ComplainRequestEvent.TYPE.UPDATE, requestUpdated);
+
             complainRequestDao.save(requestUpdated);
             // delete response
             complainResponseDao.delete(complainResponseInput);
@@ -155,5 +166,9 @@ public class ComplainResponseControlleur {
         } else {
             return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
         }
+    }
+
+    void notifyRequestEvent(ComplainRequestEvent.TYPE type, ComplainRequest complainRequest) {
+        eventPublisher.publishEvent(new ComplainRequestEvent(this, type, complainRequest));
     }
 }
