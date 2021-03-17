@@ -16,11 +16,11 @@ export class WebSocketService {
     reconnectDelay: 10000,
     // debug: (str) => { console.log(str); }
   };
+  private options: WebSocketOptions;
 
   constructor(
     private stompService: RxStompService,
-    private updatedStompConfig: InjectableRxStompConfig,
-    private options: WebSocketOptions
+    private updatedStompConfig: InjectableRxStompConfig
     ) {
     // Update StompJs configuration.
     this.stompConfig = {...this.stompConfig, ...this.updatedStompConfig};
@@ -100,7 +100,8 @@ export class WebSocketService {
   /**
    * Return an observable containing a subscribers list to the broker.
    */
-  public getObservable = () => {
+  public getObservable(endpoint: string): Observable<any> {
+    this.options = new WebSocketOptions(endpoint);
     return this.obsStompConnection;
   }
 }

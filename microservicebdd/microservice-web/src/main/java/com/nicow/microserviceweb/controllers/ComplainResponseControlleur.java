@@ -6,6 +6,7 @@ import com.nicow.microservicedao.complainDao.ComplainResponseDao;
 import com.nicow.microservicemodel.entities.ComplainRequest;
 import com.nicow.microservicemodel.entities.ComplainResponse;
 import com.nicow.microservicemodel.events.ComplainRequestEvent;
+import com.nicow.microservicemodel.events.ComplainResponseEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,14 +109,19 @@ public class ComplainResponseControlleur {
         complainResponseInput.setCreationDate(todayDate);
         // save
         ComplainResponse newResponse = complainResponseDao.save(complainResponseInput);
+
         // update request
         Optional<ComplainRequest> optRequest = complainRequestDao.findById(requestId);
         if (optRequest.isPresent() && newResponse.getId() != null) {
             ComplainRequest requestToUpdate = optRequest.get();
+            // notify new response
+            this.notifyResponseEvent(ComplainResponseEvent.TYPE.CREATE, newResponse, requestToUpdate.getId());
+
             // update last date on request
             requestToUpdate.setLastResponseDate(complainResponseInput.getCreationDate());
             // add this new response on request -> responseId
             requestToUpdate.addResponseIdOnRequest(newResponse.getId());
+
             // notify update request
             this.notifyRequestEvent(ComplainRequestEvent.TYPE.UPDATE, requestToUpdate);
 
@@ -156,16 +162,27 @@ public class ComplainResponseControlleur {
                 }
             }
             requestUpdated.setComplainResponsesId(updatedResponsesList);
+
             // notify update request
             this.notifyRequestEvent(ComplainRequestEvent.TYPE.UPDATE, requestUpdated);
 
             complainRequestDao.save(requestUpdated);
             // delete response
             complainResponseDao.delete(complainResponseInput);
+
+            // notify delete response
+            this.notifyResponseEvent(ComplainResponseEvent.TYPE.DELETE, complainResponseInput, requestUpdated.getId());
+
             return (new ResponseEntity<>(HttpStatus.OK));
         } else {
             return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
         }
+    }
+
+    void notifyResponseEvent(ComplainResponseEvent.TYPE type,
+                             ComplainResponse complainResponse,
+                             String complainRequestId) {
+        eventPublisher.publishEvent(new ComplainResponseEvent(this, type, complainResponse, complainRequestId));
     }
 
     void notifyRequestEvent(ComplainRequestEvent.TYPE type, ComplainRequest complainRequest) {

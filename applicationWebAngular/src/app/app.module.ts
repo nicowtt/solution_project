@@ -19,7 +19,8 @@ import { ResponseDisplayComponent } from './response-display/response-display.co
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateNewRequestComponent } from './create-new-request/create-new-request.component';
 import { RxStompService } from '@stomp/ng2-stompjs';
-import { ProgressWebsocketService } from './services/progress.websocket.service';
+import { RequestWebsocketService } from './services/request.websocket.service';
+import { ResponseWebSocketService } from './services/response.websocket.service';
 
 const appRoutes: Routes = [
   { path: 'newRequest', canActivate: [AuthGuardService], component: CreateNewRequestComponent},
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
     AuthGuardService,
     ApplicationHttpClientService,
     RxStompService,
-    ProgressWebsocketService,
+    RequestWebsocketService,
+    ResponseWebSocketService,
   ],
   bootstrap: [AppComponent]
 })

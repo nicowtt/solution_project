@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InjectableRxStompConfig, RxStompService } from '@stomp/ng2-stompjs';
-import { WebSocketService } from '../services/websocketService';
-import { WebSocketOptions } from '../models/websocket.option';
+import { WebSocketService } from './websocketService';
 
 export const progressStompConfig: InjectableRxStompConfig = {
   webSocketFactory: () => {
@@ -10,12 +9,11 @@ export const progressStompConfig: InjectableRxStompConfig = {
 };
 
 @Injectable()
-export class ProgressWebsocketService extends WebSocketService {
+export class RequestWebsocketService extends WebSocketService {
   constructor(stompService: RxStompService) {
     super(
       stompService,
-      progressStompConfig,
-      new WebSocketOptions('/topic/request')
+      progressStompConfig
     );
   }
 }

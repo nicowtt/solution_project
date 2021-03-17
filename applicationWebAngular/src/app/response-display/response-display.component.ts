@@ -11,6 +11,7 @@ import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComplainRequestService } from '../services/ComplainRequest.service';
 import { ComplainCommentModel } from '../models/ComplainComment.model';
+import { ResponseWebSocketService } from '../services/response.websocket.service';
 
 @Component({
   selector: 'app-response-display',
@@ -58,7 +59,8 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
               private snackBar: MatSnackBar,
               private authService: AuthService,
               private complainResponseService: ComplainResponseService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private responseWebsocketService: ResponseWebSocketService) {
                 this.authService.currentUser.subscribe(x => this.currentUser = x);
               }
 
@@ -85,6 +87,8 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     } else {
       this.userConnectedIsModerator = false;
     }
+    // init websocket response connection
+    this.initProgressWebSocket();
   }
 
   initForm() {
@@ -101,6 +105,64 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
 
   // easy access to form fields
   get cf() { return this.commentForm.controls; }
+
+  /**
+   * Subscribe to the client broker.
+   * Return the current status of the batch.
+   */
+   private initProgressWebSocket = () => {
+    const obs = this.responseWebsocketService.getObservable('/topic/request/response/' + this.idOfRequest);
+
+    obs.subscribe({
+      next: this.onNewResponse,
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  };
+
+  /**
+   * Apply result of the java server notification to the view.
+   */
+   private onNewResponse = (wsResponse) => {
+    if (wsResponse.type === 'SUCCESS') {
+      const type = wsResponse.message.type;
+      switch (type) {
+        case 'CREATE': {
+          this.wsAddNewResponse(wsResponse.message.complainResponse);
+          break;
+        }
+        case 'UPDATE': {
+          console.log('update response')
+          // this.wsUpdateRequest(wsRequest.message.complainRequest);
+          break;
+        }
+        case 'DELETE': {
+          this.wsDeleteResponse(wsResponse.message.complainResponse);
+          break;
+        }
+        default: {
+          console.log('error on complainResponse type');
+        }
+      }
+    }
+  };
+
+  private wsAddNewResponse(complainResponse: ComplainResponseModel) {
+    this.requestResponses.push(complainResponse);
+  }
+
+  private wsDeleteResponse(complainResponse: ComplainResponseModel) {
+    let index = 0;
+    const idToRemove = complainResponse.id;
+    this.requestResponses.forEach((request) => {
+      if (request.id !== idToRemove) {
+        index++;
+      } else {
+        this.requestResponses.splice(index, 1);
+      }
+    });
+  }
 
   addLink(link: boolean) {
     if (link) {

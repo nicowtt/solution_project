@@ -9,7 +9,7 @@ import { ComplainRequestService } from './../services/ComplainRequest.service';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ProgressWebsocketService } from '../services/progress.websocket.service';
+import { RequestWebsocketService } from '../services/request.websocket.service';
 
 @Component({
   selector: 'app-main-display',
@@ -40,7 +40,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private snackBar: MatSnackBar,
               private formBuilder: FormBuilder,
-              private progressWebsocketService: ProgressWebsocketService
+              private requestWebsocketService: RequestWebsocketService
               ) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -68,10 +68,10 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
    * Return the current status of the batch.
    */
   private initProgressWebSocket = () => {
-    const obs = this.progressWebsocketService.getObservable();
+    const obs = this.requestWebsocketService.getObservable('/topic/request');
 
     obs.subscribe({
-      next: this.onNewProgressMsg,
+      next: this.onNewRequest,
       error: (err) => {
         console.log(err);
       },
@@ -81,24 +81,24 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   /**
    * Apply result of the java server notification to the view.
    */
-  private onNewProgressMsg = (receivedMsg) => {
-    if (receivedMsg.type === "SUCCESS") {
-      const type = receivedMsg.message.type;
+  private onNewRequest = (wsRequest) => {
+    if (wsRequest.type === 'SUCCESS') {
+      const type = wsRequest.message.type;
       switch (type) {
-        case "CREATE": {
-          this.wsAddNewRequest(receivedMsg.message.complainRequest);
+        case 'CREATE': {
+          this.wsAddNewRequest(wsRequest.message.complainRequest);
           break;
         }
-        case "UPDATE": {
-          this.wsUpdateRequest(receivedMsg.message.complainRequest);
+        case 'UPDATE': {
+          this.wsUpdateRequest(wsRequest.message.complainRequest);
           break;
         }
-        case "DELETE": {
-          this.wsDeleteRequest(receivedMsg.message.complainRequest);
+        case 'DELETE': {
+          this.wsDeleteRequest(wsRequest.message.complainRequest);
           break;
         }
         default: {
-          console.log("error on complainRequest type");
+          console.log('error on complainRequest type');
         }
       }
     }
@@ -125,7 +125,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   private wsDeleteRequest(complainRequest: ComplainRequestModel) {
     let index = 0;
-    let idToRemove = complainRequest.id;
+    const idToRemove = complainRequest.id;
     this.requestsList.forEach((request) => {
       if (request.id !== idToRemove) {
         index++;
