@@ -60,7 +60,13 @@ public class ComplainResponseControlleur {
         // update
         if (userIsAuthorized) {
             complainResponseInput.addUserWhoIncreasePopularity(userPseudoInput);
-            complainResponseDao.save(complainResponseInput);
+            ComplainResponse updatedResponse = complainResponseDao.save(complainResponseInput);
+
+            // notify updated response
+            this.notifyResponseEvent(
+                    ComplainResponseEvent.TYPE.UPDATE,
+                    updatedResponse,
+                    complainResponseInput.getRequestId());
 
             logger.info("User " + userPseudoInput + " change popularity of: " + complainResponseInput.getResponse());
             return (new ResponseEntity<>(HttpStatus.OK));
@@ -91,13 +97,11 @@ public class ComplainResponseControlleur {
 
     /**
      * for add response
-     * @param requestId -> for update this resquest
      * @param complainResponseInput -> input body
      * @return string status
      */
-    @PostMapping(value = "/newResponse/{requestId}", consumes = "application/json")
+    @PostMapping(value = "/newResponse", consumes = "application/json")
     public ResponseEntity<String> addResponse(
-            @PathVariable String requestId,
             @RequestBody ComplainResponse complainResponseInput) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -111,11 +115,11 @@ public class ComplainResponseControlleur {
         ComplainResponse newResponse = complainResponseDao.save(complainResponseInput);
 
         // update request
-        Optional<ComplainRequest> optRequest = complainRequestDao.findById(requestId);
+        Optional<ComplainRequest> optRequest = complainRequestDao.findById(complainResponseInput.getRequestId());
         if (optRequest.isPresent() && newResponse.getId() != null) {
             ComplainRequest requestToUpdate = optRequest.get();
             // notify new response
-            this.notifyResponseEvent(ComplainResponseEvent.TYPE.CREATE, newResponse, requestToUpdate.getId());
+            this.notifyResponseEvent(ComplainResponseEvent.TYPE.CREATE, newResponse, complainResponseInput.getRequestId());
 
             // update last date on request
             requestToUpdate.setLastResponseDate(complainResponseInput.getCreationDate());
@@ -138,6 +142,13 @@ public class ComplainResponseControlleur {
             @RequestBody ComplainResponse complainResponseInput) {
         // save
         ComplainResponse updatedResponse = complainResponseDao.save(complainResponseInput);
+
+        // notify updated response
+        this.notifyResponseEvent(
+                ComplainResponseEvent.TYPE.UPDATE,
+                updatedResponse,
+                complainResponseInput.getRequestId());
+
         if (updatedResponse != null) {
             logger.info("la reponse d'id: " + updatedResponse.getId() + " à été maj");
             return (new ResponseEntity<>(HttpStatus.OK));

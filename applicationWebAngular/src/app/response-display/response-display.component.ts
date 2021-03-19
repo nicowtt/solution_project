@@ -24,7 +24,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   userConnected: boolean;
   userConnectedIsModerator: boolean;
 
-  idOfRequest: number;
+  idOfRequest: string;
 
   requestSubscription: Subscription;
   requestConcerned: ComplainRequestModel;
@@ -133,8 +133,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
           break;
         }
         case 'UPDATE': {
-          console.log('update response')
-          // this.wsUpdateRequest(wsRequest.message.complainRequest);
+          this.wsUpdateResponse(wsResponse.message.complainResponse);
           break;
         }
         case 'DELETE': {
@@ -152,6 +151,20 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     this.requestResponses.push(complainResponse);
   }
 
+  private wsUpdateResponse(complainResponse: ComplainResponseModel) {
+    let index = 0;
+    let idToUpdate = complainResponse.id;
+    this.requestResponses.forEach((request) => {
+      if (request.id !== idToUpdate) {
+        index++;
+      } else {
+        this.requestResponses.splice(index, 1);
+      }
+    });
+    this.requestResponses.push(complainResponse);
+    this.updateResponses();
+  }
+
   private wsDeleteResponse(complainResponse: ComplainResponseModel) {
     let index = 0;
     const idToRemove = complainResponse.id;
@@ -167,6 +180,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   addLink(link: boolean) {
     if (link) {
       this.link = false;
+      this.commentForm.get('addLink').setValue(null);
     } else {
       this.link = true;
     }
@@ -242,8 +256,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     response.creationDate = new Date().toLocaleString();
     response.requestId = requestId;
     response.commentList = [];
-    console.log(response.toString());
-    this.complainResponseService.addResponse(response, requestId, () => {
+    this.complainResponseService.addResponse(response, () => {
       this.updateResponses();
       this.commentForm.get('comment').setValue('');
     });
@@ -333,15 +346,12 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   onSubmitModerateResponse() {
     this.moderateResponse.response = this.moderateForm.get('responseModerate').value;
     this.moderateResponse.extLink = this.moderateForm.get('linkModerate').value;
-    console.log(this.moderateResponse);
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
 
   onSubmitModerateComment() {
     this.moderateComment = this.moderateForm.get('commentModerate').value;
-    console.log(this.moderateComment);
     this.moderateResponse.commentList[this.moderateCommentIndex].comment = this.moderateComment;
-    console.log(this.moderateResponse);
     this.complainResponseService.updateResponse(this.moderateResponse);
   }
 
@@ -365,7 +375,6 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
     if (confirm('Supprimer cette réponse?')) {
       this.complainResponseService.deleteResponse(this.requestResponses[index], () => {
         this.requestResponses.splice(index, 1);
-        console.log(this.requestResponses);
       });
     }
   }

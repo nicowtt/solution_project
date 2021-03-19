@@ -31,7 +31,7 @@
             <!-- add new link-->
           </div>
         </div>
-          <button class="btn btn-primary" style="float: right; margin-top: -5px" type="submit">Envoyer</button>
+          <button class="btn btn-primary" style="float: right; margin-top: -10px" type="submit">Envoyer</button>
         </div>
       </form>
       <br>
@@ -61,10 +61,11 @@
             </button>
           </div>
           <!---->
-
-          <span id="response">{{response.response}} </span>
-          <div id="displayLink">
+          <div>
+            <span id="response">{{response.response}} </span>
+            <div id="displayLink" *ngIf="response.extLink">
             <a href="{{response.extLink}}" id="extLink"> {{response.extLink}}</a>
+            </div>
           </div>
 
           <!-- Button for delete response -->
@@ -123,7 +124,8 @@
           <div  *ngIf="isNotCollapsed == i && seeComments" id="'collapse' + i" class="collapse show" aria-labelledby="headingOne"
               data-parent="#accordion" aria-expanded="false" aria-controls="'collapse' + i">
                 <ul class="comments" *ngFor="let comment of response.commentList; let i = index">
-                  <li><span style="color: cornflowerblue; font-size: 70%%;">{{comment.creatorPseudo}} </span>
+                  <li>
+                  <span style="color: rgb(240, 37, 37); font-size: 90%; text-decoration: underline">{{comment.creatorPseudo}} </span>
                   <span *ngIf="comment.creationDaysUntilToday > 0">
                   il y a {{ comment.creationDaysUntilToday }} jour(s) :
                   </span>
@@ -156,6 +158,7 @@
                       </button>
                     </span>
                   <!---->
+
                   </li>
                 </ul>
             </div>

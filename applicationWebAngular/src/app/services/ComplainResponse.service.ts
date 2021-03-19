@@ -56,9 +56,9 @@ export class ComplainResponseService {
       );
   }
 
-  addResponse(objectResponse: ComplainResponseModel, requestId: string, onSuccess: Function) {
+  addResponse(objectResponse: ComplainResponseModel, onSuccess: Function) {
     return this.http
-      .post<ComplainResponseModel>('/newResponse/' + requestId, objectResponse)
+      .post<ComplainResponseModel>('/newResponse', objectResponse)
       .subscribe(
         (response) => {
           onSuccess();

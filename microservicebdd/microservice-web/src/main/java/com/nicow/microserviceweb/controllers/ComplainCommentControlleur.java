@@ -5,9 +5,11 @@ import com.nicow.microservicedao.complainDao.ComplainResponseDao;
 import com.nicow.microservicemodel.entities.ComplainComment;
 import com.nicow.microservicemodel.entities.ComplainRequest;
 import com.nicow.microservicemodel.entities.ComplainResponse;
+import com.nicow.microservicemodel.events.ComplainResponseEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,9 @@ public class ComplainCommentControlleur {
 
     @Autowired
     private ComplainResponseDao complainResponseDao;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
 
     /**
@@ -55,13 +60,23 @@ public class ComplainCommentControlleur {
             ComplainResponse responseToUpdate = optResponse.get();
             // add this new comment on response -> commentList
             responseToUpdate.addCommentOnResponseCommentList(newComment);
-            complainResponseDao.save(responseToUpdate);
+            ComplainResponse updatedResponse = complainResponseDao.save(responseToUpdate);
+
+            // notify updated response
+            this.notifyResponseEvent(
+                    ComplainResponseEvent.TYPE.UPDATE,
+                    updatedResponse,
+                    updatedResponse.getRequestId());
+
             return (new ResponseEntity<>(HttpStatus.OK));
         } else {
             return (new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
 
-
-
+    void notifyResponseEvent(ComplainResponseEvent.TYPE type,
+                             ComplainResponse complainResponse,
+                             String complainRequestId) {
+        eventPublisher.publishEvent(new ComplainResponseEvent(this, type, complainResponse, complainRequestId));
+    }
 }

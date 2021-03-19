@@ -3,7 +3,7 @@
 }
 
 .list-group-item {
-  margin-bottom: -10px;
+  margin-bottom: 5px;
   margin-top: -10px;
   word-break: break-all;
   box-shadow: 8px 8px 12px #aaa;
@@ -98,7 +98,6 @@
 }
 
 #deleteComment {
-  position: relative;
   top: -1px;
   left: -15px;
 }

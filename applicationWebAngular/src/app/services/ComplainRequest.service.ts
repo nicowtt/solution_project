@@ -43,7 +43,7 @@ export class ComplainRequestService {
       );
     }
 
-    getOneRequest(requestId: number, onSuccess: Function) {
+    getOneRequest(requestId: string, onSuccess: Function) {
       this.http
       .get<ComplainRequestModel>('/getOneRequest/' + requestId )
       .subscribe(
