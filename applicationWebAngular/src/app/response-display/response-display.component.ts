@@ -6,12 +6,13 @@ import { ComplainUserModel } from './../models/ComplainUser.model';
 import { AuthService } from './../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComplainResponseModel } from './../models/ComplainResponse.model';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ComplainRequestModel } from './../models/ComplainRequest.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComplainRequestService } from '../services/ComplainRequest.service';
 import { ComplainCommentModel } from '../models/ComplainComment.model';
 import { ResponseWebSocketService } from '../services/response.websocket.service';
+import { SocketResponse } from '../models/websocket.response';
 
 @Component({
   selector: 'app-response-display',
@@ -52,6 +53,8 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   seeComments = false;
 
   link = false;
+
+  readonly maxLength = 100;
 
   constructor(private complainRequestService: ComplainRequestService,
               private route: ActivatedRoute,
@@ -110,7 +113,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
    * Subscribe to the client broker.
    * Return the current status of the batch.
    */
-   private initProgressWebSocket = () => {
+   private initProgressWebSocket() {
     const obs = this.responseWebsocketService.getObservable('/topic/request/response/' + this.idOfRequest);
 
     obs.subscribe({
@@ -124,7 +127,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   /**
    * Apply result of the java server notification to the view.
    */
-   private onNewResponse = (wsResponse) => {
+   private onNewResponse = (wsResponse: SocketResponse) => {
     if (wsResponse.type === 'SUCCESS') {
       const type = wsResponse.message.type;
       switch (type) {

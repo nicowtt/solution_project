@@ -15,7 +15,7 @@
         <div class="form-group shadow-textarea">
           <label for="responseArea" id="responseAreaLabel">Répondre en tant que {{[currentUser.pseudo]}}</label>
           <textarea class="form-control z-depth-1" id="responseArea" formControlName="comment" rows="3"
-            placeholder="Ecrivez..." [ngClass]="{ 'is-invalid': submitted && cf.comment.errors }"></textarea>
+            placeholder="Ecrivez..." [maxlength]=maxLength [ngClass]="{ 'is-invalid': submitted && cf.comment.errors }"></textarea>
              <div *ngIf="submitted && cf.comment.errors" class="invalid-feedback">
               <div class="error" *ngIf="cf.comment.errors.required">Commentaire requis</div>
             </div>
@@ -23,7 +23,7 @@
             <mat-checkbox (click)="addLink(link)">Ajoutez un lien</mat-checkbox>
             <!-- add new link-->
             <div class="form-group" *ngIf="link">
-              <input type="text" placeholder="ajouter un lien" id="addLink" class="form-control" formControlName="addLink" class="form-control"
+              <input type="text" placeholder="ajouter un lien" [maxlength]=maxLength id="addLink" class="form-control" formControlName="addLink" class="form-control"
               [ngClass]="{ 'is-invalid': submitted && cf.addLink.errors }" />
               <p></p>
               <div *ngIf="submitted && cf.addLink.errors" class="invalid-feedback">
@@ -224,7 +224,7 @@
                     <span style="color:  cornflowerblue;">{{[currentUser.name]}}</span> à la réponse: <br>
                     <span style="font-style: italic;">{{preFillresponse}}</span>
                   </label>
-                  <textarea class="form-control z-depth-1" id="responseArea" formControlName="comment" rows="3"
+                  <textarea class="form-control z-depth-1" id="responseArea" [maxlength]=maxLength formControlName="comment" rows="3"
                     placeholder="Ecrivez..."></textarea>
                   <button (click)="onSubmitComment()" class="btn btn-outline-success btn-sm" style="float: right; margin-top: 5px"
                   type="submit" data-dismiss="modal">Commenter

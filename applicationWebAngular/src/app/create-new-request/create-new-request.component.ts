@@ -26,6 +26,8 @@ export class CreateNewRequestComponent implements OnInit, OnDestroy {
 
   select = false;
 
+  readonly maxLength = 100;
+
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private router: Router,
@@ -48,8 +50,6 @@ export class CreateNewRequestComponent implements OnInit, OnDestroy {
         this.themesList.add(element.themeName);
       });
     });
-
-
   }
 
   ngOnDestroy() {
