@@ -97,6 +97,10 @@ export class WebSocketService {
     return response;
   }
 
+  public disconnect() {
+    this.stompService.deactivate();
+  }
+
   /**
    * Return an observable containing a subscribers list to the broker.
    */

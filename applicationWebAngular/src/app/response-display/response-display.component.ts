@@ -213,6 +213,7 @@ export class ResponseDisplayComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.requestSubscription.unsubscribe();
     this.requestResponsesSubscription.unsubscribe();
+    this.responseWebsocketService.disconnect();
   }
 
   preFill(response: ComplainResponseModel) {

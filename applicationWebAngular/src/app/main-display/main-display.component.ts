@@ -170,6 +170,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     if (this.requestsSubscription != null) {
       this.requestsSubscription.unsubscribe();
     }
+    this.requestWebsocketService.disconnect();
   }
 
   preFill(request: ComplainRequestModel) {
@@ -200,7 +201,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   }
 
   showResponses(requestId: string) {
-    this.router.navigate(['/response', requestId]);
+    this.router.navigate(['/response/', requestId]);
   }
 
   countNbrOfResponse(request: ComplainRequestModel) {
