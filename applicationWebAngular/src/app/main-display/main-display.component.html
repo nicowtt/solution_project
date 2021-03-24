@@ -2,8 +2,15 @@
   <div class="col-md-12">
 
       <div class="parent">
-        <img class="fond" src="/assets/img/river2.svg" alt="river"
-        >
+        <div>
+          <img class="fond" src="/assets/img/river2.svg" alt="river">
+        </div>
+        <div>
+          <img *ngIf="noBottles" id="noBottlesImg" src="/assets/img/shiponthebottle.png">
+        </div>
+        <div>
+          <span *ngIf="noBottles" id="noBottlesMessage">Votre message naviguera au fil des jours...</span>
+        </div>
         <div *ngFor="let bottle of bottles; let i = index">
           <img (click)="showResponses(bottle.requestId)"
             [ngStyle]="{'top': [bottle.top], 'left': [bottle.left], 'width': [bottle.width]}" class="bouteille"

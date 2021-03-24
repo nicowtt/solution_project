@@ -35,6 +35,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
 
   dayForForget = 7;
 
+  noBottles = false;
+
   constructor(private complainRequestService: ComplainRequestService,
               private router: Router,
               private authService: AuthService,
@@ -151,6 +153,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
         this.calculateRequestDiffFromTodayTo(request);
       });
       this.fillBottles();
+      this.checkIfBottlesIsPresent();
       this.requestsList.sort(this.comparePopularity); // bigger is upper
     });
     // user connected
@@ -163,6 +166,15 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
       }
     } else {
       this.userConnected = false;
+    }
+
+  }
+
+  public checkIfBottlesIsPresent() {
+    if (this.bottles.length === 0 ) {
+      this.noBottles = true;
+    } else {
+      this.noBottles = false;
     }
   }
 
@@ -183,8 +195,8 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
   onSubmitModerate() {
     this.moderateRequest.request = this.moderateForm.get('requestModerate').value;
     this.moderateRequest.themeName = this.moderateForm.get('requestThemeModerate').value;
-    console.log(this.moderateRequest);
     this.complainRequestService.updateRequest(this.moderateRequest);
+    this.updateRequests();
   }
 
   comparePopularity(a, b) {
@@ -338,6 +350,7 @@ export class MainDisplayComponent implements OnInit, OnDestroy {
     if(confirm('Supprimer cette requête?')) {
       this.complainRequestService.deleteRequest(this.requestsList[index], () => {
         this.requestsList.splice(index, 1);
+        this.updateRequests();
       });
     }
   }

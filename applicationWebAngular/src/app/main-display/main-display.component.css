@@ -61,3 +61,18 @@
   border-radius: 35px;
   word-break: break-all;
 }
+
+#noBottlesImg {
+  position: absolute;
+  bottom: 150px;
+  left: 180px;
+  width: 35%;
+	height: 30%;
+}
+
+#noBottlesMessage {
+  position: absolute;
+  bottom: 170px;
+  left: 290px;
+  font-style: italic;
+}
